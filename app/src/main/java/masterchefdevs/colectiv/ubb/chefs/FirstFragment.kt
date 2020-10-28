@@ -1,5 +1,6 @@
 package masterchefdevs.colectiv.ubb.chefs
 
+import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -27,5 +28,6 @@ class FirstFragment : Fragment() {
         view.findViewById<Button>(R.id.button_first).setOnClickListener {
             findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
         }
+        this.view?.setBackgroundColor(Color.CYAN);
     }
 }
