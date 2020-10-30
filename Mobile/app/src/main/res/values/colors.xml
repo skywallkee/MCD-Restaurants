@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#147160</color>
+    <color name="colorPrimaryDark">#3700B3</color>
+    <color name="colorAccent">#7ac2a3</color>
+    <color name="cardBackground">#F5F5F5</color>
+    <color name="mainGreen">#147160</color>
+    <color name="white">#FFFFFF</color>
+    <color name="purple_200">#147160</color>
+    <color name="purple_500">#06D6A0</color>
+    <color name="purple_700">#147160</color>
+    <color name="teal_200">#FFFFFFFF</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+</resources>
