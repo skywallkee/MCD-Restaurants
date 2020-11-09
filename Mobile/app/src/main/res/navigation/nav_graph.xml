@@ -14,6 +14,9 @@
         <action
             android:id="@+id/action_FirstFragment_to_SecondFragment"
             app:destination="@+id/SignInFragment" />
+        <action
+            android:id="@+id/action_FirstFragment_to_filterFragment"
+            app:destination="@id/filterFragment" />
     </fragment>
     <fragment
         android:id="@+id/SignInFragment"
@@ -36,4 +39,9 @@
             android:id="@+id/action_signup_to_back"
             app:destination="@id/FirstFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/filterFragment"
+        android:name="masterchefdevs.colectiv.ubb.chefs.ui.login.FilterFragment"
+        android:label="fragment_filter"
+        tools:layout="@layout/fragment_filter" />
 </navigation>

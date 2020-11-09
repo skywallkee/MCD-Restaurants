@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.SearchView
 import androidx.navigation.fragment.findNavController
 
 /**
@@ -27,6 +28,10 @@ class FirstFragment : Fragment() {
 
         view.findViewById<Button>(R.id.button_first).setOnClickListener {
             findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
+        }
+
+        view.findViewById<SearchView>(R.id.search_view_first).setOnSearchClickListener{
+            findNavController().navigate(R.id.action_FirstFragment_to_filterFragment)
         }
         this.view?.setBackgroundColor(Color.CYAN);
     }
