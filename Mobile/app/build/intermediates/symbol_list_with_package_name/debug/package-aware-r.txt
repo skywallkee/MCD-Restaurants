@@ -1019,6 +1019,7 @@ color dim_foreground_material_dark
 color dim_foreground_material_light
 color error_color_material_dark
 color error_color_material_light
+color error_red
 color foreground_material_dark
 color foreground_material_light
 color highlighted_text_material_dark
@@ -1785,6 +1786,7 @@ id edit_query
 id end
 id enterAlways
 id enterAlwaysCollapsed
+id error_text
 id exitUntilCollapsed
 id expand_activities_button
 id expanded_menu
@@ -1838,6 +1840,8 @@ id listMode
 id list_item
 id loading
 id login
+id mainpage_loggedin
+id mainpage_loggedin_up
 id masked
 id message
 id middle
@@ -1893,6 +1897,7 @@ id parentPanel
 id parentRelative
 id parent_matrix
 id password
+id password1up
 id password_toggle
 id path
 id pathRelative
@@ -1906,6 +1911,7 @@ id progress_horizontal
 id radio
 id ratio
 id rectangles
+id register
 id reverseSawtooth
 id right
 id right_icon
@@ -2004,6 +2010,7 @@ id titleDividerNoCustom
 id title_template
 id toggle
 id toolbar
+id toolbar_text
 id top
 id topPanel
 id touch_outside
@@ -2021,6 +2028,7 @@ id unlabeled
 id up
 id useLogo
 id username
+id usernameup
 id view_offset_helper
 id visible
 id visible_removing_fragment_view_tag
@@ -2090,7 +2098,6 @@ layout abc_search_dropdown_item_icons_2line
 layout abc_search_view
 layout abc_select_dialog_material
 layout abc_tooltip
-layout activity_login
 layout activity_main
 layout content_main
 layout custom_dialog

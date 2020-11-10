@@ -6,7 +6,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object Api {
-    private const val URL = "https://master-chef-devs.herokuapp.com/rest-auth/login/"
+    private const val URL = "https://master-chef-devs.herokuapp.com"
 
     val tokenInterceptor = TokenInterceptor()
 

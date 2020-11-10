@@ -28,6 +28,15 @@ object LoginRepository {
         }
         return result
     }
+    suspend fun register(username: String, password1: String, password2: String): Result<TokenHolder> {
+        val user = NewUser(username, password1, password2, "")
+        val result = RemoteAuthDataSource.register(user)
+        if (result is Result.Success<TokenHolder>) {
+            val loggedUser = LoggedInUser(username, password1)
+            setLoggedInUser(loggedUser, result.data)
+        }
+        return result
+    }
 
     private fun setLoggedInUser(user: LoggedInUser, tokenHolder: TokenHolder) {
         LoginRepository.user = user

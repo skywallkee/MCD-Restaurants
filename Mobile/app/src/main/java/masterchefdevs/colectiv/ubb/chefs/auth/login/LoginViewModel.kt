@@ -22,9 +22,17 @@ class LoginViewModel : ViewModel() {
     val loginResult: LiveData<Result<TokenHolder>> = mutableLoginResult
 
     fun login(username: String, password: String) {
+        Log.v(TAG, "inside view model")
         viewModelScope.launch {
             Log.v(TAG, "login...");
             mutableLoginResult.value = LoginRepository.login(username, password)
+        }
+    }
+    fun register(username: String, password1: String, password2: String) {
+        Log.v(TAG, "inside view model")
+        viewModelScope.launch {
+            Log.v(TAG, "register...");
+            mutableLoginResult.value = LoginRepository.register(username, password1, password2)
         }
     }
 

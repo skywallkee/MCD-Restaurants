@@ -27,7 +27,7 @@
         app:layout_constraintVertical_bias="0.309">
 
         <EditText
-            android:id="@+id/username"
+            android:id="@+id/usernameup"
             android:layout_width="328dp"
             android:layout_height="55dp"
             android:layout_marginStart="24dp"
@@ -38,7 +38,7 @@
             android:selectAllOnFocus="true" />
 
         <EditText
-            android:id="@+id/password"
+            android:id="@+id/password1up"
             android:layout_width="328dp"
             android:layout_height="55dp"
             android:layout_marginStart="24dp"
@@ -64,7 +64,7 @@
             android:selectAllOnFocus="true" />
 
         <Button
-            android:id="@+id/login"
+            android:id="@+id/register"
             android:layout_width="225dp"
             android:layout_height="50dp"
             android:layout_gravity="start"

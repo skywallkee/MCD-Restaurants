@@ -24,7 +24,11 @@
         <action
             android:id="@+id/action_signin_to_signup"
             app:destination="@id/fragment_signup" />
+        <action
+            android:id="@+id/mainpage_loggedin"
+            app:destination="@id/FirstFragment" />
     </fragment>
+
 
     <fragment
         android:id="@+id/fragment_signup"
@@ -35,5 +39,9 @@
         <action
             android:id="@+id/action_signup_to_back"
             app:destination="@id/FirstFragment" />
+        <action
+            android:id="@+id/mainpage_loggedin_up"
+            app:destination="@id/FirstFragment" />
+
     </fragment>
 </navigation>
