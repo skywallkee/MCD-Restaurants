@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MobileChefs">
         <activity
-            android:name=".MainActivity"
+            android:name=".other.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/Theme.MobileChefs.NoActionBar"
             android:windowSoftInputMode="adjustNothing">
