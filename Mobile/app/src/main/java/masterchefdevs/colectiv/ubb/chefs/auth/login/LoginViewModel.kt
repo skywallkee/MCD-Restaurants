@@ -29,7 +29,7 @@ class LoginViewModel : ViewModel() {
         }
     }
     fun register(username: String, password1: String, password2: String) {
-        Log.v(TAG, "inside view model")
+        Log.v(TAG, "inside view model register")
         viewModelScope.launch {
             Log.v(TAG, "register...");
             mutableLoginResult.value = LoginRepository.register(username, password1, password2)
@@ -37,6 +37,7 @@ class LoginViewModel : ViewModel() {
     }
 
     fun loginDataChanged(username: String, password: String) {
+        Log.v(TAG, "inside loginvoewModel")
         if (!isUserNameValid(username)) {
             mutableLoginFormState.value = LoginFormState(usernameError = R.string.invalid_username)
         } else if (!isPasswordValid(password)) {
@@ -45,8 +46,23 @@ class LoginViewModel : ViewModel() {
             mutableLoginFormState.value = LoginFormState(isDataValid = true)
         }
     }
+    fun loginDataChanged(username: String, password: String, password2: String) {
+        Log.v(TAG, "inside loginvoewModel")
+        if (!isUserNameValid(username)) {
+            mutableLoginFormState.value = LoginFormState(usernameError = R.string.invalid_username)
+        } else if (!isPasswordValid(password)) {
+            mutableLoginFormState.value = LoginFormState(passwordError = R.string.invalid_password)
+        } else if (!isPassword2Valid(password, password2)) {
+            mutableLoginFormState.value =
+                LoginFormState(passwordError = R.string.invalid_password_confirmation)
+        }else{
+            mutableLoginFormState.value = LoginFormState(isDataValid = true)
+        }
+    }
+
 
     private fun isUserNameValid(username: String): Boolean {
+        Log.v(TAG, "inside is username valid")
         return if (username.contains('@')) {
             Patterns.EMAIL_ADDRESS.matcher(username).matches()
         } else {
@@ -56,5 +72,8 @@ class LoginViewModel : ViewModel() {
 
     private fun isPasswordValid(password: String): Boolean {
         return password.length >= 1
+    }
+    private fun isPassword2Valid(password1: String, password2: String): Boolean {
+        return password1.compareTo(password2)==0
     }
 }

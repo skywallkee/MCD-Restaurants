@@ -245,22 +245,22 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="549" y="167" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1605003792844" />
-    <state width="1491" height="230" key="GridCell.Tab.0.bottom" timestamp="1605018605352">
+    <state width="1340" height="227" key="GridCell.Tab.0.bottom" timestamp="1605078975113">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1491" height="230" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1605018605352" />
-    <state width="1491" height="230" key="GridCell.Tab.0.center" timestamp="1605018605352">
+    <state width="1340" height="227" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1605078975113" />
+    <state width="1340" height="227" key="GridCell.Tab.0.center" timestamp="1605078975113">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1491" height="230" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1605018605352" />
-    <state width="1491" height="230" key="GridCell.Tab.0.left" timestamp="1605018605352">
+    <state width="1340" height="227" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1605078975113" />
+    <state width="1340" height="227" key="GridCell.Tab.0.left" timestamp="1605078975113">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1491" height="230" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1605018605352" />
-    <state width="1491" height="230" key="GridCell.Tab.0.right" timestamp="1605018605352">
+    <state width="1340" height="227" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1605078975113" />
+    <state width="1340" height="227" key="GridCell.Tab.0.right" timestamp="1605078975113">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1491" height="230" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1605018605352" />
+    <state width="1340" height="227" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1605078975113" />
     <state x="277" y="55" key="SettingsEditor" timestamp="1604226457337">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -269,13 +269,24 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="93" y="93" width="1350" height="638" key="com.android.tools.idea.avdmanager.AvdListDialog/0.0.1536.824@0.0.1536.824" timestamp="1603608783616" />
-    <state x="458" y="256" key="com.intellij.ide.util.TipDialog" timestamp="1605031628976">
+    <state x="458" y="256" key="com.intellij.ide.util.TipDialog" timestamp="1605076252027">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="458" y="256" key="com.intellij.ide.util.TipDialog/0.0.1536.824@0.0.1536.824" timestamp="1605031628976" />
+    <state x="458" y="256" key="com.intellij.ide.util.TipDialog/0.0.1536.824@0.0.1536.824" timestamp="1605076252027" />
     <state x="410" y="89" width="609" height="536" key="find.popup" timestamp="1603959012598">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="410" y="89" width="609" height="536" key="find.popup/0.0.1536.824@0.0.1536.824" timestamp="1603959012598" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/masterchefdevs/colectiv/ubb/chefs/auth/login/SignUpFragment.kt</url>
+          <line>47</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

@@ -46,27 +46,28 @@ class SignUpFragment : Fragment() {
 
     private fun setupRegisterForm() {
         viewModel.loginFormState.observe(viewLifecycleOwner, { loginState ->
-            login.isEnabled = loginState.isDataValid
+            register.isEnabled = loginState.isDataValid
             if (loginState.usernameError != null) {
-                username.error = getString(loginState.usernameError)
+                usernameup.error = getString(loginState.usernameError)
             }
             if (loginState.passwordError != null) {
-                password.error = getString(loginState.passwordError)
+                password1up.error = getString(loginState.passwordError)
             }
         })
         viewModel.loginResult.observe(viewLifecycleOwner, { loginResult ->
-            loading.visibility = View.GONE
+            loadingup.visibility = View.GONE
             if (loginResult is Result.Success<*>) {
                 view?.findViewById<TextView>(R.id.toolbar_text)
                     ?.setText("Welcome " + username.text.toString());
                 findNavController().navigate(R.id.mainpage_loggedin_up)
             } else if (loginResult is Result.Error) {
-                error_text.text = "Register error ${loginResult.exception.message}"
-                error_text.visibility = View.VISIBLE
+                error_textup.text = "Register error ${loginResult.exception.message}"
+                error_textup.visibility = View.VISIBLE
             }
         })
 
         usernameup.afterTextChanged {
+            Log.v(TAG, "after text changed")
             viewModel.loginDataChanged(
                 usernameup.text.toString(),
                 password1up.text.toString()
@@ -82,12 +83,13 @@ class SignUpFragment : Fragment() {
             viewModel.loginDataChanged(
                 usernameup.text.toString(),
                 password1up.text.toString()
+
             )
         }
 
         register.setOnClickListener {
-            loading.visibility = View.VISIBLE
-            error_text.visibility = View.GONE
+            loadingup.visibility = View.VISIBLE
+            error_textup.visibility = View.GONE
             viewModel.register(usernameup.text.toString(), password1up.text.toString(), confirm_password.text.toString() )
             Log.v(TAG, "in click")
         }

@@ -10,17 +10,17 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:background="@color/purple_200">
+        android:layout_height="40dp"
+        android:background="@color/purple_200"
+        android:translationZ="1dp">
 
         <TextView
             android:id="@+id/toolbar_text"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:textAlignment="viewEnd"
             android:gravity="end"
+            android:textAlignment="viewEnd"
             android:textColor="@color/white"
-
             >
 
         </TextView>
@@ -28,9 +28,10 @@
     </androidx.appcompat.widget.Toolbar>
 
 
-
     <include
         layout="@layout/content_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:background="@drawable/background" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

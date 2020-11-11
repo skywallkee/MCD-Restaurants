@@ -15,7 +15,7 @@
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="351dp"
-        android:layout_height="317dp"
+        android:layout_height="330dp"
         app:cardBackgroundColor="@color/cardBackground"
         app:cardCornerRadius="3dp"
         app:cardElevation="6dp"
@@ -63,13 +63,27 @@
             android:inputType="textPassword"
             android:selectAllOnFocus="true" />
 
+        <TextView
+            android:id="@+id/error_textup"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginStart="130dp"
+            android:layout_marginTop="215dp"
+            android:layout_marginEnd="130dp"
+            android:layout_marginBottom="64dp"
+            android:textColor="@color/error_red"
+            android:textAlignment="center"
+            android:visibility="invisible"
+            android:text="ddddd"
+            android:gravity="center_horizontal"/>
+
         <Button
             android:id="@+id/register"
             android:layout_width="225dp"
             android:layout_height="50dp"
             android:layout_gravity="start"
             android:layout_marginStart="70dp"
-            android:layout_marginTop="250dp"
+            android:layout_marginTop="270dp"
             android:layout_marginEnd="70dp"
             android:layout_marginBottom="64dp"
             android:background="@drawable/button"
@@ -81,6 +95,21 @@
 
     </com.google.android.material.card.MaterialCardView>
 
+    <ProgressBar
+        android:id="@+id/loadingup"
+        android:layout_width="17dp"
+        android:layout_height="22dp"
+        android:layout_gravity="center"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="64dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/password1up"
+        app:layout_constraintStart_toStartOf="@+id/password1up"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.3"
+        tools:ignore="NotSibling" />
     <TextView
         android:id="@+id/signup_cancel"
         android:layout_width="wrap_content"

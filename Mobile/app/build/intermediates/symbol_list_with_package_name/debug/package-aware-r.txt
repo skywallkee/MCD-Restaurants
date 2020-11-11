@@ -1787,6 +1787,7 @@ id end
 id enterAlways
 id enterAlwaysCollapsed
 id error_text
+id error_textup
 id exitUntilCollapsed
 id expand_activities_button
 id expanded_menu
@@ -1839,6 +1840,7 @@ id linear
 id listMode
 id list_item
 id loading
+id loadingup
 id login
 id mainpage_loggedin
 id mainpage_loggedin_up
@@ -2228,6 +2230,7 @@ string hello_second_fragment
 string hide_bottom_view_on_scroll_behavior
 string icon_content_description
 string invalid_password
+string invalid_password_confirmation
 string invalid_username
 string item_view_role_description
 string login

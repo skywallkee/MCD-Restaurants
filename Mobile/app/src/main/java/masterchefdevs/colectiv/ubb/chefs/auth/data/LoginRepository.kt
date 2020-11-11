@@ -1,8 +1,10 @@
 package masterchefdevs.colectiv.ubb.chefs.auth.data
 
+import android.util.Log
 import masterchefdevs.colectiv.ubb.chefs.auth.data.remote.RemoteAuthDataSource
 import masterchefdevs.colectiv.ubb.chefs.core.Api
 import  masterchefdevs.colectiv.ubb.chefs.core.Result
+import masterchefdevs.colectiv.ubb.chefs.core.TAG
 
 object LoginRepository {
     var user: LoggedInUser? = null
@@ -30,6 +32,7 @@ object LoginRepository {
     }
     suspend fun register(username: String, password1: String, password2: String): Result<TokenHolder> {
         val user = NewUser(username, password1, password2, "")
+        Log.v(TAG, "inside Login repo")
         val result = RemoteAuthDataSource.register(user)
         if (result is Result.Success<TokenHolder>) {
             val loggedUser = LoggedInUser(username, password1)
