@@ -1,6 +1,6 @@
 export default {
     endpoint: {
-        login: '',
-        register: ''
+        login: 'https://master-chef-devs.herokuapp.com/rest-auth/login/',
+        register: 'https://master-chef-devs.herokuapp.com/createUser/'
     }
 };
