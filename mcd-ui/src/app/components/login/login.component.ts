@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { LoginService } from 'src/app/services/Login/login.service';
 
 @Component({
   selector: 'app-login',
@@ -6,10 +7,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
+  username: string;
+  password: string;
 
-  constructor() { }
+  constructor(private loginService: LoginService) { }
+
+  loginClick(){
+    this.loginService.login(this.username, this.password);
+  }
 
   ngOnInit(): void {
   }
-
 }
