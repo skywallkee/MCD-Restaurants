@@ -6,29 +6,31 @@
         </div>
     </mat-card>
 </div>
+
 <div fxLayoutAlign="center center" fxLayout="column" fxFlexFill>
     <p style="font-size: 30px; color: #147160;">
         Create your account!
     </p>
     <mat-card fxFlex="40">
-        <form fxLayoutAlign="stretch" fxLayout="column">
+        <div fxLayoutAlign="stretch" fxLayout="column">
             <mat-form-field>
-                <input matInput placeholder="user">
+                <input matInput placeholder="user" [(ngModel)]="username">
             </mat-form-field>
             <mat-form-field>
-                <input matInput type="password" placeholder="password">
+                <input matInput type="password" placeholder="password" [(ngModel)]="password">
             </mat-form-field>
             <mat-form-field>
                 <input matInput type="password" placeholder="confirm password">
             </mat-form-field>
-            <button mat-raised-button type="submit" style="background-color: #147160; color:white;">register</button>
-        </form>
+            <button mat-raised-button (click)="registerClick()" style="background-color: #147160; color:white;">register</button>
+        </div>
     </mat-card>
     <br>
     <br>
     <br>
     <a style="font-size: 15px; color:cadetblue">Already have an account?</a>
 </div>
+
 <footer>
     <div class="row">
         <div class="column">
