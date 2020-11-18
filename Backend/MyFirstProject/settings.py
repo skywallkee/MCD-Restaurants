@@ -48,7 +48,7 @@ INSTALLED_APPS = [
     'rest_auth.registration',
     'rest_framework',
     'rest_framework.authtoken',
-    'articles.apps.ArticlesConfig'
+    'articles'
 ]
 
 SITE_ID = 1
