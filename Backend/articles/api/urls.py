@@ -1,21 +1,18 @@
-from django.urls import path
+from rest_framework.routers import DefaultRouter
+from articles.api.views import (
+   RestaurantViewSet, 
+    ReviewViewSet, 
+    RezervariViewSet, 
+    PeretiViewSet,
+    MeseViewSet
+)
+# from django.urls import path, include
+# from server.api import views
 
-# from .views import (ArticleDetailView ,  
-#                     ArticleListView,
-#                     ArticleCreateView,
-#                     ArticleDeleteView,
-#                     ArticleUpdateView)
-
-# urlpatterns = [
-#     path('', ArticleListView.as_view()),
-#     path('create/', ArticleCreateView.as_view()),  
-#     path('<pk>', ArticleDetailView.as_view()),
-#     path('<pk>/delete/',ArticleDeleteView.as_view()),
-#     path('<pk>/update/',ArticleUpdateView.as_view())  
-# ]
-
-# from articles.api.views import ArticleViewSet
-# from rest_framework.routers import DefaultRouter
-
-# router = DefaultRouter()
-# urlpatterns = router.urls
+router = DefaultRouter()
+router.register(r'restaurant', RestaurantViewSet, basename='restaurant')
+router.register(r'review', ReviewViewSet, basename='review')
+router.register(r'rezervari', RezervariViewSet, basename='rezervari')
+router.register(r'pereti', PeretiViewSet, basename='pereti')
+router.register(r'mese', MeseViewSet, basename='mese')
+urlpatterns = router.urls
