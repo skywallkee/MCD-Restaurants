@@ -1,0 +1,44 @@
+<div>
+    <mat-card class="header">
+        <div style="overflow: hidden;">
+            <p class="titlu" style="float: left;">Master Chef Devs</p>
+            <a class="PCorMobile" style="float: right;">Login</a>
+            <a class="PCorMobile" style="float: right;">Register</a>
+        </div>
+    </mat-card>
+</div>
+
+<div fxLayoutAlign="center center" fxFlexFill fxLayout="column">
+    <mat-card fxFlex="35">
+        <form fxLayoutAlign="stretch" fxLayout="row">
+            <mat-form-field>
+                <input placeholder="Search Restaurant">
+            </mat-form-field>
+            <button type="submit" style="background-color: #147160; color:white;">Search</button>
+        </form>
+    </mat-card>
+    <mat-card>
+        <app-restaurant
+            *ngFor="let item of restaurants"
+            [restaurant]="item"></app-restaurant>
+    </mat-card>
+</div>
+
+<footer>
+    <div class="row">
+        <div class="column">
+            <a>URL here</a>
+            <br>
+            <br>
+            <a>URL here</a>
+        </div>
+        <div class="column">
+            <a>URL here</a>
+            <br>
+            <br>
+            <a>URL here</a>
+        </div>
+    </div>
+    <p>Copyright 2020 MCD<br>
+    </p>
+</footer>
