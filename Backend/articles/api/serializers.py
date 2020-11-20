@@ -1,11 +1,11 @@
 from rest_framework import serializers
-from articles.models import User,Restaurant,Review,Rezervari,Pereti,Mese
+from articles.models import Restaurant,Review,Rezervari,Pereti,Mese
 
 
-class UserSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        fields = '__all__'
+# class UserSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = User
+#         fields = '__all__'
 
 class RestaurantSerializer(serializers.ModelSerializer):
     class Meta:

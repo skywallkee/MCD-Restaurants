@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
 
@@ -10,13 +11,13 @@ from django.db import models
 #         return self.title
 
 
-class User(models.Model):
-    user = models.CharField(max_length=250)
-    password = models.CharField(max_length=250)
-    email = models.CharField(max_length=250)
+# class User(models.Model):
+#     user = models.CharField(max_length=250)
+#     password = models.CharField(max_length=250)
+#     email = models.CharField(max_length=250)
 
-    def _str_(self):
-        return self.user + ' ' + self.password + ' ' + self.email
+#     def _str_(self):
+#         return self.user + ' ' + self.password + ' ' + self.email
 
 
 class Restaurant(models.Model):

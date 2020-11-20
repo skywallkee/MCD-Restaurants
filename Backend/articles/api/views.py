@@ -50,6 +50,15 @@ class ReviewViewSet(viewsets.ModelViewSet):
     serializer_class = ReviewSerializer
     queryset = Review.objects.all()
 
+    def create(self,request):
+        data = json.loads(request.body.decode('utf-8'))
+        review = Review(nr_stele = data["nr_stele"], mesaj = data["mesaj"], data = data["data"])
+        review.id_R = Restaurant.objects.get(id = data["id_R"])
+        review.id_U = User.objects.get(id = data["id_U"]) 
+        review.save()
+        serializer=ReviewSerializer(review)
+        return Response(serializer.data) 
+
 class RezervariViewSet(viewsets.ModelViewSet):
     serializer_class = RezervariSerializer
     queryset = Rezervari.objects.all()
@@ -59,8 +68,8 @@ class PeretiViewSet(viewsets.ModelViewSet):
     queryset = Pereti.objects.all()
 
 class MeseViewSet(viewsets.ModelViewSet):
-    serializer_class = PeretiSerializer
-    queryset = Pereti.objects.all()
+    serializer_class = MeseSerializer
+    queryset = Mese.objects.all()
 
 @csrf_exempt
 @api_view(['POST'])
@@ -70,7 +79,7 @@ def createUser(request):
         try:
             if not data["password1"]==data["password2"]:
                 raise Exception("The passwords are not the same")
-            user=User.objects.create_user(username=data["username"],email=data["email"],password=data["password1"])
+            user=User.objects.create(username=data["username"],email=data["email"],password=data["password1"])
             user.save()
             token= Token.objects.create(user=user)
             return Response({'key':token.key})
