@@ -14,8 +14,7 @@
         <action
             android:id="@+id/action_FirstFragment_to_SecondFragment"
             app:destination="@+id/SignInFragment" />
-<<<<<<< Updated upstream
-=======
+
         <action
             android:id="@+id/action_FirstFragment_to_restaurantFragment"
             app:destination="@id/restaurantFragment" />
@@ -23,7 +22,7 @@
             android:id="@+id/action_FirstFragment_to_fragment_blank"
             app:destination="@id/fragment_blank" />
 
->>>>>>> Stashed changes
+
     </fragment>
     <fragment
         android:id="@+id/SignInFragment"
@@ -46,8 +45,7 @@
             android:id="@+id/action_signup_to_back"
             app:destination="@id/FirstFragment" />
     </fragment>
-<<<<<<< Updated upstream
-=======
+
 
     <fragment
         android:id="@+id/fragment_blank"
