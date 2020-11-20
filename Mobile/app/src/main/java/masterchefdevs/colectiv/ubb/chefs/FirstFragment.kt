@@ -7,11 +7,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-<<<<<<< Updated upstream
-=======
+
 import android.widget.ImageView
 import android.widget.SearchView
->>>>>>> Stashed changes
+
 import androidx.navigation.fragment.findNavController
 
 /**
@@ -33,8 +32,8 @@ class FirstFragment : Fragment() {
         view.findViewById<Button>(R.id.button_first).setOnClickListener {
             findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
         }
-<<<<<<< Updated upstream
-=======
+
+
 
         val img_1 = view.findViewById(R.id.imageView4) as ImageView
         val img_2 = view.findViewById(R.id.imageView5) as ImageView
@@ -57,7 +56,7 @@ class FirstFragment : Fragment() {
         })
 //            findNavController().navigate(R.id.action_FirstFragment_to_filterFragment)
 //        }
->>>>>>> Stashed changes
+
         this.view?.setBackgroundColor(Color.CYAN);
     }
 }
