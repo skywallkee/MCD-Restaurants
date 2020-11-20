@@ -15,6 +15,9 @@ import {FlexLayoutModule} from '@angular/flex-layout';
 import { HomeComponent } from './components/home/home.component';
 import { RestaurantComponent } from './components/home/restaurant/restaurant.component';
 import { FormsModule } from '@angular/forms';
+import { RestaurantInterfataComponent } from './components/restaurant-interfata/restaurant-interfata.component';
+import { SearchComponent } from './components/search/search.component';
+
 
 @NgModule({
   declarations: [
@@ -22,7 +25,10 @@ import { FormsModule } from '@angular/forms';
     LoginComponent,
     RegisterComponent,
     HomeComponent,
-    RestaurantComponent
+    RestaurantComponent,
+    RestaurantInterfataComponent,
+    SearchComponent
+    
   ],
   imports: [
     BrowserModule,
