@@ -14,6 +14,15 @@
         <action
             android:id="@+id/action_FirstFragment_to_SecondFragment"
             app:destination="@+id/SignInFragment" />
+
+        <action
+            android:id="@+id/action_FirstFragment_to_restaurantFragment"
+            app:destination="@id/restaurantFragment" />
+        <action
+            android:id="@+id/action_FirstFragment_to_fragment_blank"
+            app:destination="@id/fragment_blank" />
+
+
     </fragment>
     <fragment
         android:id="@+id/SignInFragment"
@@ -36,4 +45,30 @@
             android:id="@+id/action_signup_to_back"
             app:destination="@id/FirstFragment" />
     </fragment>
+
+
+    <fragment
+        android:id="@+id/fragment_blank"
+        android:name="masterchefdevs.colectiv.ubb.chefs.FilterFragment"
+        android:label="Sign Up Fragment"
+        tools:layout="@layout/fragment_filter">
+
+        <action
+            android:id="@+id/action_filter_to_back"
+            app:destination="@id/FirstFragment" />
+        <action
+            android:id="@+id/action_fragment_blank_to_restaurantFragment"
+            app:destination="@id/restaurantFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/restaurantFragment"
+        android:name="masterchefdevs.colectiv.ubb.chefs.RestaurantFragment"
+        android:label="fragment_restaurant"
+        tools:layout="@layout/fragment_restaurant" >
+        <action
+            android:id="@+id/action_restaurantFragment_to_FirstFragment"
+            app:destination="@id/FirstFragment" />
+    </fragment>
+>>>>>>> Stashed changes
 </navigation>

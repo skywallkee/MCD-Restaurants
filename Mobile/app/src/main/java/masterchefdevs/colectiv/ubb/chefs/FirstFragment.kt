@@ -7,6 +7,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+
+import android.widget.ImageView
+import android.widget.SearchView
+
 import androidx.navigation.fragment.findNavController
 
 /**
@@ -28,6 +32,31 @@ class FirstFragment : Fragment() {
         view.findViewById<Button>(R.id.button_first).setOnClickListener {
             findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
         }
+
+
+
+        val img_1 = view.findViewById(R.id.imageView4) as ImageView
+        val img_2 = view.findViewById(R.id.imageView5) as ImageView
+        img_1.setOnClickListener{
+            findNavController().navigate(R.id.action_FirstFragment_to_restaurantFragment)
+        }
+        img_2.setOnClickListener{
+            findNavController().navigate(R.id.action_FirstFragment_to_restaurantFragment)
+        }
+        view.findViewById<SearchView>(R.id.search_view_first).setOnQueryTextListener(object :
+            SearchView.OnQueryTextListener {
+            override fun onQueryTextChange(newText: String): Boolean {
+                return false
+            }
+            override fun onQueryTextSubmit(query: String): Boolean {
+                findNavController().navigate(R.id.action_FirstFragment_to_fragment_blank)
+                return false
+            }
+
+        })
+//            findNavController().navigate(R.id.action_FirstFragment_to_filterFragment)
+//        }
+
         this.view?.setBackgroundColor(Color.CYAN);
     }
 }
