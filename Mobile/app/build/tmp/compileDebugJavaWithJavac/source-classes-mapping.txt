@@ -1,2 +1,0 @@
-masterchefdevs/colectiv/ubb/chefs/BuildConfig.java
- masterchefdevs.colectiv.ubb.chefs.BuildConfig
