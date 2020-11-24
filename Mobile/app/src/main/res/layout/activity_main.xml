@@ -25,6 +25,7 @@
         android:layout_height="41dp"
         android:background="@color/mainGreen"
         app:layout_anchor="@+id/include"
+        app:titleTextColor="@color/white"
         app:layout_anchorGravity="top|center"
         app:popupTheme="@style/Theme.MobileChefs.PopupOverlay" />
 

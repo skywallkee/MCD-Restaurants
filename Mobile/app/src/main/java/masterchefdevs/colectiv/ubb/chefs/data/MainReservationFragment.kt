@@ -10,12 +10,16 @@ import android.widget.ImageView
 import android.widget.SearchView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import masterchefdevs.colectiv.ubb.chefs.R
 import masterchefdevs.colectiv.ubb.chefs.auth.data.LoginRepository
+import masterchefdevs.colectiv.ubb.chefs.auth.login.LoginViewModel
 import masterchefdevs.colectiv.ubb.chefs.core.Api
 
 class MainReservationFragment : Fragment() {
+    private lateinit var viewModel: RestaurantViewModel
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -26,36 +30,11 @@ class MainReservationFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel = ViewModelProvider(this).get(RestaurantViewModel::class.java)
 
-        if (Api.tokenInterceptor.token!=null)
-            view.findViewById<TextView>(R.id.toolbar_text).setText("Welcome "+ LoginRepository.user?.username+" ! ")
-
-        view.findViewById<Button>(R.id.button_first).setOnClickListener {
-            findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
+        view.findViewById<TextView>(R.id.restaurant_name).setText(viewModel.restaurant.value?.name)
+        view.findViewById<TextView>(R.id.restaurant_address).setText(viewModel.restaurant.value?.address)
+        view.findViewById<TextView>(R.id.rating_stars).setRawInputType(3)
         }
 
-        val img_1 = view.findViewById(R.id.imageView4) as ImageView
-        val img_2 = view.findViewById(R.id.imageView5) as ImageView
-        img_1.setOnClickListener{
-            findNavController().navigate(R.id.action_FirstFragment_to_restaurantFragment)
-        }
-        img_2.setOnClickListener{
-            findNavController().navigate(R.id.action_FirstFragment_to_restaurantFragment)
-        }
-        view.findViewById<SearchView>(R.id.search_view_first).setOnQueryTextListener(object :
-            SearchView.OnQueryTextListener {
-            override fun onQueryTextChange(newText: String): Boolean {
-                return false
-            }
-            override fun onQueryTextSubmit(query: String): Boolean {
-                findNavController().navigate(R.id.action_FirstFragment_to_fragment_blank)
-                return false
-            }
-
-        })
-//            findNavController().navigate(R.id.action_FirstFragment_to_filterFragment)
-//        }
-
-        this.view?.setBackgroundColor(Color.CYAN);
-    }
 }

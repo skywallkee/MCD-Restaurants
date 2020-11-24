@@ -11,6 +11,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.SearchView
 import android.widget.TextView
+import androidx.core.view.isVisible
 
 import androidx.navigation.fragment.findNavController
 import masterchefdevs.colectiv.ubb.chefs.R
@@ -33,8 +34,12 @@ class FirstFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if (Api.tokenInterceptor.token!=null)
-            view.findViewById<TextView>(R.id.toolbar_text).setText("Welcome "+ LoginRepository.user?.username+" ! ")
+        if (Api.tokenInterceptor.token!=null) {
+            view.findViewById<TextView>(R.id.toolbar_text)
+                .setText("Welcome " + LoginRepository.user?.username + " ! ")
+        }
+        else
+            view.findViewById<Button>(R.id.logout_button).visibility = View.GONE;
 
         view.findViewById<Button>(R.id.button_first).setOnClickListener {
             findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)

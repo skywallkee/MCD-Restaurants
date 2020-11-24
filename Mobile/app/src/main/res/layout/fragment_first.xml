@@ -128,4 +128,15 @@
         </LinearLayout>
     </ScrollView>
 
+    <Button
+        android:id="@+id/logout_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:text="logout"
+        android:background="@color/mainGreen"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:backgroundTint="#009688"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
