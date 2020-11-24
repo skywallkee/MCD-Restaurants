@@ -1,11 +1,10 @@
-package masterchefdevs.colectiv.ubb.chefs
+package masterchefdevs.colectiv.ubb.chefs.other
 
 import android.os.Bundle
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import masterchefdevs.colectiv.ubb.chefs.R
 
 class MainActivity : AppCompatActivity() {
 

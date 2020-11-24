@@ -1,4 +1,4 @@
-package masterchefdevs.colectiv.ubb.chefs.data
+package masterchefdevs.colectiv.ubb.chefs.core
 
 /**
  * A generic class that holds a value with its loading status.

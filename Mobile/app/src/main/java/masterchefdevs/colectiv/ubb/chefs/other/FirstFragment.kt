@@ -1,4 +1,4 @@
-package masterchefdevs.colectiv.ubb.chefs
+package masterchefdevs.colectiv.ubb.chefs.other
 
 import android.graphics.Color
 import android.os.Bundle
@@ -10,8 +10,13 @@ import android.widget.Button
 
 import android.widget.ImageView
 import android.widget.SearchView
+import android.widget.TextView
+import androidx.core.view.isVisible
 
 import androidx.navigation.fragment.findNavController
+import masterchefdevs.colectiv.ubb.chefs.R
+import masterchefdevs.colectiv.ubb.chefs.auth.data.LoginRepository
+import masterchefdevs.colectiv.ubb.chefs.core.Api
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
@@ -29,11 +34,16 @@ class FirstFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        if (Api.tokenInterceptor.token!=null) {
+            view.findViewById<TextView>(R.id.toolbar_text)
+                .setText("Welcome " + LoginRepository.user?.username + " ! ")
+        }
+        else
+            view.findViewById<Button>(R.id.logout_button).visibility = View.GONE;
+
         view.findViewById<Button>(R.id.button_first).setOnClickListener {
             findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
         }
-
-
 
         val img_1 = view.findViewById(R.id.imageView4) as ImageView
         val img_2 = view.findViewById(R.id.imageView5) as ImageView

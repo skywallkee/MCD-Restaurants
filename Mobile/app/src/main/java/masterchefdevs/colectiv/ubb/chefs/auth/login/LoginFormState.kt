@@ -1,4 +1,4 @@
-package masterchefdevs.colectiv.ubb.chefs.ui.login
+package masterchefdevs.colectiv.ubb.chefs.auth.login
 
 /**
  * Data validation state of the login form.
