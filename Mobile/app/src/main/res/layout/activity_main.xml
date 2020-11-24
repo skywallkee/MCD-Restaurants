@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".other.MainActivity">
 
 
     <include
@@ -23,7 +23,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="41dp"
-        android:background="@color/purple_200"
+        android:background="@color/mainGreen"
         app:layout_anchor="@+id/include"
         app:layout_anchorGravity="top|center"
         app:popupTheme="@style/Theme.MobileChefs.PopupOverlay" />
