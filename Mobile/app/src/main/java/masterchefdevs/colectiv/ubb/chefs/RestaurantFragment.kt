@@ -38,7 +38,11 @@ class RestaurantFragment : Fragment() {
         view.findViewById<Button>(R.id.back2).setOnClickListener {
             findNavController().navigate(R.id.action_restaurantFragment_to_FirstFragment)
         }
+        view.findViewById<Button>(R.id.make_reservation_button).setOnClickListener{
+            findNavController().navigate(R.id.action_restaurantFragment_to_MakeReservation)
+        }
     }
+
     companion object {
         /**
          * Use this factory method to create a new instance of

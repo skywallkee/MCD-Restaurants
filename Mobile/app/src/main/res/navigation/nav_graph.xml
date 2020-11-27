@@ -79,6 +79,16 @@
         <action
             android:id="@+id/action_restaurantFragment_to_FirstFragment"
             app:destination="@id/FirstFragment" />
+        <action
+            android:id="@+id/action_restaurantFragment_to_MakeReservation"
+            app:destination="@id/restaurantLayout" />
+
     </fragment>
->>>>>>> Stashed changes
+    <fragment
+        android:id="@+id/restaurantLayout"
+        android:name="masterchefdevs.colectiv.ubb.chefs.data.MainReservationFragment"
+        android:label="fragment_restaurantLayout"
+        tools:layout="@layout/fragment_rezerva_main" >
+
+    </fragment>
 </navigation>

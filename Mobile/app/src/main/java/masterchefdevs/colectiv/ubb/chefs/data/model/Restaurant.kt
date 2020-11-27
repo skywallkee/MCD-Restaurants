@@ -4,7 +4,7 @@ data class Restaurant(
     val id: String,
     val name: String,
     val address: String,
-    val stars: Int,
+    val stars: Float,
     val layouts: List<Layout> //de completat
 ) {
 }

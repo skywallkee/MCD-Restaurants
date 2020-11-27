@@ -7,4 +7,7 @@ data class Layout(
     val tables: List<Table>
     //de completat
 ) {
+    override fun toString(): String {
+        return floor
+    }
 }
