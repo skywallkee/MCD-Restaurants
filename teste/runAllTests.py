@@ -1,7 +1,7 @@
-
+from testCmmdc import testCmmdc
 
 def runAll():
-  pass
+  testCmmdc()
 
 if __name__=="__main__":
   runAll()
