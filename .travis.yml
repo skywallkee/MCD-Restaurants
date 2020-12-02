@@ -1,0 +1,6 @@
+language: python
+jobs:
+  include:
+  - name: "3.5 Unit Test"
+    python: "3.5"
+  script: /teste/runAllTests.py
