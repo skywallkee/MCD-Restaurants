@@ -32,8 +32,8 @@ class MainReservationFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this).get(RestaurantViewModel::class.java)
 
-        view.findViewById<TextView>(R.id.restaurant_name).setText(viewModel.restaurant.value?.name)
-        view.findViewById<TextView>(R.id.restaurant_address).setText(viewModel.restaurant.value?.address)
+        view.findViewById<TextView>(R.id.restaurant_name).setText(viewModel.restaurant.value?.nameR)
+        view.findViewById<TextView>(R.id.restaurant_address).setText(viewModel.restaurant.value?.adresa)
         view.findViewById<TextView>(R.id.rating_stars).setRawInputType(3)
         }
 

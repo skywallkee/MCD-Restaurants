@@ -8,7 +8,4 @@ import masterchefdevs.colectiv.ubb.chefs.data.model.Restaurant
 class RestaurantViewModel  : ViewModel() {
     private val mutableRestaurant = MutableLiveData<Restaurant>()
     val restaurant: LiveData<Restaurant> = mutableRestaurant
-
-
-
 }
