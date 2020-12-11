@@ -41,7 +41,7 @@ class MainReservationFragment : Fragment() {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProvider(this).get(RestaurantViewModel::class.java)
+
 
         val dateView = view.findViewById<TextView>(R.id.date_view)
         val timeView = view.findViewById<TextView>(R.id.time_view)
@@ -69,11 +69,12 @@ class MainReservationFragment : Fragment() {
         setMyDatePicker()
         setMyTimePicker()
 
-        //view.findViewById<TextView>(R.id.restaurant_name).setText(viewModel.restaurant.value?.name)
+
         //view.findViewById<TextView>(R.id.restaurant_address).setText(viewModel.restaurant.value?.address)
         //view.findViewById<TextView>(R.id.rating_stars).setRawInputType(3)
 
-        //
+
+        /*
         val table1 = Table(1, "masa1", 4, 100, 100, 100, 150, 150, 150, 150, 100)
         val tables : MutableList<Table> = mutableListOf(table1)
         val layout = Layout("parter", 350, 450, tables)
@@ -116,10 +117,25 @@ class MainReservationFragment : Fragment() {
         set.constrainMinWidth(butt.id, 100)
         set.constrainMaxWidth(butt.id, 100)
         set.applyTo(layout1)
-         //
+         */
 
         }
 
+    fun setAllElements(){
+        Log.d(TAG, "inside setallElements")
+        viewModel = ViewModelProvider(this).get(RestaurantViewModel::class.java)
+
+        val id = 1;
+        viewModel.getRestaurant(id);
+        view?.findViewById<TextView>(R.id.restaurant_name)?.setText(viewModel.restaurant.value?.name)
+
+
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        setAllElements();
+    }
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun setMyDatePicker(){
