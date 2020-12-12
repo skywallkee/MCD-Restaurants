@@ -11,17 +11,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import android.widget.AdapterView.OnItemSelectedListener
 import androidx.annotation.RequiresApi
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
+import kotlinx.android.synthetic.main.fragment_rezerva_main.*
 import masterchefdevs.colectiv.ubb.chefs.R
 import masterchefdevs.colectiv.ubb.chefs.core.TAG
 import masterchefdevs.colectiv.ubb.chefs.data.model.Layout
-import masterchefdevs.colectiv.ubb.chefs.data.model.Restaurant
-import masterchefdevs.colectiv.ubb.chefs.data.model.Table
 import java.util.*
 
 
@@ -29,112 +29,166 @@ class MainReservationFragment : Fragment() {
     private lateinit var viewModel: RestaurantViewModel
     private lateinit var myContext: Context
     private var date = MutableLiveData<Calendar>().apply { value = Calendar.getInstance() }
+    private var layouts: MutableList<Layout> = mutableListOf()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         myContext = inflater.context
+
         return inflater.inflate(R.layout.fragment_rezerva_main, container, false)
+    }
+
+    fun convertToDp(px: Int): Int{
+        val scale = requireContext().resources.displayMetrics.density
+        return (px * scale + 0.5f).toInt()
+
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setAllElements();
 
+        val spinner = view.findViewById<Spinner>(R.id.floors_spinner)
+        spinner.onItemSelectedListener = object : OnItemSelectedListener {
+            override fun onItemSelected(adapterView: AdapterView<*>?, view: View, i: Int, l: Long) {
+                setLayout(layouts[i].floor)
+            }
+            override fun onNothingSelected(adapterView: AdapterView<*>?) {
+                return
+            }
+        }
 
-        val dateView = view.findViewById<TextView>(R.id.date_view)
-        val timeView = view.findViewById<TextView>(R.id.time_view)
+        val id = 11;    //  ar trebui sa vina dinafara
+        viewModel.getRestaurant(id)
+        viewModel.getMeseRestaurant(id)
+        viewModel.getPeretiRestaurant(id)
+        viewModel.restaurant.observe(viewLifecycleOwner, { restaurant ->
+            view.findViewById<TextView>(R.id.restaurant_name)?.setText(restaurant.nameR)
+            view.findViewById<TextView>(R.id.restaurant_address).setText(restaurant.adresa)
+            view.findViewById<RatingBar>(R.id.rating_stars).rating = 3.0f
+        })
+        viewModel.tables.observe(viewLifecycleOwner, { tables ->
+            tables.filter { table -> table.id_R == id }.forEach { table ->
+                val l = layouts.find { l -> (l.floor == (table.etaj)) and (table.id_R.equals(id)) }
+                if (l != null) {
+                    l.tables.add(table)
+                } else {
+                    layouts.add(Layout(table.etaj, mutableListOf(table), mutableListOf()))
+                }
+            }
+            val spinnerAdapter: SpinnerAdapter = ArrayAdapter(
+                myContext, R.layout.support_simple_spinner_dropdown_item, layouts
+            )
+            spinner.adapter = spinnerAdapter
+        })
 
-        dateView.setText(date.value?.get(Calendar.YEAR)?.toString() + "-"+
-                (date.value?.get(Calendar.MONTH))?.plus(1).toString() +"-"+
-                    date.value?.get(Calendar.DAY_OF_MONTH)?.toString())
+        viewModel.walls.observe(viewLifecycleOwner, { walls ->
+            walls.filter { wall -> wall.id_R == id }.forEach { wall ->
+                val l = layouts.find { l -> (l.floor == (wall.etaj)) and (wall.id_R.equals(id)) }
+                if (l != null) {
+                    l.walls.add(wall)
+                } else {
+                    layouts.add(Layout(wall.etaj, mutableListOf(), mutableListOf(wall)))
+                }
+            }
+        })
+    }
+
+    @RequiresApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
+    fun setLayout(etaj: String) {
+        val constraintLayout = view?.findViewById<ConstraintLayout>(R.id.layout)
+        constraintLayout?.removeAllViewsInLayout()
+        layouts.findLast { layout -> layout.floor == etaj }?.tables?.forEach { table ->
+            val butt = Button(myContext)
+            butt.setText(table.nr_locuri.toString())
+            butt.id = View.generateViewId()
+            butt.setBackgroundColor(Color.GREEN)
+            // w = 370  h = 380
+            val h = convertToDp((table.Dy - table.Ay) * 380 / 100)
+            val w = convertToDp((table.Bx - table.Ax) * 370 / 100)
+            val left = convertToDp(table.Ax * 370 / 100)
+            val top = convertToDp(table.Ay * 380 / 100)
+            Log.d(TAG, "width: " + w)
+            Log.d(TAG, "height: " + h)
+            Log.d(TAG, "left: " + left)
+            Log.d(TAG, "top: " + top)
+            val lp = RelativeLayout.LayoutParams(w, h)
+            constraintLayout?.addView(butt, lp)
+            val set = ConstraintSet()
+            set.clone(constraintLayout)
+            set.connect(butt.id,ConstraintSet.LEFT,ConstraintSet.PARENT_ID,ConstraintSet.LEFT,left)
+            set.connect(butt.id,ConstraintSet.TOP,ConstraintSet.PARENT_ID,ConstraintSet.TOP, top )
+            set.constrainMinHeight(butt.id, h)
+            set.constrainMaxHeight(butt.id, h)
+            set.constrainMinWidth(butt.id, w)
+            set.constrainMaxWidth(butt.id, w)
+            set.applyTo(constraintLayout)
+        }
+
+        //pereti
+        layouts.findLast { layout -> layout.floor == etaj }?.walls?.forEach { wall ->
+            val butt = Button(myContext)
+            butt.id = View.generateViewId()
+            butt.setBackgroundColor(Color.GRAY)
+            // w = 370  h = 380
+            val h = convertToDp((wall.Dy - wall.Ay) * 380 / 100)
+            val w = convertToDp((wall.Bx - wall.Ax) * 370 / 100)
+            val left = convertToDp(wall.Ax * 370 / 100)
+            val top = convertToDp(wall.Ay * 380 / 100)
+            Log.d(TAG, "width: " + w)
+            Log.d(TAG, "height: " + h)
+            Log.d(TAG, "left: " + left)
+            Log.d(TAG, "top: " + top)
+            val lp = RelativeLayout.LayoutParams(w, h)
+            constraintLayout?.addView(butt, lp)
+
+            val set = ConstraintSet()
+            set.clone(constraintLayout)
+            set.connect(
+                butt.id,
+                ConstraintSet.LEFT,
+                ConstraintSet.PARENT_ID,
+                ConstraintSet.LEFT,
+                left
+            )
+            set.connect(butt.id, ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP, top)
+            set.constrainMinHeight(butt.id, h)
+            set.constrainMaxHeight(butt.id, h)
+            set.constrainMinWidth(butt.id, w)
+            set.constrainMaxWidth(butt.id, w)
+            set.applyTo(constraintLayout)
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun setAllElements(){
+        Log.d(TAG, "inside setallElements")
+        viewModel = ViewModelProvider(this).get(RestaurantViewModel::class.java)
+        setMyDatePicker()
+        setMyTimePicker()
+        val dateView = view?.findViewById<TextView>(R.id.date_view)
+        val timeView = view?.findViewById<TextView>(R.id.time_view)
+        dateView?.setText(
+            date.value?.get(Calendar.YEAR)?.toString() + "-" +
+                    (date.value?.get(Calendar.MONTH))?.plus(1).toString() + "-" +
+                    date.value?.get(Calendar.DAY_OF_MONTH)?.toString()
+        )
 
         val min = date.value?.get(Calendar.MINUTE)
         if (min != null) {
             if (min < 10) {
                 val smin = "0" + min.toString()
-                timeView.setText(
+                timeView?.setText(
                     date.value?.get(Calendar.HOUR_OF_DAY).toString() + " : " +
-                            smin
-                )
-            }
-            else
-                timeView.setText(
+                            smin)
+            } else
+                timeView?.setText(
                     date.value?.get(Calendar.HOUR_OF_DAY).toString() + " : " +
-                            date.value?.get(Calendar.MINUTE).toString()
-                )
+                            date.value?.get(Calendar.MINUTE).toString() )
         }
-
-        setMyDatePicker()
-        setMyTimePicker()
-
-
-        //view.findViewById<TextView>(R.id.restaurant_address).setText(viewModel.restaurant.value?.address)
-        //view.findViewById<TextView>(R.id.rating_stars).setRawInputType(3)
-
-
-        /*
-        val table1 = Table(1, "masa1", 4, 100, 100, 100, 150, 150, 150, 150, 100)
-        val tables : MutableList<Table> = mutableListOf(table1)
-        val layout = Layout("parter", 350, 450, tables)
-        val layouts : MutableList<Layout> = mutableListOf(layout)
-        val restaurant = Restaurant("112", "MecDonalds", "Oradea, str. Unirii nr 14", 3.0f, layouts)
-
-        view.findViewById<TextView>(R.id.restaurant_name).setText(restaurant.name)
-        view.findViewById<TextView>(R.id.restaurant_address).setText(restaurant.address)
-        view.findViewById<RatingBar>(R.id.rating_stars).rating = restaurant.stars
-        val spinner = view.findViewById<Spinner>(R.id.floors_spinner)
-        val spinnerAdapter: SpinnerAdapter = ArrayAdapter(
-            myContext,
-            R.layout.support_simple_spinner_dropdown_item,
-            layouts
-        )
-        spinner.adapter = spinnerAdapter
-
-        val butt = Button(myContext)
-
-        butt.setText("5")
-        butt.id = View.generateViewId()
-        butt.setBackgroundColor(Color.GREEN)
-
-        val layout1 =view.findViewById<ConstraintLayout>(R.id.layout)
-        val lp = RelativeLayout.LayoutParams(50, 50)
-        layout1.addView(butt, lp)
-
-        val set = ConstraintSet()
-        set.clone(layout1)
-        set.connect(butt.id, ConstraintSet.LEFT, ConstraintSet.PARENT_ID, ConstraintSet.LEFT, 150)
-        set.connect(
-            butt.id,
-            ConstraintSet.BOTTOM,
-            ConstraintSet.PARENT_ID,
-            ConstraintSet.BOTTOM,
-            50
-        )
-        set.constrainMinHeight(butt.id, 100)
-        set.constrainMaxHeight(butt.id, 100)
-        set.constrainMinWidth(butt.id, 100)
-        set.constrainMaxWidth(butt.id, 100)
-        set.applyTo(layout1)
-         */
-
-        }
-
-    fun setAllElements(){
-        Log.d(TAG, "inside setallElements")
-        viewModel = ViewModelProvider(this).get(RestaurantViewModel::class.java)
-
-        val id = 1;
-        viewModel.getRestaurant(id);
-        view?.findViewById<TextView>(R.id.restaurant_name)?.setText(viewModel.restaurant.value?.name)
-
-
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        setAllElements();
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -150,9 +204,10 @@ class MainReservationFragment : Fragment() {
                                 date.value?.set(Calendar.YEAR, nyear)
                                 date.value?.set(Calendar.MONTH, nmonthOfYear)
                                 date.value?.set(Calendar.DAY_OF_MONTH, ndayOfMonth)
-                                Log.d(TAG,date.value.toString())
-                                dateView?.setText(nyear.toString() + "-"+ (nmonthOfYear+1).toString() +"-"+ndayOfMonth.toString())
-                            }, it1, it2, it3)
+                                Log.d(TAG, date.value.toString())
+                                dateView?.setText(nyear.toString() + "-" + (nmonthOfYear + 1).toString() + "-" + ndayOfMonth.toString())
+                            }, it1, it2, it3
+                        )
                     }
                 }
             }
@@ -172,11 +227,11 @@ class MainReservationFragment : Fragment() {
                         { view, hours, min ->
                             date.value?.set(Calendar.HOUR_OF_DAY, hours)
                             date.value?.set(Calendar.MINUTE, min)
-                            Log.d(TAG,"h"+hours.toString())
+                            Log.d(TAG, "h" + hours.toString())
                             Log.d(TAG, timeView.toString())
                             var smin = ""
-                            if (min < 10 )
-                                smin+="0"+min.toString()
+                            if (min < 10)
+                                smin += "0" + min.toString()
                             else
                                 smin += min.toString()
                             timeView.setText(hours.toString() + " : " + smin)
