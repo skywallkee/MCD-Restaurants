@@ -14,6 +14,9 @@ private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
 class RestaurantFragment : Fragment() {
+    companion object {
+        const val ITEM_ID = "ITEM_ID"
+    }
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -38,7 +41,11 @@ class RestaurantFragment : Fragment() {
         view.findViewById<Button>(R.id.back2).setOnClickListener {
             findNavController().navigate(R.id.action_restaurantFragment_to_FirstFragment)
         }
+        view.findViewById<Button>(R.id.make_reservation_button).setOnClickListener{
+            findNavController().navigate(R.id.action_restaurantFragment_to_MakeReservation)
+        }
     }
+
     companion object {
         /**
          * Use this factory method to create a new instance of

@@ -1,11 +1,9 @@
 package masterchefdevs.colectiv.ubb.chefs.data.model
 
-data class Table (
+data class Wall (
     val id: Int,
     val id_R: Int,
-    val nume: Number,
-    val nr_locuri: Int,
-    val reserved: Boolean,
+    val nume: Int,
     val etaj: String,
     val Ax: Int,
     val Ay: Int,
@@ -16,4 +14,5 @@ data class Table (
     val Dx: Int,
     val Dy: Int,    //de completat ?
 ){
+
 }

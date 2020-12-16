@@ -81,10 +81,10 @@
 
             </TableLayout>
 
-            <com.google.android.gms.maps.MapView
-                android:id="@+id/mapView"
-                android:layout_width="match_parent"
-                android:layout_height="175dp" />
+<!--            <com.google.android.gms.maps.MapView-->
+<!--                android:id="@+id/mapView"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="175dp" />-->
 
             <TableLayout
                 android:layout_width="251dp"
@@ -98,7 +98,7 @@
                     android:gravity="center">
 
                     <Button
-                        android:id="@+id/button"
+                        android:id="@+id/make_reservation_button"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:text="Make Reservation"

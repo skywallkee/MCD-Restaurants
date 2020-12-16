@@ -55,6 +55,11 @@
                                 <LayoutPositions />
                               </value>
                             </entry>
+                            <entry key="mainpage_loggedin">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
                           </map>
                         </option>
                       </LayoutPositions>
@@ -81,6 +86,11 @@
                                 <LayoutPositions />
                               </value>
                             </entry>
+                            <entry key="mainpage_loggedin_up">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
                           </map>
                         </option>
                       </LayoutPositions>
@@ -102,6 +112,11 @@
                                 <LayoutPositions />
                               </value>
                             </entry>
+                            <entry key="mainpage_loggedin_up">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
                           </map>
                         </option>
                       </LayoutPositions>
@@ -115,6 +130,20 @@
                             <option name="x" value="-672" />
                             <option name="y" value="-686" />
                           </Point>
+                        </option>
+                        <option name="myPositions">
+                          <map>
+                            <entry key="action_restaurantFragment_to_FirstFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                            <entry key="action_restaurantFragment_to_MakeReservation">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                          </map>
                         </option>
                       </LayoutPositions>
                     </value>
