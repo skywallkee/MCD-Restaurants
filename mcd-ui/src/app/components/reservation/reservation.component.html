@@ -1,46 +1,82 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+
 <div>
     <mat-card class="header">
         <div style="overflow: hidden;">
             <p class="titlu" style="float: left;">Master Chef Devs</p>
-            <a class="PCorMobile" style="float: right;">&lt; Back</a>
+            <a class="PCorMobile" style="float: right; color: white;">&lt; Back</a>
         </div>
     </mat-card>
 </div>
 
-<div fxLayoutAlign="center center" fxLayout="column" fxFlexFill>
-    <p style="font-size: 30px; color: #147160;">choose a restaurant</p>
-    <p style="font-size: 20px;">or</p>
-    <mat-card fxFlex="35">
+
+<div fxLayoutAlign="center center" fxLayout="column">
+    <p style="color: #147160; font-size: 50px;padding-top: 20px;">McDonald's</p>
+            <br>
+            <p style="color: #147160; font-size: 30px;">Restaurant Adress</p>
+            <br>
+            <p>
+                    <a href="#">
+                      <span class="glyphicon glyphicon-star" style="color: #147160; font-size:25px;"></span>
+                      <span class="glyphicon glyphicon-star" style="color: #147160; font-size:25px;"></span>
+                      <span class="glyphicon glyphicon-star" style="color: #147160; font-size:25px;"></span>
+                      <span class="glyphicon glyphicon-star" style="color: #147160; font-size:25px;"></span>
+                      <span class="glyphicon glyphicon-star" style="color: #147160; font-size:25px;"></span>
+                      <span class="glyphicon glyphicon-star-empty" style="color: #147160; font-size:25px;"></span>
+                    </a>
+                  
+            </p>
+        </div>
+    <br>
+    <span>
+        
+    <label style="margin-left:15%;color: #147160; font-size: 30px; width: 50%;">Select Seats:</label>
+
+
+    <input style="max-width: width 30%;color: #147160; font-size: 15px;" list="browsers" name="browser" id="browser" placeholder="First floor">
+    <datalist id="browsers" > 
+        <option value="Edge">
+        <option value="Firefox">
+        <option value="Chrome">
+        <option value="Opera">
+        <option value="Safari">
+      </datalist>
+  
+    </span>
+      <div fxLayoutAlign="center center" fxLayout="column">
+    <mat-card fxFlex="35" class="LatimeMatCard">
         <div fxLayoutAlign="stretch" fxLayout="column">
             <mat-form-field>
-                <input matInput placeholder="user" [(ngModel)]="username">
+                
             </mat-form-field>
-            <mat-form-field>
-                <input matInput type="password" placeholder="password" [(ngModel)]="password">
-            </mat-form-field>
-            <label style="text-align: center;">ceva</label>
-            <button mat-raised-button (click)="loginClick()" style="background-color: #147160; color:white;">sign in</button>
         </div>
     </mat-card>
     <br>
-    <br>
-    <br>
-    <a style="font-size: 15px; color:cadetblue">create account</a>
+    
+    <button mat-raised-button class="LatimeButon" style="background-color: #147160; color:white;">Make Reservation</button>
+   
 </div>
 
-<footer>
+<footer style="position: fixed;left: 0;bottom: 0;width: 100%;">
     <div class="row">
         <div class="column">
-            <a>URL here</a>
+            <a style="color: white;">URL here</a>
             <br>
             <br>
-            <a>URL here</a>
+            <a style="color: white;">URL here</a>
         </div>
         <div class="column">
-            <a>URL here</a>
+            <a style="color: white;">URL here</a>
             <br>
             <br>
-            <a>URL here</a>
+            <a style="color: white;">URL here</a>
         </div>
     </div>
     <p>Copyright 2020 MCD<br>
