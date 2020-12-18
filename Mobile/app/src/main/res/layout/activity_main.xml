@@ -4,18 +4,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".other.MainActivity">
 
+
+    <include
+        android:id="@+id/include"
+        layout="@layout/content_main"
+        android:background="@drawable/background" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="791dp"
+        android:orientation="horizontal">
+
+    </LinearLayout>
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="35dp"
-        android:background="@color/purple_200"
+        android:layout_height="41dp"
+        android:background="@color/mainGreen"
+        app:layout_anchor="@+id/include"
+        app:titleTextColor="@color/white"
+        app:layout_anchorGravity="top|center"
         app:popupTheme="@style/Theme.MobileChefs.PopupOverlay" />
-
-    <include
-        layout="@layout/content_main"
-        android:background="@drawable/background" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

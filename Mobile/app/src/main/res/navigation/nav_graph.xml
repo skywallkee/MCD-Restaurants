@@ -7,33 +7,88 @@
 
     <fragment
         android:id="@+id/FirstFragment"
-        android:name="masterchefdevs.colectiv.ubb.chefs.FirstFragment"
+        android:name="masterchefdevs.colectiv.ubb.chefs.other.FirstFragment"
         android:label="@string/first_fragment_label"
         tools:layout="@layout/fragment_first">
 
         <action
             android:id="@+id/action_FirstFragment_to_SecondFragment"
             app:destination="@+id/SignInFragment" />
+
+        <action
+            android:id="@+id/action_FirstFragment_to_restaurantFragment"
+            app:destination="@id/restaurantFragment" />
+        <action
+            android:id="@+id/action_FirstFragment_to_fragment_blank"
+            app:destination="@id/fragment_blank" />
+
+
     </fragment>
     <fragment
         android:id="@+id/SignInFragment"
-        android:name="masterchefdevs.colectiv.ubb.chefs.SignInFragment"
+        android:name="masterchefdevs.colectiv.ubb.chefs.auth.login.SignInFragment"
         android:label="@string/second_fragment_label"
         tools:layout="@layout/fragment_signin">
 
         <action
             android:id="@+id/action_signin_to_signup"
             app:destination="@id/fragment_signup" />
+        <action
+            android:id="@+id/mainpage_loggedin"
+            app:destination="@id/FirstFragment" />
     </fragment>
 
     <fragment
         android:id="@+id/fragment_signup"
-        android:name="masterchefdevs.colectiv.ubb.chefs.SignUpFragment"
+        android:name="masterchefdevs.colectiv.ubb.chefs.auth.login.SignUpFragment"
         android:label="Sign Up Fragment"
         tools:layout="@layout/fragment_signup">
 
         <action
             android:id="@+id/action_signup_to_back"
             app:destination="@id/FirstFragment" />
+        <action
+            android:id="@+id/mainpage_loggedin_up"
+            app:destination="@id/FirstFragment" />
+
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/fragment_blank"
+        android:name="masterchefdevs.colectiv.ubb.chefs.FilterFragment"
+        android:label="Sign Up Fragment"
+        tools:layout="@layout/fragment_filter">
+
+        <action
+            android:id="@+id/action_filter_to_back"
+            app:destination="@id/FirstFragment" />
+        <action
+            android:id="@+id/mainpage_loggedin_up"
+            app:destination="@id/FirstFragment" />
+        <action
+            android:id="@+id/action_fragment_blank_to_restaurantFragment"
+            app:destination="@id/restaurantFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/restaurantFragment"
+        android:name="masterchefdevs.colectiv.ubb.chefs.RestaurantFragment"
+        android:label="fragment_restaurant"
+        tools:layout="@layout/fragment_restaurant" >
+        <action
+            android:id="@+id/action_restaurantFragment_to_FirstFragment"
+            app:destination="@id/FirstFragment" />
+        <action
+            android:id="@+id/action_restaurantFragment_to_MakeReservation"
+            app:destination="@id/restaurantLayout" />
+
+    </fragment>
+    <fragment
+        android:id="@+id/restaurantLayout"
+        android:name="masterchefdevs.colectiv.ubb.chefs.data.MainReservationFragment"
+        android:label="fragment_restaurantLayout"
+        tools:layout="@layout/fragment_rezerva_main" >
+
     </fragment>
 </navigation>

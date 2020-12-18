@@ -17,6 +17,8 @@ import { RestaurantComponent } from './components/home/restaurant/restaurant.com
 import { FormsModule } from '@angular/forms';
 import { RestaurantInterfataComponent } from './components/restaurant-interfata/restaurant-interfata.component';
 import { SearchComponent } from './components/search/search.component';
+import { ReviewsComponent } from './components/reviews/reviews.component';
+import { ReservationComponent } from './components/reservation/reservation.component';
 
 
 @NgModule({
@@ -27,7 +29,9 @@ import { SearchComponent } from './components/search/search.component';
     HomeComponent,
     RestaurantComponent,
     RestaurantInterfataComponent,
-    SearchComponent
+    SearchComponent,
+    ReviewsComponent,
+    ReservationComponent
     
   ],
   imports: [

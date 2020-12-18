@@ -27,8 +27,8 @@ SECRET_KEY = '3pj-@i1s35_0#0*1llxb8=fo8=%tbw7ds)%#yf-vy%dpq3jo#n'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-# ALLOWED_HOSTS = ['master-chef-devs.herokuapp.com','127.0.0.1']
-ALLOWED_HOSTS =[]
+ALLOWED_HOSTS = ['master-chef-devs.herokuapp.com','127.0.0.1']
+#ALLOWED_HOSTS =[]
 
 # Application definition
 
@@ -55,6 +55,8 @@ INSTALLED_APPS = [
 SITE_ID = 1
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
