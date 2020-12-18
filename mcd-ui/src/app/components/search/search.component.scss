@@ -1,7 +1,7 @@
 * {
     box-sizing: border-box;
 }
-.pozaRestaurant{
+.restaurantImage{
     width: 100%;
     border-radius: 12%;
 };
@@ -21,6 +21,14 @@
     padding-right: 100px;
     padding-left: 150px;
 }
+
+.restaurant-card{
+    margin: 15px;
+    width: 295px;
+    border-radius: 25px;
+    margin: 15px 150px;
+}
+
 @media screen and (max-width: 600px) {
     a.PCorMobile {
       display: none;
