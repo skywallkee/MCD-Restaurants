@@ -23,7 +23,7 @@ object RestaurantRepository {
     suspend fun load(itemId: String): Restaurant {
         Log.i(TAG, "load")
         Log.i(TAG, itemId.toString())
-        val item = cachedItems?.find { it.id == itemId }
+        val item = cachedItems?.find { it.id.toString() == itemId }
         if (item != null) {
             return item
         }
@@ -39,7 +39,7 @@ object RestaurantRepository {
 
     suspend fun update(item: Restaurant): Restaurant{
         Log.i(TAG, "update")
-        val updatedItem = RestaurantApi.service.update(item.id, item)
+        val updatedItem = RestaurantApi.service.update(item.id.toString(), item)
         //asta trebuie adaugata eventuala
         //cachedItems?.add(updatedItem)
         Log.i(TAG, updatedItem.id.toString())

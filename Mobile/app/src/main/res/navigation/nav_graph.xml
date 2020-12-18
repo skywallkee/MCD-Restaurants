@@ -16,11 +16,11 @@
             app:destination="@+id/SignInFragment" />
 
         <action
-            android:id="@+id/action_FirstFragment_to_restaurantFragment"
-            app:destination="@id/restaurantFragment" />
-        <action
             android:id="@+id/action_FirstFragment_to_fragment_blank"
             app:destination="@id/fragment_blank" />
+        <action
+            android:id="@+id/action_FirstFragment_to_restaurantEditFragment"
+            app:destination="@id/restaurantEditFragment" />
 
 
     </fragment>
@@ -67,28 +67,30 @@
             android:id="@+id/mainpage_loggedin_up"
             app:destination="@id/FirstFragment" />
         <action
-            android:id="@+id/action_fragment_blank_to_restaurantFragment"
-            app:destination="@id/restaurantFragment" />
+            android:id="@+id/action_fragment_blank_to_restaurantEditFragment"
+            app:destination="@id/restaurantEditFragment" />
     </fragment>
 
-    <fragment
-        android:id="@+id/restaurantFragment"
-        android:name="masterchefdevs.colectiv.ubb.chefs.RestaurantFragment"
-        android:label="fragment_restaurant"
-        tools:layout="@layout/fragment_restaurant" >
-        <action
-            android:id="@+id/action_restaurantFragment_to_FirstFragment"
-            app:destination="@id/FirstFragment" />
-        <action
-            android:id="@+id/action_restaurantFragment_to_MakeReservation"
-            app:destination="@id/restaurantLayout" />
-
-    </fragment>
     <fragment
         android:id="@+id/restaurantLayout"
         android:name="masterchefdevs.colectiv.ubb.chefs.data.MainReservationFragment"
         android:label="fragment_restaurantLayout"
         tools:layout="@layout/fragment_rezerva_main" >
 
+    </fragment>
+    <fragment
+        android:id="@+id/restaurantEditFragment"
+        android:name="masterchefdevs.colectiv.ubb.chefs.data.restaurantFragment.RestaurantEditFragment"
+        android:label="fragment_restaurant"
+        tools:layout="@layout/fragment_restaurant" >
+        <action
+            android:id="@+id/action_restaurantEditFragment_to_FirstFragment"
+            app:destination="@id/FirstFragment" />
+        <action
+            android:id="@+id/action_restaurantEditFragment_to_fragment_blank"
+            app:destination="@id/fragment_blank" />
+        <action
+            android:id="@+id/action_restaurantEditFragment_to_restaurantLayout"
+            app:destination="@id/restaurantLayout" />
     </fragment>
 </navigation>
