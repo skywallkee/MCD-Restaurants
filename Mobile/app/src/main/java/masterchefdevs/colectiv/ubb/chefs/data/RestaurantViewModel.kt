@@ -1,8 +1,6 @@
 package masterchefdevs.colectiv.ubb.chefs.data
 
-import android.content.ContentValues
 import android.util.Log
-import android.util.Patterns
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,7 +8,6 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import  masterchefdevs.colectiv.ubb.chefs.core.Result
 import masterchefdevs.colectiv.ubb.chefs.core.TAG
-import masterchefdevs.colectiv.ubb.chefs.data.model.Layout
 import masterchefdevs.colectiv.ubb.chefs.data.model.Restaurant
 import masterchefdevs.colectiv.ubb.chefs.data.model.Table
 import masterchefdevs.colectiv.ubb.chefs.data.model.Wall
@@ -39,7 +36,6 @@ class RestaurantViewModel  : ViewModel() {
         Log.d(TAG, "inside getMese_view model")
         viewModelScope.launch {
             val result = RemoteRestaurantDataSource.getMese(restaurantId)
-            //Log.d(TAG, result.size())
             if (result is Result.Success<List<Table>>)
                 mutableTables.value = result.data;
         }
@@ -49,7 +45,6 @@ class RestaurantViewModel  : ViewModel() {
         Log.d(TAG, "inside getMese_view model")
         viewModelScope.launch {
             val result = RemoteRestaurantDataSource.getPereti(restaurantId)
-            //Log.d(TAG, result.size())
             if (result is Result.Success<List<Wall>>)
                 mutableWalls.value = result.data;
         }

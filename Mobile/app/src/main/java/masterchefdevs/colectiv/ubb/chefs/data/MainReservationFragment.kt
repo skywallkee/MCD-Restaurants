@@ -18,8 +18,10 @@ import androidx.constraintlayout.widget.ConstraintSet
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import kotlinx.android.synthetic.main.fragment_rezerva_main.*
 import masterchefdevs.colectiv.ubb.chefs.R
+import masterchefdevs.colectiv.ubb.chefs.RestaurantFragment
 import masterchefdevs.colectiv.ubb.chefs.core.TAG
 import masterchefdevs.colectiv.ubb.chefs.data.model.Layout
 import java.util.*
@@ -31,19 +33,27 @@ class MainReservationFragment : Fragment() {
     private var date = MutableLiveData<Calendar>().apply { value = Calendar.getInstance() }
     private var layouts: MutableList<Layout> = mutableListOf()
 
+    companion object {
+        var ITEM_ID: Number = -1;
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         myContext = inflater.context
-
+        Log.d(TAG,"in on create view- arguments: "+arguments)
+        arguments?.let {
+            val a = it.getString("ITEM_ID")
+            Log.d(TAG,"in on create view: "+a)
+            ITEM_ID = it.getString("ITEM_ID")?.toInt() ?: 0
+        }
         return inflater.inflate(R.layout.fragment_rezerva_main, container, false)
     }
 
     fun convertToDp(px: Int): Int{
         val scale = requireContext().resources.displayMetrics.density
         return (px * scale + 0.5f).toInt()
-
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -61,7 +71,8 @@ class MainReservationFragment : Fragment() {
             }
         }
 
-        val id = 11;    //  ar trebui sa vina dinafara
+        val id = ITEM_ID;
+        Log.d(TAG, id.toString());
         viewModel.getRestaurant(id)
         viewModel.getMeseRestaurant(id)
         viewModel.getPeretiRestaurant(id)
@@ -106,11 +117,11 @@ class MainReservationFragment : Fragment() {
             butt.setText(table.nr_locuri.toString())
             butt.id = View.generateViewId()
             butt.setBackgroundColor(Color.GREEN)
-            // w = 370  h = 380
-            val h = convertToDp((table.Dy - table.Ay) * 380 / 100)
+            // w = 370  h = 370
+            val h = convertToDp((table.Dy - table.Ay) * 370 / 100)
             val w = convertToDp((table.Bx - table.Ax) * 370 / 100)
             val left = convertToDp(table.Ax * 370 / 100)
-            val top = convertToDp(table.Ay * 380 / 100)
+            val top = convertToDp(table.Ay * 370 / 100)
             Log.d(TAG, "width: " + w)
             Log.d(TAG, "height: " + h)
             Log.d(TAG, "left: " + left)
@@ -189,6 +200,10 @@ class MainReservationFragment : Fragment() {
                     date.value?.get(Calendar.HOUR_OF_DAY).toString() + " : " +
                             date.value?.get(Calendar.MINUTE).toString() )
         }
+        view?.findViewById<Button>(R.id.back_to_map)?.setOnClickListener({
+            findNavController().navigate(R.id.action_layout_to_map,Bundle().apply {
+                putString("ITEM_ID", ITEM_ID.toString())})
+        })
     }
 
     @RequiresApi(Build.VERSION_CODES.O)

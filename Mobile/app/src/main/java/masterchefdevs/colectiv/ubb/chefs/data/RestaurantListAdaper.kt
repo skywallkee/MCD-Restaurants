@@ -11,7 +11,6 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.fragment_first.view.*
-
 import kotlinx.android.synthetic.main.view_restaurant.view.*
 
 import masterchefdevs.colectiv.ubb.chefs.R
@@ -32,13 +31,12 @@ class RestaurantListAdaper(
     private var onItemClick: View.OnClickListener;
 
     init {
-
         Log.v(TAG, "init adapter ")
         onItemClick = View.OnClickListener { view ->
             val item = view.tag as Restaurant
-            Log.v(TAG, "on item view")
+            Log.v(TAG, "on item view "+item.id.toString())
             fragment.findNavController().navigate(R.id.restaurantFragment, Bundle().apply {
-                putString(RestaurantFragment.ITEM_ID, item.id.toString())
+                putString("ITEM_ID", item.id.toString())
             })
         }
     }

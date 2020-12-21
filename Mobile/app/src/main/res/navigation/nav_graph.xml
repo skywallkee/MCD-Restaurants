@@ -89,6 +89,9 @@
         android:name="masterchefdevs.colectiv.ubb.chefs.data.MainReservationFragment"
         android:label="fragment_restaurantLayout"
         tools:layout="@layout/fragment_rezerva_main" >
+        <action
+            android:id="@+id/action_layout_to_map"
+            app:destination="@id/restaurantFragment" />
 
     </fragment>
 </navigation>

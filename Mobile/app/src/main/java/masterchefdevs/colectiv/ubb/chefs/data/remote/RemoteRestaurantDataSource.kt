@@ -7,6 +7,7 @@ import masterchefdevs.colectiv.ubb.chefs.auth.data.TokenHolder
 import masterchefdevs.colectiv.ubb.chefs.core.Api
 import masterchefdevs.colectiv.ubb.chefs.core.Result
 import masterchefdevs.colectiv.ubb.chefs.core.TAG
+import masterchefdevs.colectiv.ubb.chefs.core.UnsecuredApi
 import masterchefdevs.colectiv.ubb.chefs.data.model.Reservation
 import masterchefdevs.colectiv.ubb.chefs.data.model.Restaurant
 import masterchefdevs.colectiv.ubb.chefs.data.model.Table
@@ -35,7 +36,7 @@ object RemoteRestaurantDataSource {
         suspend fun getRezervari(): List<Reservation>      // cum trimit parametrii?
     }
 
-    private val restaurantService: RestaurantService = ApiGen.retrofit.create(RestaurantService::class.java)
+    private val restaurantService: RestaurantService = UnsecuredApi.retrofit.create(RestaurantService::class.java)
 
     suspend fun getRestaurant(id: Number): Result<Restaurant> {
         Log.d(TAG, "inside getRestaurant _ restaurant repo")
@@ -47,7 +48,6 @@ object RemoteRestaurantDataSource {
             return aa
         } catch (e: Exception) {
             return Result.Error(e)
-
         }
     }
     suspend fun getMese(id: Number): Result<List<Table>> {

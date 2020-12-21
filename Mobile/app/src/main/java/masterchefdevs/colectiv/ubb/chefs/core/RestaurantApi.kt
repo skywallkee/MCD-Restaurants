@@ -10,7 +10,7 @@ object RestaurantApi {
         suspend fun find(): List<Restaurant>
 
         @GET("/api/restaurant/{id}")
-        suspend fun read(@Path("id") itemId: String): Restaurant;
+        suspend fun read(@Path("id") itemId: Number): Restaurant;
 
         @Headers("Content-Type: application/json")
         @POST("/api/restaurant")
@@ -18,7 +18,7 @@ object RestaurantApi {
 
         @Headers("Content-Type: application/json")
         @PUT("/api/restaurant/{id}")
-        suspend fun update(@Path("id") itemId: String, @Body item: Restaurant): Restaurant
+        suspend fun update(@Path("id") itemId: Number, @Body item: Restaurant): Restaurant
     }
     val service: Service = UnsecuredApi.retrofit.create(Service::class.java)
 }
