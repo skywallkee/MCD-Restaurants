@@ -54,7 +54,6 @@ class RestaurantFragment : Fragment(), OnMapReadyCallback {
         Log.d(TAG, ITEM_ID);
         setUpElements()
 
-
         view.findViewById<Button>(R.id.back2).setOnClickListener {
             findNavController().navigate(R.id.action_restaurantFragment_to_FirstFragment)
         }
@@ -77,7 +76,6 @@ class RestaurantFragment : Fragment(), OnMapReadyCallback {
             view?.findViewById<TextView>(R.id.restaurant_address_map)?.setText(restaurant.adresa)
             view?.findViewById<RatingBar>(R.id.rating_stars_map)?.rating = 3.0f
         })
-
     }
 
     fun getAddress(): String?{

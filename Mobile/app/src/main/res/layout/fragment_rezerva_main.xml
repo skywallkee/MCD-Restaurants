@@ -83,24 +83,51 @@
 
             <TableRow
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
+                android:layout_height="40dp"
                 android:layout_marginTop="5dp"
-                android:gravity="center">
+                android:weightSum="13"
+                >
+
+                <Button
+                    android:id="@+id/flor_button"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_weight="4"
+                    android:backgroundTint="@color/mainGreen"
+                    android:text="Floor" />
 
                 <Spinner
                     android:id="@+id/floors_spinner"
-                    android:layout_marginLeft="70dp"
-                    android:layout_marginRight="70dp"
-                    android:layout_width="100dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="6dp"
+                    android:layout_width="0dp"
                     android:layout_height="30dp"
                     android:background="@color/cardBackground"
-                    android:gravity="center"
+                    android:layout_weight="4"
+
                     />
+
+                <Button
+                    android:id="@+id/duration_button"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:backgroundTint="@color/mainGreen"
+                    android:text="Hours"
+                    android:layout_weight="4"
+                    />
+
+                <NumberPicker
+                    android:id="@+id/duration_numer_picker"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_weight="1" />
             </TableRow>
 
             <TableRow
                 android:layout_width="match_parent"
-                android:layout_marginTop="10dp"
                 android:paddingLeft="20dp"
                 android:paddingRight="20dp"
                 android:layout_height="40dp"
@@ -143,7 +170,7 @@
             <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="500dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:gravity="center">
 
                 <androidx.core.widget.NestedScrollView

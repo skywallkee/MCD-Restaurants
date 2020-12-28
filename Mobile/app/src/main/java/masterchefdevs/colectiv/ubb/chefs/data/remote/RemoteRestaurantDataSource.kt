@@ -1,10 +1,6 @@
 package masterchefdevs.colectiv.ubb.chefs.data.remote
 
 import android.util.Log
-import masterchefdevs.colectiv.ubb.chefs.auth.data.LoggedInUser
-import masterchefdevs.colectiv.ubb.chefs.auth.data.NewUser
-import masterchefdevs.colectiv.ubb.chefs.auth.data.TokenHolder
-import masterchefdevs.colectiv.ubb.chefs.core.Api
 import masterchefdevs.colectiv.ubb.chefs.core.Result
 import masterchefdevs.colectiv.ubb.chefs.core.TAG
 import masterchefdevs.colectiv.ubb.chefs.core.UnsecuredApi
@@ -13,8 +9,7 @@ import masterchefdevs.colectiv.ubb.chefs.data.model.Restaurant
 import masterchefdevs.colectiv.ubb.chefs.data.model.Table
 import masterchefdevs.colectiv.ubb.chefs.data.model.Wall
 import retrofit2.http.*
-import java.sql.Date
-import java.sql.Time
+import java.util.Date
 
 object RemoteRestaurantDataSource {
 
@@ -69,13 +64,16 @@ object RemoteRestaurantDataSource {
         }
     }
 
-    suspend fun getRezervari(id: Number, data: Date, ora: Time ): Result<List<Reservation>> {
+    suspend fun getRezervari(id: Number, data: Date): Result<List<Reservation>> {
+        Log.d(TAG, "inainate de send req rezervari")
         try {
             val a = Result.Success(restaurantService.getRezervari())
+            Log.d(TAG, "dupa de send req rezervari")
             return a
         } catch (e: Exception) {
             return Result.Error(e)
         }
+
     }
 
 }

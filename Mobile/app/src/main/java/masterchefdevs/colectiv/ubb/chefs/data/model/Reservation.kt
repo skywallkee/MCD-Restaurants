@@ -1,18 +1,29 @@
 package masterchefdevs.colectiv.ubb.chefs.data.model
 
-import java.sql.Date
 import java.sql.Time
+import java.util.*
 
 data class Reservation(
     val id: Int,
     val id_M: Int,
-    val id_U: Int,      //probabil id_R
+    val id_U: Int,      //id-user
+    val nume_pers: String,
+    val email: String,
     val data: Date,
     val ora : Time,
     val timp: Time,
     val telefon: String,
-    val nume_pers: String,
-    val email: String,
-
 ) {
 }
+/*
+ "id": 4,
+        "data": "2020-12-18",
+        "ora": "16:48:52.285246",
+        "timp": "01:00:00",
+        "telefon": "0747184539",
+        "nume_pers": "Gelu",
+        "email": "gelu@gmail.com",
+        "id_M": 2,
+        "id_U": 4
+    },
+ */

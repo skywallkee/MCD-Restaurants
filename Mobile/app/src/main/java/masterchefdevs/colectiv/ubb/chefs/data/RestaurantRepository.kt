@@ -16,6 +16,8 @@ object RestaurantRepository {
         }
         cachedItems = mutableListOf()
         val items = RestaurantApi.service.find()
+
+
         cachedItems?.addAll(items)
         return cachedItems as List<Restaurant>
     }

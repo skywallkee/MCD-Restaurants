@@ -5,7 +5,7 @@ data class Table (
     val id_R: Int,
     val nume: Number,
     val nr_locuri: Int,
-    val reserved: Boolean,
+    var reserved: Boolean,
     val etaj: String,
     val Ax: Int,
     val Ay: Int,

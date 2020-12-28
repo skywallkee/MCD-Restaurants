@@ -19,19 +19,21 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import kotlinx.android.synthetic.main.fragment_rezerva_main.*
 import masterchefdevs.colectiv.ubb.chefs.R
-import masterchefdevs.colectiv.ubb.chefs.RestaurantFragment
 import masterchefdevs.colectiv.ubb.chefs.core.TAG
 import masterchefdevs.colectiv.ubb.chefs.data.model.Layout
-import java.util.*
+import masterchefdevs.colectiv.ubb.chefs.data.model.Reservation
+import java.util.Calendar
+import java.util.Date
 
 
-class MainReservationFragment : Fragment() {
+class MainReservationFragment : Fragment(), NumberPicker.OnValueChangeListener {
     private lateinit var viewModel: RestaurantViewModel
     private lateinit var myContext: Context
     private var date = MutableLiveData<Calendar>().apply { value = Calendar.getInstance() }
+    private var duration: Int = 0
     private var layouts: MutableList<Layout> = mutableListOf()
+    private var reservations: MutableList<Reservation> = mutableListOf();
 
     companion object {
         var ITEM_ID: Number = -1;
@@ -72,15 +74,18 @@ class MainReservationFragment : Fragment() {
         }
 
         val id = ITEM_ID;
-        Log.d(TAG, id.toString());
+        Log.d(TAG, id.toString())
         viewModel.getRestaurant(id)
-        viewModel.getMeseRestaurant(id)
+
+        viewModel.getMeseRestaurant(id, date.value!!.time)
         viewModel.getPeretiRestaurant(id)
+
         viewModel.restaurant.observe(viewLifecycleOwner, { restaurant ->
             view.findViewById<TextView>(R.id.restaurant_name)?.setText(restaurant.nameR)
             view.findViewById<TextView>(R.id.restaurant_address).setText(restaurant.adresa)
             view.findViewById<RatingBar>(R.id.rating_stars).rating = 3.0f
         })
+
         viewModel.tables.observe(viewLifecycleOwner, { tables ->
             tables.filter { table -> table.id_R == id }.forEach { table ->
                 val l = layouts.find { l -> (l.floor == (table.etaj)) and (table.id_R.equals(id)) }
@@ -116,7 +121,11 @@ class MainReservationFragment : Fragment() {
             val butt = Button(myContext)
             butt.setText(table.nr_locuri.toString())
             butt.id = View.generateViewId()
-            butt.setBackgroundColor(Color.GREEN)
+
+            if (table.reserved)
+                butt.setBackgroundColor(Color.RED)
+            else
+                butt.setBackgroundColor(Color.GREEN)
             // w = 370  h = 370
             val h = convertToDp((table.Dy - table.Ay) * 370 / 100)
             val w = convertToDp((table.Bx - table.Ax) * 370 / 100)
@@ -172,6 +181,12 @@ class MainReservationFragment : Fragment() {
             set.constrainMaxWidth(butt.id, w)
             set.applyTo(constraintLayout)
         }
+        //rezervari
+
+    }
+
+    fun setDuration(){
+        view?.findViewById<NumberPicker>(R.id.duration_numer_picker)?.setOnValueChangedListener(this)
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -180,6 +195,7 @@ class MainReservationFragment : Fragment() {
         viewModel = ViewModelProvider(this).get(RestaurantViewModel::class.java)
         setMyDatePicker()
         setMyTimePicker()
+        setDuration()
         val dateView = view?.findViewById<TextView>(R.id.date_view)
         val timeView = view?.findViewById<TextView>(R.id.time_view)
         dateView?.setText(
@@ -204,6 +220,8 @@ class MainReservationFragment : Fragment() {
             findNavController().navigate(R.id.action_layout_to_map,Bundle().apply {
                 putString("ITEM_ID", ITEM_ID.toString())})
         })
+        view?.findViewById<NumberPicker>(R.id.duration_numer_picker)?.minValue=1;
+        view?.findViewById<NumberPicker>(R.id.duration_numer_picker)?.maxValue=10;
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -259,5 +277,9 @@ class MainReservationFragment : Fragment() {
                 timePickerDialog.show()
             }
         }
+    }
+
+    override fun onValueChange(picker: NumberPicker?, oldVal: Int, newVal: Int) {
+        duration = newVal
     }
 }
