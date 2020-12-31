@@ -8,6 +8,9 @@
 /.idea/navEditor.xml
 /.idea/assetWizardSettings.xml
 
+/backend/articles/api/__pycache__
+/backend/articles/__pycache__
+
 .DS_Store
 /build
 /captures
