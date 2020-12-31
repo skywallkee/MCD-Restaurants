@@ -31,3 +31,30 @@
         margin-left:40%;
     }
   }
+
+  #top {
+    margin-bottom: 0px;
+    padding-bottom: 0px;
+    display: block;
+    width: 100vw;
+    height: 50vw;
+    object-fit: cover;
+}
+
+@media (min-width: 400px) and (orientation:landscape) {
+    #top {
+        margin-bottom: 0px;
+        padding-bottom: 0px;
+        display: block;
+        width: 100vw;
+        height: 70%;
+        object-fit: cover;
+    }
+}
+
+#main {
+    width: 100vw;
+    background-color: #06D6A0;
+    padding-top: 0px;
+    margin-top: 0px;
+}

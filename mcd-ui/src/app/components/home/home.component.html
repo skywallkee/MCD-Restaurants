@@ -8,20 +8,24 @@
     </mat-card>
 </div>
 
-<div fxLayoutAlign="center center" fxFlexFill fxLayout="column">
-    <mat-card fxFlex="35">
-        <form fxLayoutAlign="stretch" fxLayout="row">
-            <mat-form-field>
-                <input placeholder="Search Restaurant">
-            </mat-form-field>
-            <button type="submit" style="background-color: #147160; color:white;">Search</button>
-        </form>
-    </mat-card>
-    <mat-card>
-        <app-restaurant
-            *ngFor="let item of restaurants"
-            [restaurant]="item"></app-restaurant>
-    </mat-card>
+<img id="top" src="assets/top.svg">
+
+<div id="main">
+    <div fxLayoutAlign="center center" fxFlexFill fxLayout="column">
+        <mat-card fxFlex="35">
+            <form fxLayoutAlign="stretch" fxLayout="row">
+                <mat-form-field>
+                    <input placeholder="Search Restaurant">
+                </mat-form-field>
+                <button type="submit" style="background-color: #147160; color:white;">Search</button>
+            </form>
+        </mat-card>
+        <mat-card>
+            <app-restaurant
+                *ngFor="let item of restaurants"
+                [restaurant]="item"></app-restaurant>
+        </mat-card>
+    </div>
 </div>
 
 <footer>
