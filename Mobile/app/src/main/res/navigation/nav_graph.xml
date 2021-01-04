@@ -82,7 +82,18 @@
         <action
             android:id="@+id/action_restaurantFragment_to_MakeReservation"
             app:destination="@id/restaurantLayout" />
-
+        <action
+            android:id="@+id/action_restaurantFragment_to_Satistics"
+            app:destination="@id/restaurantStatistics" />
+    </fragment>
+    <fragment
+        android:id="@+id/restaurantStatistics"
+        android:name="masterchefdevs.colectiv.ubb.chefs.RestaurantStatisticsFragment"
+        android:label="fragment_statistics"
+        tools:layout="@layout/fragment_statistics" >
+        <action
+            android:id="@+id/action_statistics_to_map"
+            app:destination="@id/restaurantFragment" />
     </fragment>
     <fragment
         android:id="@+id/restaurantLayout"
@@ -94,4 +105,5 @@
             app:destination="@id/restaurantFragment" />
 
     </fragment>
+
 </navigation>

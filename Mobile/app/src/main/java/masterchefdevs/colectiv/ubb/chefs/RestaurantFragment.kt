@@ -64,6 +64,14 @@ class RestaurantFragment : Fragment(), OnMapReadyCallback {
                     putString("ITEM_ID", ITEM_ID)
                 })
         }
+        view.findViewById<Button>(R.id.view_statistics_button).setOnClickListener{
+            findNavController().navigate(
+                R.id.action_restaurantFragment_to_Satistics,
+                Bundle().apply {
+                    putString("ITEM_ID", ITEM_ID)
+
+                })
+        }
     }
     fun setUpElements(){
         geoCoder = Geocoder(this.myContext, Locale.getDefault())

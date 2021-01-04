@@ -23,6 +23,7 @@ import masterchefdevs.colectiv.ubb.chefs.R
 import masterchefdevs.colectiv.ubb.chefs.core.TAG
 import masterchefdevs.colectiv.ubb.chefs.data.model.Layout
 import masterchefdevs.colectiv.ubb.chefs.data.model.Reservation
+import java.time.Month
 import java.util.Calendar
 import java.util.Date
 
@@ -79,6 +80,7 @@ class MainReservationFragment : Fragment(), NumberPicker.OnValueChangeListener {
 
         viewModel.getMeseRestaurant(id, date.value!!.time)
         viewModel.getPeretiRestaurant(id)
+        viewModel.getReservations(ITEM_ID, Date())
 
         viewModel.restaurant.observe(viewLifecycleOwner, { restaurant ->
             view.findViewById<TextView>(R.id.restaurant_name)?.setText(restaurant.nameR)
@@ -111,6 +113,20 @@ class MainReservationFragment : Fragment(), NumberPicker.OnValueChangeListener {
                 }
             }
         })
+        viewModel.reservations.observe(viewLifecycleOwner,{
+
+            it.forEach {
+                Log.d(TAG,it.data_conv.toString())
+                var tableButton = view.findViewById<Button>(it.id_M)    // nu intra aici !!!!11
+                if (tableButton != null)
+                    if (viewModel.isReserved(it, Date(date.value!!.get(Calendar.YEAR), date.value!!.get(Calendar.MONTH), date.value!!.get(Calendar.DAY_OF_MONTH)),0))
+                    {
+                        tableButton.setBackgroundColor(Color.RED)
+                        Log.d(TAG, tableButton.id.toString())
+                    };
+
+            }
+        })
     }
 
     @RequiresApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
@@ -120,21 +136,15 @@ class MainReservationFragment : Fragment(), NumberPicker.OnValueChangeListener {
         layouts.findLast { layout -> layout.floor == etaj }?.tables?.forEach { table ->
             val butt = Button(myContext)
             butt.setText(table.nr_locuri.toString())
-            butt.id = View.generateViewId()
+            butt.id = table.id
+            butt.setBackgroundColor(Color.GREEN)
 
-            if (table.reserved)
-                butt.setBackgroundColor(Color.RED)
-            else
-                butt.setBackgroundColor(Color.GREEN)
             // w = 370  h = 370
             val h = convertToDp((table.Dy - table.Ay) * 370 / 100)
             val w = convertToDp((table.Bx - table.Ax) * 370 / 100)
             val left = convertToDp(table.Ax * 370 / 100)
             val top = convertToDp(table.Ay * 370 / 100)
-            Log.d(TAG, "width: " + w)
-            Log.d(TAG, "height: " + h)
-            Log.d(TAG, "left: " + left)
-            Log.d(TAG, "top: " + top)
+
             val lp = RelativeLayout.LayoutParams(w, h)
             constraintLayout?.addView(butt, lp)
             val set = ConstraintSet()
@@ -158,10 +168,7 @@ class MainReservationFragment : Fragment(), NumberPicker.OnValueChangeListener {
             val w = convertToDp((wall.Bx - wall.Ax) * 370 / 100)
             val left = convertToDp(wall.Ax * 370 / 100)
             val top = convertToDp(wall.Ay * 380 / 100)
-            Log.d(TAG, "width: " + w)
-            Log.d(TAG, "height: " + h)
-            Log.d(TAG, "left: " + left)
-            Log.d(TAG, "top: " + top)
+
             val lp = RelativeLayout.LayoutParams(w, h)
             constraintLayout?.addView(butt, lp)
 
@@ -181,8 +188,6 @@ class MainReservationFragment : Fragment(), NumberPicker.OnValueChangeListener {
             set.constrainMaxWidth(butt.id, w)
             set.applyTo(constraintLayout)
         }
-        //rezervari
-
     }
 
     fun setDuration(){
@@ -216,10 +221,11 @@ class MainReservationFragment : Fragment(), NumberPicker.OnValueChangeListener {
                     date.value?.get(Calendar.HOUR_OF_DAY).toString() + " : " +
                             date.value?.get(Calendar.MINUTE).toString() )
         }
-        view?.findViewById<Button>(R.id.back_to_map)?.setOnClickListener({
-            findNavController().navigate(R.id.action_layout_to_map,Bundle().apply {
-                putString("ITEM_ID", ITEM_ID.toString())})
-        })
+        view?.findViewById<Button>(R.id.back_to_map)?.setOnClickListener {
+            findNavController().navigate(R.id.action_layout_to_map, Bundle().apply {
+                putString("ITEM_ID", ITEM_ID.toString())
+            })
+        }
         view?.findViewById<NumberPicker>(R.id.duration_numer_picker)?.minValue=1;
         view?.findViewById<NumberPicker>(R.id.duration_numer_picker)?.maxValue=10;
     }
@@ -239,6 +245,7 @@ class MainReservationFragment : Fragment(), NumberPicker.OnValueChangeListener {
                                 date.value?.set(Calendar.DAY_OF_MONTH, ndayOfMonth)
                                 Log.d(TAG, date.value.toString())
                                 dateView?.setText(nyear.toString() + "-" + (nmonthOfYear + 1).toString() + "-" + ndayOfMonth.toString())
+                                Log.d(TAG, "new DAte: " + date.value!!.get(Calendar.YEAR).toString()+" " + date.value!!.get(Calendar.MONTH)+ " " + date.value!!.get(Calendar.DAY_OF_MONTH))
                             }, it1, it2, it3
                         )
                     }
@@ -248,6 +255,12 @@ class MainReservationFragment : Fragment(), NumberPicker.OnValueChangeListener {
                 datePickerDialog.show()
             }
         }
+        date.observe(viewLifecycleOwner, {
+            val date = Date(it.get(Calendar.YEAR), it.get(Calendar.MONTH)+1, it.get(Calendar.DAY_OF_MONTH))
+            viewModel.getReservations(ITEM_ID, date)
+            //viewModel.setReservedToAllTables(date)
+        })
+
     }
     @RequiresApi(Build.VERSION_CODES.O)
     fun setMyTimePicker(){

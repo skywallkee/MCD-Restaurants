@@ -8,11 +8,9 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import masterchefdevs.colectiv.ubb.chefs.core.Result
 import masterchefdevs.colectiv.ubb.chefs.core.TAG
-import masterchefdevs.colectiv.ubb.chefs.data.model.Reservation
-import masterchefdevs.colectiv.ubb.chefs.data.model.Restaurant
-import masterchefdevs.colectiv.ubb.chefs.data.model.Table
-import masterchefdevs.colectiv.ubb.chefs.data.model.Wall
+import masterchefdevs.colectiv.ubb.chefs.data.model.*
 import masterchefdevs.colectiv.ubb.chefs.data.remote.RemoteRestaurantDataSource
+import java.sql.Time
 import java.util.Calendar
 import java.util.Date
 
@@ -21,12 +19,17 @@ class RestaurantViewModel  : ViewModel() {
     private val mutableTables = MutableLiveData<List<Table>>()
     private val mutableWalls = MutableLiveData<List<Wall>>()
     private val mutableReservations = MutableLiveData<List<Reservation>>()
+    private val mutableDayStat = MutableLiveData<DayStatDTO>()
+    private val mutableHourStat = MutableLiveData<List<Int>>()
+
 
     val restaurant: LiveData<Restaurant> = mutableRestaurant
 
     val tables: LiveData<List<Table>> = mutableTables
     val walls: LiveData<List<Wall>> = mutableWalls
     val reservations: LiveData<List<Reservation>> = mutableReservations
+    val dayStat: LiveData<DayStatDTO> = mutableDayStat
+    val hourStat: LiveData<List<Int>> = mutableHourStat
 
        fun getRestaurant(restaurantId: Number) {
         Log.d(TAG, "inside getRestaurant_view model")
@@ -50,33 +53,36 @@ class RestaurantViewModel  : ViewModel() {
         val startTime: Long = calendar.getTimeInMillis()
 
         //pentru data de la old res
-        val calendar1: Calendar = Calendar.getInstance()
-        calendar.set(
-            res.data.year, res.data.month, res.data.day,
-            res.data.hours, res.data.minutes, 0 )
-        val startTime1: Long = calendar1.getTimeInMillis()
+        val startTime1: Long = res.data_conv.getTimeInMillis()
         val startTime2: Long = (duration*3600000).toLong()
         if (startTime>=startTime1 && startTime<=startTime2)
             return true
         return false
     }
+
+    fun setReservedToAllTables(date: Date){
+            mutableTables.value?.forEach { table ->
+                var myRes = reservations.value?.filter { reservation ->
+                    if (reservation.id_M == table.id)
+                        return@filter isReserved(reservation, date, 0)
+                    return@filter false
+                }
+                if (myRes == null)
+                    myRes = emptyList()
+                table.reserved = myRes.size > 0
+            }
+    }
+
     fun getMeseRestaurant(restaurantId: Number, date: Date) {
         Log.d(TAG, "inside getMese_view model")
         viewModelScope.launch {
             val result = RemoteRestaurantDataSource.getMese(restaurantId)
             Log.d(TAG,date.toString())
-            val reservationsResult = RemoteRestaurantDataSource.getRezervari(restaurantId, date)
-            if (result is Result.Success<List<Table>> && (reservationsResult is Result.Success<List<Reservation>>)) {
-                result.data.forEach { table ->
-                    var myRes = reservationsResult.data.filter { reservation ->
-                        if (reservation.id_M == table.id)
-                            return@filter isReserved(reservation, date, 0)
-                        return@filter true
-                    }
-                    table.reserved = myRes.size > 0
-                }
-                mutableTables.value = result.data;
+            if (result is Result.Success) {
+                mutableTables.value = result.data
+                //setReservedToAllTables(date)
             }
+
         }
     }
 
@@ -88,16 +94,59 @@ class RestaurantViewModel  : ViewModel() {
                 mutableWalls.value = result.data;
         }
     }
-
-    fun getReservations(restaurantId: Number, date: Date){
-        Log.d(TAG, "inside get reservations")
+    fun getDayStat(restaurantId: Int) {
+        Log.d(TAG, "inside getDaystat_view model")
         viewModelScope.launch {
-            val result = RemoteRestaurantDataSource.getRezervari(restaurantId, date)
-            if (result is Result.Success<List<Reservation>>)
-                mutableReservations.value = result.data
+            val result = RemoteRestaurantDataSource.getDayStat(restaurantId)
+            if (result is Result.Success<DayStatDTO>)
+                mutableDayStat.value = result.data
+        }
+    }
+    fun getHourStat(restaurantId: Int, dayId: Int) {
+        Log.d(TAG, "inside getDaystat_view model")
+        viewModelScope.launch {
+            val result = RemoteRestaurantDataSource.getDayStatHour(restaurantId,dayId)
+           if (result is Result.Success<List<Int>>)
+                mutableHourStat.value = result.data
         }
     }
 
+    fun getReservations(restaurantId: Number, date: Date){
+        Log.d(TAG, "inside get reservations")
+        var lista_id_mese: List<Int>? = mutableTables.value?.map{it.id}
+        if (lista_id_mese == null)
+            lista_id_mese = emptyList()
+        viewModelScope.launch {
+            val result = RemoteRestaurantDataSource.getRezervari(restaurantId, date)
+            if (result is Result.Success<List<Reservation>>) {
+                val allRelevantReservations: List<Reservation> = result.data.filter {lista_id_mese.contains(it.id_M)}
+                    allRelevantReservations.forEach { reservation ->
+                    var parts = reservation.data.split("-")
+                    val year = parts[0].toInt()
+                    val month = parts[1].toInt()
+                    val day = parts[2].toInt()
+                    parts = reservation.ora.split(":")
+                    val hours = parts[0].toInt()
+                    val min = parts[1].toInt()
+                    parts = reservation.timp.split(":")
+                    val thours = parts[0].toInt()
+                    val tmin = parts[1].toInt()
+                    val cal = Calendar.getInstance()
+                    cal.set(year, month, day, hours, min)
+                    reservation.data_conv = cal
+                    val time = Time(thours, tmin, 0)
+                    reservation.timp_conv = time
+                }
+
+                mutableReservations.value = allRelevantReservations
+            }
+        }
+    }
+
+    fun refresh(restaurantId: Number, calendar: Calendar){
+
+
+    }
     fun makeReservation(username: String, password1: String, password2: String) {
 
 //        viewModelScope.launch {

@@ -9,10 +9,13 @@ data class Reservation(
     val id_U: Int,      //id-user
     val nume_pers: String,
     val email: String,
-    val data: Date,
-    val ora : Time,
-    val timp: Time,
+    val data: String,
+    val ora : String,
+    val timp: String,
     val telefon: String,
+
+    var data_conv : Calendar,
+    var timp_conv: Time
 ) {
 }
 /*
