@@ -21,7 +21,7 @@ class RestaurantViewModel  : ViewModel() {
     private val mutableReservations = MutableLiveData<List<Reservation>>()
     private val mutableDayStat = MutableLiveData<DayStatDTO>()
     private val mutableHourStat = MutableLiveData<List<Int>>()
-
+    private val mutableRating = MutableLiveData<Float>()
 
     val restaurant: LiveData<Restaurant> = mutableRestaurant
 
@@ -30,13 +30,18 @@ class RestaurantViewModel  : ViewModel() {
     val reservations: LiveData<List<Reservation>> = mutableReservations
     val dayStat: LiveData<DayStatDTO> = mutableDayStat
     val hourStat: LiveData<List<Int>> = mutableHourStat
+    var rating: LiveData<Float> = mutableRating
 
-       fun getRestaurant(restaurantId: Number) {
+    fun getRestaurant(restaurantId: Number) {
         Log.d(TAG, "inside getRestaurant_view model")
         viewModelScope.launch {
             val result = RemoteRestaurantDataSource.getRestaurant(restaurantId)
-            if (result is Result.Success<Restaurant>)
-                mutableRestaurant.value = result.data;
+            if (result is Result.Success<Restaurant>) {
+                mutableRestaurant.value = result.data
+                val rat =  RemoteRestaurantDataSource.getRating(restaurantId.toInt())
+                if (rat is Result.Success<Float>)
+                    mutableRating.value = rat.data
+            }
         }
     }
 

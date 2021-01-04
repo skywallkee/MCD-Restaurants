@@ -109,7 +109,9 @@ class RestaurantStatisticsFragment :  Fragment() {
         viewModel.restaurant.observe(viewLifecycleOwner, { restaurant ->
             view?.findViewById<TextView>(R.id.restaurant_name_stat)?.setText(restaurant.nameR)
             view?.findViewById<TextView>(R.id.restaurant_address_stat)?.setText(restaurant.adresa)
-            view?.findViewById<RatingBar>(R.id.rating_stars_stat)?.rating = 3.0f
+        })
+        viewModel.rating.observe(viewLifecycleOwner, {rating ->
+            view?.findViewById<RatingBar>(R.id.rating_stars_stat)?.rating = rating
         })
     }
 

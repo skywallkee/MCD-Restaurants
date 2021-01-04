@@ -82,7 +82,9 @@ class RestaurantFragment : Fragment(), OnMapReadyCallback {
         viewModel.restaurant.observe(viewLifecycleOwner, { restaurant ->
             view?.findViewById<TextView>(R.id.restaurant_name_map)?.setText(restaurant.nameR)
             view?.findViewById<TextView>(R.id.restaurant_address_map)?.setText(restaurant.adresa)
-            view?.findViewById<RatingBar>(R.id.rating_stars_map)?.rating = 3.0f
+        })
+        viewModel.rating.observe(viewLifecycleOwner, {rating ->
+            view?.findViewById<RatingBar>(R.id.rating_stars_map)?.rating = rating
         })
     }
 

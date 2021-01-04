@@ -85,7 +85,10 @@ class MainReservationFragment : Fragment(), NumberPicker.OnValueChangeListener {
         viewModel.restaurant.observe(viewLifecycleOwner, { restaurant ->
             view.findViewById<TextView>(R.id.restaurant_name)?.setText(restaurant.nameR)
             view.findViewById<TextView>(R.id.restaurant_address).setText(restaurant.adresa)
-            view.findViewById<RatingBar>(R.id.rating_stars).rating = 3.0f
+        })
+
+        viewModel.rating.observe(viewLifecycleOwner, {rating ->
+            view.findViewById<RatingBar>(R.id.rating_stars).rating = rating
         })
 
         viewModel.tables.observe(viewLifecycleOwner, { tables ->

@@ -22,6 +22,9 @@ object RemoteRestaurantDataSource {
         @POST("/statisticsByDayByHour")
         suspend fun getStatByHour(@Body id: IdDayDto): JsonElement
 
+        @Headers("Content-Type: application/json")
+        @POST("/getReviewAverage")
+        suspend fun getRating(@Body id: IdDto): JsonElement
 
         @Headers("Content-Type: application/json")
         @GET("/api/restaurant/{id}")
@@ -42,6 +45,17 @@ object RemoteRestaurantDataSource {
     }
 
     private val restaurantService: RestaurantService = UnsecuredApi.retrofit.create(RestaurantService::class.java)
+
+    suspend fun getRating(id: Int): Result<Float>{
+        try {
+            val idDto = IdDto(id)
+            val a = restaurantService.getRating(idDto)
+            val value: Float =  (a as JsonObject).get("Average").asFloat
+            return Result.Success(value)
+        } catch (e: Exception) {
+            return Result.Error(e)
+        }
+    }
 
     suspend fun getDayStat(id: Int): Result<DayStatDTO> {
         try {
