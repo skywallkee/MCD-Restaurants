@@ -40,7 +40,6 @@ object RemoteRestaurantDataSource {
         @Headers("Content-Type: application/json")
         @GET("/api/rezervari/")
         suspend fun getRezervari(): List<Reservation>
-
     }
 
     private val restaurantService: RestaurantService = UnsecuredApi.retrofit.create(RestaurantService::class.java)
@@ -66,8 +65,6 @@ object RemoteRestaurantDataSource {
     }
 
     suspend fun getDayStatHour(id: Int, id_day: Int): Result<List<Int>> {
-
-        Log.d(TAG, "inside stat_ day_hour repo")
         try {
             val idDayDto = IdDayDto(id, id_day)
             val a = restaurantService.getStatByHour(idDayDto)
@@ -91,13 +88,11 @@ object RemoteRestaurantDataSource {
             return Result.Error(e)
         }
     }
+
     suspend fun getRestaurant(id: Number): Result<Restaurant> {
-        Log.d(TAG, "inside getRestaurant _ restaurant repo")
         try {
             val a =restaurantService.getRestaurant(id)
-            Log.d(TAG, "primit: "+a.nameR);
             val aa = Result.Success(a);
-            Log.d(TAG, "primit: "+aa.data.nameR);
             return aa
         } catch (e: Exception) {
             return Result.Error(e)
@@ -112,6 +107,7 @@ object RemoteRestaurantDataSource {
             return Result.Error(e)
         }
     }
+
     suspend fun getPereti(id: Number): Result<List<Wall>> {
         try {
             val idDto = IdDto(id.toInt())

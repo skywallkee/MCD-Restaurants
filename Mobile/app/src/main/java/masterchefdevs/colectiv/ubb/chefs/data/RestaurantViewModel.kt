@@ -22,6 +22,8 @@ class RestaurantViewModel  : ViewModel() {
     private val mutableDayStat = MutableLiveData<DayStatDTO>()
     private val mutableHourStat = MutableLiveData<List<Int>>()
     private val mutableRating = MutableLiveData<Float>()
+    private val mutableTableIdLists = mutableListOf<Int>()
+    var lista_id_mese: MutableList<Int>? = mutableListOf()
 
     val restaurant: LiveData<Restaurant> = mutableRestaurant
 
@@ -37,9 +39,11 @@ class RestaurantViewModel  : ViewModel() {
             val result = RemoteRestaurantDataSource.getRestaurant(restaurantId)
             if (result is Result.Success<Restaurant>) {
                 mutableRestaurant.value = result.data
+                mutableTableIdLists.clear()
                 val rat =  RemoteRestaurantDataSource.getRating(restaurantId.toInt())
-                if (rat is Result.Success<Float>)
+                if (rat is Result.Success<Float>) {
                     mutableRating.value = rat.data
+                }
             }
         }
     }
@@ -83,9 +87,11 @@ class RestaurantViewModel  : ViewModel() {
             val result = RemoteRestaurantDataSource.getMese(restaurantId)
             if (result is Result.Success) {
                 mutableTables.value = result.data
-                //setReservedToAllTables(date)
+                tables.value?.forEach {
+                    lista_id_mese?.add(it.id)
+                }
+                //getReservations(restaurantId, Date())
             }
-
         }
     }
 
@@ -97,6 +103,7 @@ class RestaurantViewModel  : ViewModel() {
                 mutableWalls.value = result.data;
         }
     }
+
     fun getDayStat(restaurantId: Int) {
         Log.d(TAG, "inside getDaystat_view model")
         viewModelScope.launch {
@@ -116,13 +123,12 @@ class RestaurantViewModel  : ViewModel() {
 
     fun getReservations(restaurantId: Number, date: Date){
         Log.d(TAG, "inside get reservations")
-        var lista_id_mese: List<Int>? = mutableTables.value?.map{it.id}
-        if (lista_id_mese == null)
-            lista_id_mese = emptyList()
-        viewModelScope.launch {
+      viewModelScope.launch {
             val result = RemoteRestaurantDataSource.getRezervari(restaurantId, date)
             if (result is Result.Success<List<Reservation>>) {
-                val allRelevantReservations: List<Reservation> = result.data.filter {lista_id_mese.contains(it.id_M)}
+                Log.d(TAG, result.data.size.toString())
+                val allRelevantReservations: List<Reservation> = result.data.filter {lista_id_mese!!.contains(it.id_M)}
+                Log.d(TAG, allRelevantReservations.size.toString())
                     allRelevantReservations.forEach { reservation ->
                     var parts = reservation.data.split("-")
                     val year = parts[0].toInt()
@@ -140,7 +146,6 @@ class RestaurantViewModel  : ViewModel() {
                     val time = Time(thours, tmin, 0)
                     reservation.timp_conv = time
                 }
-
                 mutableReservations.value = allRelevantReservations
             }
         }

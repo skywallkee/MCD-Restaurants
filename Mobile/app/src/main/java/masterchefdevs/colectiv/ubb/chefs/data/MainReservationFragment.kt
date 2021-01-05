@@ -23,6 +23,7 @@ import masterchefdevs.colectiv.ubb.chefs.R
 import masterchefdevs.colectiv.ubb.chefs.core.TAG
 import masterchefdevs.colectiv.ubb.chefs.data.model.Layout
 import masterchefdevs.colectiv.ubb.chefs.data.model.Reservation
+import masterchefdevs.colectiv.ubb.chefs.data.model.Table
 import java.time.Month
 import java.util.Calendar
 import java.util.Date
@@ -32,9 +33,8 @@ class MainReservationFragment : Fragment(), NumberPicker.OnValueChangeListener {
     private lateinit var viewModel: RestaurantViewModel
     private lateinit var myContext: Context
     private var date = MutableLiveData<Calendar>().apply { value = Calendar.getInstance() }
-    private var duration: Int = 0
+    private var duration = MutableLiveData<Int>().apply { value = 1 }
     private var layouts: MutableList<Layout> = mutableListOf()
-    private var reservations: MutableList<Reservation> = mutableListOf();
 
     companion object {
         var ITEM_ID: Number = -1;
@@ -45,16 +45,16 @@ class MainReservationFragment : Fragment(), NumberPicker.OnValueChangeListener {
         savedInstanceState: Bundle?
     ): View? {
         myContext = inflater.context
-        Log.d(TAG,"in on create view- arguments: "+arguments)
+        Log.d(TAG, "in on create view- arguments: " + arguments)
         arguments?.let {
             val a = it.getString("ITEM_ID")
-            Log.d(TAG,"in on create view: "+a)
+            Log.d(TAG, "in on create view: " + a)
             ITEM_ID = it.getString("ITEM_ID")?.toInt() ?: 0
         }
         return inflater.inflate(R.layout.fragment_rezerva_main, container, false)
     }
 
-    fun convertToDp(px: Int): Int{
+    fun convertToDp(px: Int): Int {
         val scale = requireContext().resources.displayMetrics.density
         return (px * scale + 0.5f).toInt()
     }
@@ -69,27 +69,24 @@ class MainReservationFragment : Fragment(), NumberPicker.OnValueChangeListener {
             override fun onItemSelected(adapterView: AdapterView<*>?, view: View, i: Int, l: Long) {
                 setLayout(layouts[i].floor)
             }
+
             override fun onNothingSelected(adapterView: AdapterView<*>?) {
                 return
             }
         }
-
         val id = ITEM_ID;
         viewModel.getRestaurant(id)
 
         viewModel.getMeseRestaurant(id)
         viewModel.getPeretiRestaurant(id)
-        viewModel.getReservations(ITEM_ID, Date())
 
         viewModel.restaurant.observe(viewLifecycleOwner, { restaurant ->
             view.findViewById<TextView>(R.id.restaurant_name)?.setText(restaurant.nameR)
             view.findViewById<TextView>(R.id.restaurant_address).setText(restaurant.adresa)
         })
-
-        viewModel.rating.observe(viewLifecycleOwner, {rating ->
+        viewModel.rating.observe(viewLifecycleOwner, { rating ->
             view.findViewById<RatingBar>(R.id.rating_stars).rating = rating
         })
-
         viewModel.tables.observe(viewLifecycleOwner, { tables ->
             tables.filter { table -> table.id_R == id }.forEach { table ->
                 val l = layouts.find { l -> l.floor == (table.etaj) }
@@ -104,7 +101,6 @@ class MainReservationFragment : Fragment(), NumberPicker.OnValueChangeListener {
             )
             spinner.adapter = spinnerAdapter
         })
-
         viewModel.walls.observe(viewLifecycleOwner, { walls ->
             walls.filter { wall -> wall.id_R == id }.forEach { wall ->
                 val l = layouts.find { l -> l.floor == (wall.etaj) }
@@ -115,6 +111,59 @@ class MainReservationFragment : Fragment(), NumberPicker.OnValueChangeListener {
                 }
             }
         })
+        viewModel.reservations.observe(viewLifecycleOwner, { rez ->
+            rez.forEach { reservation ->
+                if (checkIfReserved(reservation)) {
+                    val table = getTableFromLayouts(reservation.id_M)
+                    table?.reserved = true
+                    table?.button?.setBackgroundColor(Color.RED)
+                }
+            }
+        })
+    }
+
+    fun getMilisec(cal: Calendar): Long {
+        return cal.timeInMillis
+    }
+
+    fun getTableFromLayouts(id: Int): Table? {
+        layouts.forEach { layout ->
+            layout.tables.forEach { table ->
+                if (table.id == id) {
+                    return table
+                }
+            }
+        }
+        return null
+    }
+
+    //true if reserved
+    fun checkIfReserved(res: Reservation): Boolean {
+        //crurrent reservation
+        val currResDate = getMilisec(date.value!!)
+        val cal: Calendar = Calendar.getInstance()
+        cal.set(Calendar.YEAR, date.value!!.get(Calendar.YEAR))
+        cal.set(Calendar.MONTH, date.value!!.get(Calendar.MONTH))
+        cal.set(Calendar.DAY_OF_MONTH, date.value!!.get(Calendar.DAY_OF_MONTH))
+        cal.set(Calendar.HOUR_OF_DAY, date.value!!.get(Calendar.HOUR_OF_DAY))
+        cal.set(Calendar.MINUTE, date.value!!.get(Calendar.MINUTE))
+        cal.add(Calendar.HOUR_OF_DAY, duration.value!!)
+        val currResDatePlusDuration = getMilisec(cal)
+        //old reservation
+        val calRes: Calendar = Calendar.getInstance()
+        calRes.set(Calendar.YEAR, res.data_conv.get(Calendar.YEAR))
+        calRes.set(Calendar.MONTH, date.value!!.get(Calendar.MONTH))
+        calRes.set(Calendar.DAY_OF_MONTH, date.value!!.get(Calendar.DAY_OF_MONTH))
+        calRes.set(Calendar.HOUR_OF_DAY, date.value!!.get(Calendar.HOUR_OF_DAY))
+        calRes.set(Calendar.MINUTE, date.value!!.get(Calendar.MINUTE))
+        calRes.add(Calendar.HOUR_OF_DAY, duration.value!!)
+        val resDate = getMilisec(date.value!!)
+        val resDatePlusDuration = getMilisec(cal)
+        if ((currResDate>resDate) and (currResDate<resDatePlusDuration))
+            return true
+        if ((currResDatePlusDuration<resDate) and (currResDatePlusDuration<resDatePlusDuration))
+            return true
+        return false
     }
 
     @RequiresApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
@@ -127,6 +176,7 @@ class MainReservationFragment : Fragment(), NumberPicker.OnValueChangeListener {
             butt.setText(table.nr_locuri.toString())
             butt.id = View.generateViewId()
             table.id_button = butt.id
+            table.button = butt
             butt.setBackgroundColor(Color.GREEN)
 
             // w = 370  h = 370
@@ -249,8 +299,12 @@ class MainReservationFragment : Fragment(), NumberPicker.OnValueChangeListener {
             val date = Date(it.get(Calendar.YEAR), it.get(Calendar.MONTH)+1, it.get(Calendar.DAY_OF_MONTH))
             viewModel.getReservations(ITEM_ID, date)
         })
-
+        duration.observe(viewLifecycleOwner, {
+            val date = Date(date.value!!.get(Calendar.YEAR), date.value!!.get(Calendar.MONTH)+1, date.value!!.get(Calendar.DAY_OF_MONTH))
+            viewModel.getReservations(ITEM_ID, date)
+        })
     }
+
     @RequiresApi(Build.VERSION_CODES.O)
     fun setMyTimePicker(){
         val timeView = requireView().findViewById<TextView>(R.id.time_view)
@@ -272,7 +326,6 @@ class MainReservationFragment : Fragment(), NumberPicker.OnValueChangeListener {
                             timeView.setText(hours.toString() + " : " + smin)
                         }, it1, it2, true
                     )
-
                 }
             }
             if (timePickerDialog != null) {
@@ -282,6 +335,6 @@ class MainReservationFragment : Fragment(), NumberPicker.OnValueChangeListener {
     }
 
     override fun onValueChange(picker: NumberPicker?, oldVal: Int, newVal: Int) {
-        duration = newVal
+        duration.value = newVal
     }
 }
