@@ -1,6 +1,7 @@
 package masterchefdevs.colectiv.ubb.chefs.data.model
 
 data class Table (
+    var id_button: Int,
     val id: Int,
     val id_R: Int,
     val nume: Number,

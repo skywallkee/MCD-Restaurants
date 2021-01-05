@@ -3,7 +3,6 @@ package masterchefdevs.colectiv.ubb.chefs.data.remote
 import android.util.Log
 import com.google.gson.JsonElement
 import com.google.gson.JsonObject
-import com.squareup.moshi.Json
 import masterchefdevs.colectiv.ubb.chefs.core.Result
 import masterchefdevs.colectiv.ubb.chefs.core.TAG
 import masterchefdevs.colectiv.ubb.chefs.core.UnsecuredApi
@@ -31,12 +30,12 @@ object RemoteRestaurantDataSource {
         suspend fun getRestaurant(@Path("id") id: Number): Restaurant
 
         @Headers("Content-Type: application/json")
-        @GET("/api/mese/")
-        suspend fun getTables(): List<Table>
+        @POST("/api/mese/getTables/")
+        suspend fun getTables(@Body id: IdDto): List<Table>
 
         @Headers("Content-Type: application/json")
-        @POST("/api/pereti/")
-        suspend fun getWalls(@Body id: Number): List<Wall>
+        @POST("/api/pereti/getWalls/")
+        suspend fun getWalls(@Body id: IdDto): List<Wall>
 
         @Headers("Content-Type: application/json")
         @GET("/api/rezervari/")
@@ -106,9 +105,8 @@ object RemoteRestaurantDataSource {
     }
     suspend fun getMese(id: Number): Result<List<Table>> {
         try {
-            Log.d(TAG, "inainate de send req mese")
-            val a = Result.Success(restaurantService.getTables())
-            Log.d(TAG, "dupa de send req mese"+a.data.size)
+            val idDto = IdDto(id.toInt())
+            val a = Result.Success(restaurantService.getTables(idDto))
             return a
         } catch (e: Exception) {
             return Result.Error(e)
@@ -116,7 +114,8 @@ object RemoteRestaurantDataSource {
     }
     suspend fun getPereti(id: Number): Result<List<Wall>> {
         try {
-            val a = Result.Success(restaurantService.getWalls(id))
+            val idDto = IdDto(id.toInt())
+            val a = Result.Success(restaurantService.getWalls(idDto))
             return a
         } catch (e: Exception) {
             return Result.Error(e)

@@ -75,10 +75,9 @@ class MainReservationFragment : Fragment(), NumberPicker.OnValueChangeListener {
         }
 
         val id = ITEM_ID;
-        Log.d(TAG, id.toString())
         viewModel.getRestaurant(id)
 
-        viewModel.getMeseRestaurant(id, date.value!!.time)
+        viewModel.getMeseRestaurant(id)
         viewModel.getPeretiRestaurant(id)
         viewModel.getReservations(ITEM_ID, Date())
 
@@ -93,7 +92,7 @@ class MainReservationFragment : Fragment(), NumberPicker.OnValueChangeListener {
 
         viewModel.tables.observe(viewLifecycleOwner, { tables ->
             tables.filter { table -> table.id_R == id }.forEach { table ->
-                val l = layouts.find { l -> (l.floor == (table.etaj)) and (table.id_R.equals(id)) }
+                val l = layouts.find { l -> l.floor == (table.etaj) }
                 if (l != null) {
                     l.tables.add(table)
                 } else {
@@ -108,26 +107,12 @@ class MainReservationFragment : Fragment(), NumberPicker.OnValueChangeListener {
 
         viewModel.walls.observe(viewLifecycleOwner, { walls ->
             walls.filter { wall -> wall.id_R == id }.forEach { wall ->
-                val l = layouts.find { l -> (l.floor == (wall.etaj)) and (wall.id_R.equals(id)) }
+                val l = layouts.find { l -> l.floor == (wall.etaj) }
                 if (l != null) {
                     l.walls.add(wall)
                 } else {
                     layouts.add(Layout(wall.etaj, mutableListOf(), mutableListOf(wall)))
                 }
-            }
-        })
-        viewModel.reservations.observe(viewLifecycleOwner,{
-
-            it.forEach {
-                Log.d(TAG,it.data_conv.toString())
-                var tableButton = view.findViewById<Button>(it.id_M)    // nu intra aici !!!!11
-                if (tableButton != null)
-                    if (viewModel.isReserved(it, Date(date.value!!.get(Calendar.YEAR), date.value!!.get(Calendar.MONTH), date.value!!.get(Calendar.DAY_OF_MONTH)),0))
-                    {
-                        tableButton.setBackgroundColor(Color.RED)
-                        Log.d(TAG, tableButton.id.toString())
-                    };
-
             }
         })
     }
@@ -136,10 +121,12 @@ class MainReservationFragment : Fragment(), NumberPicker.OnValueChangeListener {
     fun setLayout(etaj: String) {
         val constraintLayout = view?.findViewById<ConstraintLayout>(R.id.layout)
         constraintLayout?.removeAllViewsInLayout()
+        Log.d(TAG, "size of tables list: "+layouts[0].tables.size.toString())
         layouts.findLast { layout -> layout.floor == etaj }?.tables?.forEach { table ->
             val butt = Button(myContext)
             butt.setText(table.nr_locuri.toString())
-            butt.id = table.id
+            butt.id = View.generateViewId()
+            table.id_button = butt.id
             butt.setBackgroundColor(Color.GREEN)
 
             // w = 370  h = 370
@@ -261,7 +248,6 @@ class MainReservationFragment : Fragment(), NumberPicker.OnValueChangeListener {
         date.observe(viewLifecycleOwner, {
             val date = Date(it.get(Calendar.YEAR), it.get(Calendar.MONTH)+1, it.get(Calendar.DAY_OF_MONTH))
             viewModel.getReservations(ITEM_ID, date)
-            //viewModel.setReservedToAllTables(date)
         })
 
     }

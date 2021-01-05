@@ -33,7 +33,6 @@ class RestaurantViewModel  : ViewModel() {
     var rating: LiveData<Float> = mutableRating
 
     fun getRestaurant(restaurantId: Number) {
-        Log.d(TAG, "inside getRestaurant_view model")
         viewModelScope.launch {
             val result = RemoteRestaurantDataSource.getRestaurant(restaurantId)
             if (result is Result.Success<Restaurant>) {
@@ -78,11 +77,10 @@ class RestaurantViewModel  : ViewModel() {
             }
     }
 
-    fun getMeseRestaurant(restaurantId: Number, date: Date) {
+    fun getMeseRestaurant(restaurantId: Number) {
         Log.d(TAG, "inside getMese_view model")
         viewModelScope.launch {
             val result = RemoteRestaurantDataSource.getMese(restaurantId)
-            Log.d(TAG,date.toString())
             if (result is Result.Success) {
                 mutableTables.value = result.data
                 //setReservedToAllTables(date)
