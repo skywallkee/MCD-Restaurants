@@ -23,7 +23,7 @@
 
             <Space
                 android:layout_width="match_parent"
-                android:layout_height="92dp" />
+                android:layout_height="50dp" />
             <com.google.android.material.appbar.AppBarLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -35,7 +35,7 @@
                 android:layout_margin="0dp"
                 android:id="@+id/toolbar_text"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="30dp"
                 android:textSize="16dp"
                 android:textColor="@color/mainGreen"
                 android:layout_marginTop="140dp"

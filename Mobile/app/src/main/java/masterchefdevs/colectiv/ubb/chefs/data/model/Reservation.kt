@@ -18,15 +18,3 @@ data class Reservation(
     var timp_conv: Time
 ) {
 }
-/*
- "id": 4,
-        "data": "2020-12-18",
-        "ora": "16:48:52.285246",
-        "timp": "01:00:00",
-        "telefon": "0747184539",
-        "nume_pers": "Gelu",
-        "email": "gelu@gmail.com",
-        "id_M": 2,
-        "id_U": 4
-    },
- */

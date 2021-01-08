@@ -121,31 +121,38 @@ class RestaurantViewModel  : ViewModel() {
         }
     }
 
-    fun getReservations(restaurantId: Number, date: Date){
+    fun getReservations(restaurantId: Number, date: String){
         Log.d(TAG, "inside get reservations")
       viewModelScope.launch {
             val result = RemoteRestaurantDataSource.getRezervari(restaurantId, date)
             if (result is Result.Success<List<Reservation>>) {
-                Log.d(TAG, result.data.size.toString())
+                Log.d(TAG, "------"+result.data.size.toString())
                 val allRelevantReservations: List<Reservation> = result.data.filter {lista_id_mese!!.contains(it.id_M)}
                 Log.d(TAG, allRelevantReservations.size.toString())
                     allRelevantReservations.forEach { reservation ->
-                    var parts = reservation.data.split("-")
-                    val year = parts[0].toInt()
-                    val month = parts[1].toInt()
-                    val day = parts[2].toInt()
-                    parts = reservation.ora.split(":")
-                    val hours = parts[0].toInt()
-                    val min = parts[1].toInt()
-                    parts = reservation.timp.split(":")
-                    val thours = parts[0].toInt()
-                    val tmin = parts[1].toInt()
-                    val cal = Calendar.getInstance()
-                    cal.set(year, month, day, hours, min)
-                    reservation.data_conv = cal
-                    val time = Time(thours, tmin, 0)
-                    reservation.timp_conv = time
-                }
+                        var parts = reservation.data.split("-")
+                        val year = parts[0].toInt()
+                        val month = parts[1].toInt()
+                        val day = parts[2].toInt()
+                        parts = reservation.ora.split(":")
+                        val hours = parts[0].toInt()
+                        val min = parts[1].toInt()
+                        parts = reservation.timp.split(":")
+                        val thours = parts[0].toInt()
+                        val tmin = parts[1].toInt()
+                        val cal = Calendar.getInstance()
+                        cal.set(Calendar.YEAR, year)
+                        cal.set(Calendar.MONTH, month - 1)
+                        cal.set(Calendar.DAY_OF_MONTH, day)
+
+                        cal.set(Calendar.HOUR_OF_DAY, hours)
+                        cal.set(Calendar.MINUTE, min)
+                        //Log.d(TAG, cal.get(Calendar.YEAR).toString())
+                        //Log.d(TAG, cal.get(Calendar.MONTH).toString())
+                        reservation.data_conv = cal
+                        val time = Time(thours, tmin, 0)
+                        reservation.timp_conv = time
+                    }
                 mutableReservations.value = allRelevantReservations
             }
         }

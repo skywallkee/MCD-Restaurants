@@ -51,6 +51,11 @@ class FirstFragment : Fragment() {
         view.findViewById<Button>(R.id.button_first).setOnClickListener {
             findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
         }
+        view.findViewById<Button>(R.id.logout_button).setOnClickListener {
+            LoginRepository.logout()
+            view.findViewById<TextView>(R.id.toolbar_text)
+                .setText("")
+        }
 
 //        val img_1 = view.findViewById(R.id.imageView4) as ImageView
 //        val img_2 = view.findViewById(R.id.imageView5) as ImageView

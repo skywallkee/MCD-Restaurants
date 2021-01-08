@@ -38,8 +38,8 @@ object RemoteRestaurantDataSource {
         suspend fun getWalls(@Body id: IdDto): List<Wall>
 
         @Headers("Content-Type: application/json")
-        @GET("/api/rezervari/")
-        suspend fun getRezervari(): List<Reservation>
+        @POST("/getRezervareForRestaurant")
+        suspend fun getRezervari(@Body dayRes: RequestResDTO): List<Reservation>
     }
 
     private val restaurantService: RestaurantService = UnsecuredApi.retrofit.create(RestaurantService::class.java)
@@ -69,17 +69,17 @@ object RemoteRestaurantDataSource {
             val idDayDto = IdDayDto(id, id_day)
             val a = restaurantService.getStatByHour(idDayDto)
             val a0 = (a as JsonObject).get("0-2").asInt
-            val a2 = (a as JsonObject).get("2-4").asInt
-            val a4 = (a as JsonObject).get("4-6").asInt
-            val a6 = (a as JsonObject).get("6-8").asInt
-            val a8 = (a as JsonObject).get("8-10").asInt
-            val a10 = (a as JsonObject).get("10-12").asInt
-            val a12 = (a as JsonObject).get("12-14").asInt
-            val a14 = (a as JsonObject).get("14-16").asInt
-            val a16 = (a as JsonObject).get("16-18").asInt
-            val a18 = (a as JsonObject).get("18-20").asInt
-            val a20 = (a as JsonObject).get("20-22").asInt
-            val a22 = (a as JsonObject).get("22-24").asInt
+            val a2 = a.get("2-4").asInt
+            val a4 = a.get("4-6").asInt
+            val a6 = a.get("6-8").asInt
+            val a8 = a.get("8-10").asInt
+            val a10 = a.get("10-12").asInt
+            val a12 = a.get("12-14").asInt
+            val a14 = a.get("14-16").asInt
+            val a16 = a.get("16-18").asInt
+            val a18 = a.get("18-20").asInt
+            val a20 = a.get("20-22").asInt
+            val a22 = a.get("22-24").asInt
             val lista: List<Int> = listOf(a0,a2,a4,a6,a8,a10,a12,a14,a16,a18,a20,a22)
 
             Log.d(TAG, "primit: ---" + a.toString());
@@ -118,10 +118,11 @@ object RemoteRestaurantDataSource {
         }
     }
 
-    suspend fun getRezervari(id: Number, data: Date): Result<List<Reservation>> {
+    suspend fun getRezervari(id: Number, data: String): Result<List<Reservation>> {
         Log.d(TAG, "inainate de send req rezervari")
         try {
-            val a = Result.Success(restaurantService.getRezervari())
+            val sendObj = RequestResDTO(id.toInt(), data)
+            val a = Result.Success(restaurantService.getRezervari(sendObj))
             Log.d(TAG, "dupa de send req rezervari")
             return a
         } catch (e: Exception) {

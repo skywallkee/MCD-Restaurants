@@ -16,6 +16,7 @@ import androidx.annotation.RequiresApi
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -36,6 +37,8 @@ class MainReservationFragment : Fragment(), NumberPicker.OnValueChangeListener {
     private var duration = MutableLiveData<Int>().apply { value = 1 }
     private var layouts: MutableList<Layout> = mutableListOf()
 
+    private var flag = MutableLiveData<Int>().apply{value =0}
+
     companion object {
         var ITEM_ID: Number = -1;
     }
@@ -47,8 +50,6 @@ class MainReservationFragment : Fragment(), NumberPicker.OnValueChangeListener {
         myContext = inflater.context
         Log.d(TAG, "in on create view- arguments: " + arguments)
         arguments?.let {
-            val a = it.getString("ITEM_ID")
-            Log.d(TAG, "in on create view: " + a)
             ITEM_ID = it.getString("ITEM_ID")?.toInt() ?: 0
         }
         return inflater.inflate(R.layout.fragment_rezerva_main, container, false)
@@ -112,14 +113,25 @@ class MainReservationFragment : Fragment(), NumberPicker.OnValueChangeListener {
             }
         })
         viewModel.reservations.observe(viewLifecycleOwner, { rez ->
+            setAllTablesGreen()
             rez.forEach { reservation ->
+                val table = getTableFromLayouts(reservation.id_M)
                 if (checkIfReserved(reservation)) {
-                    val table = getTableFromLayouts(reservation.id_M)
+                    Log.d(TAG, "red")
                     table?.reserved = true
                     table?.button?.setBackgroundColor(Color.RED)
                 }
             }
         })
+    }
+
+    fun setAllTablesGreen(){
+        layouts.forEach { layout ->
+            layout.tables.forEach{table ->
+                table.reserved = false
+                table.button?.setBackgroundColor(Color.GREEN)
+            }
+        }
     }
 
     fun getMilisec(cal: Calendar): Long {
@@ -152,16 +164,22 @@ class MainReservationFragment : Fragment(), NumberPicker.OnValueChangeListener {
         //old reservation
         val calRes: Calendar = Calendar.getInstance()
         calRes.set(Calendar.YEAR, res.data_conv.get(Calendar.YEAR))
-        calRes.set(Calendar.MONTH, date.value!!.get(Calendar.MONTH))
-        calRes.set(Calendar.DAY_OF_MONTH, date.value!!.get(Calendar.DAY_OF_MONTH))
-        calRes.set(Calendar.HOUR_OF_DAY, date.value!!.get(Calendar.HOUR_OF_DAY))
-        calRes.set(Calendar.MINUTE, date.value!!.get(Calendar.MINUTE))
-        calRes.add(Calendar.HOUR_OF_DAY, duration.value!!)
-        val resDate = getMilisec(date.value!!)
-        val resDatePlusDuration = getMilisec(cal)
-        if ((currResDate>resDate) and (currResDate<resDatePlusDuration))
+        calRes.set(Calendar.MONTH, res.data_conv.get(Calendar.MONTH))
+        calRes.set(Calendar.DAY_OF_MONTH, res.data_conv.get(Calendar.DAY_OF_MONTH))
+        calRes.set(Calendar.HOUR_OF_DAY, res.data_conv.get(Calendar.HOUR_OF_DAY))
+        calRes.set(Calendar.MINUTE, res.data_conv.get(Calendar.MINUTE))
+        val oldRes = getMilisec(calRes)
+        val timeh = res.timp_conv.hours
+        val minh = res.timp_conv.minutes
+        calRes.add(Calendar.HOUR_OF_DAY, timeh)
+        calRes.add(Calendar.MINUTE,minh)
+        val oldDatePlusDuration = getMilisec(calRes)
+
+        if ((currResDate>oldRes) and (currResDate<oldDatePlusDuration))
             return true
-        if ((currResDatePlusDuration<resDate) and (currResDatePlusDuration<resDatePlusDuration))
+        if ((currResDatePlusDuration<oldRes) and (currResDatePlusDuration<oldDatePlusDuration))
+            return true
+        if ((currResDate<oldRes) and (currResDatePlusDuration>oldDatePlusDuration))
             return true
         return false
     }
@@ -170,14 +188,16 @@ class MainReservationFragment : Fragment(), NumberPicker.OnValueChangeListener {
     fun setLayout(etaj: String) {
         val constraintLayout = view?.findViewById<ConstraintLayout>(R.id.layout)
         constraintLayout?.removeAllViewsInLayout()
-        Log.d(TAG, "size of tables list: "+layouts[0].tables.size.toString())
         layouts.findLast { layout -> layout.floor == etaj }?.tables?.forEach { table ->
             val butt = Button(myContext)
             butt.setText(table.nr_locuri.toString())
             butt.id = View.generateViewId()
             table.id_button = butt.id
             table.button = butt
-            butt.setBackgroundColor(Color.GREEN)
+            if(table.reserved)
+                butt.setBackgroundColor(Color.RED)
+            else
+                butt.setBackgroundColor(Color.GREEN)
 
             // w = 370  h = 370
             val h = convertToDp((table.Dy - table.Ay) * 370 / 100)
@@ -203,6 +223,7 @@ class MainReservationFragment : Fragment(), NumberPicker.OnValueChangeListener {
             val butt = Button(myContext)
             butt.id = View.generateViewId()
             butt.setBackgroundColor(Color.GRAY)
+            butt.setOnClickListener {  }
             // w = 370  h = 380
             val h = convertToDp((wall.Dy - wall.Ay) * 380 / 100)
             val w = convertToDp((wall.Bx - wall.Ax) * 370 / 100)
@@ -232,6 +253,10 @@ class MainReservationFragment : Fragment(), NumberPicker.OnValueChangeListener {
 
     fun setDuration(){
         view?.findViewById<NumberPicker>(R.id.duration_numer_picker)?.setOnValueChangedListener(this)
+    }
+
+    fun makeReservation(){
+
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -284,6 +309,7 @@ class MainReservationFragment : Fragment(), NumberPicker.OnValueChangeListener {
                                 date.value?.set(Calendar.MONTH, nmonthOfYear)
                                 date.value?.set(Calendar.DAY_OF_MONTH, ndayOfMonth)
                                 Log.d(TAG, date.value.toString())
+                                flag.value=1
                                 dateView?.setText(nyear.toString() + "-" + (nmonthOfYear + 1).toString() + "-" + ndayOfMonth.toString())
                                 Log.d(TAG, "new DAte: " + date.value!!.get(Calendar.YEAR).toString()+" " + date.value!!.get(Calendar.MONTH)+ " " + date.value!!.get(Calendar.DAY_OF_MONTH))
                             }, it1, it2, it3
@@ -295,13 +321,20 @@ class MainReservationFragment : Fragment(), NumberPicker.OnValueChangeListener {
                 datePickerDialog.show()
             }
         }
-        date.observe(viewLifecycleOwner, {
-            val date = Date(it.get(Calendar.YEAR), it.get(Calendar.MONTH)+1, it.get(Calendar.DAY_OF_MONTH))
-            viewModel.getReservations(ITEM_ID, date)
+        flag.observe(viewLifecycleOwner, {
+            if (flag.value==1) {
+               val stringDate: String = date.value!!.get(Calendar.YEAR).toString() + "-" +
+                       (date.value!!.get(Calendar.MONTH)+1).toString() + "-" +
+                       date.value!!.get(Calendar.DAY_OF_MONTH).toString();
+                viewModel.getReservations(ITEM_ID, stringDate)
+                flag.value = 0
+            }
         })
         duration.observe(viewLifecycleOwner, {
-            val date = Date(date.value!!.get(Calendar.YEAR), date.value!!.get(Calendar.MONTH)+1, date.value!!.get(Calendar.DAY_OF_MONTH))
-            viewModel.getReservations(ITEM_ID, date)
+            val stringDate: String = date.value!!.get(Calendar.YEAR).toString() + "-" +
+                    (date.value!!.get(Calendar.MONTH)+1).toString() + "-" +
+                    date.value!!.get(Calendar.DAY_OF_MONTH).toString();
+            viewModel.getReservations(ITEM_ID, stringDate)
         })
     }
 
@@ -324,6 +357,7 @@ class MainReservationFragment : Fragment(), NumberPicker.OnValueChangeListener {
                             else
                                 smin += min.toString()
                             timeView.setText(hours.toString() + " : " + smin)
+                            flag.value=1
                         }, it1, it2, true
                     )
                 }
