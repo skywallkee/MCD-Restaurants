@@ -29,7 +29,8 @@ class RestaurantViewSet(viewsets.ModelViewSet):
 
     def create(self,request):
         data = json.loads(request.body.decode('utf-8'))
-        restaurant = Restaurant(nameR = data["nameR"], lungime = data["lungime"], latime = data["latime"], adresa = data["adresa"])
+        restaurant = Restaurant(nameR = data["nameR"], lungime = data["lungime"], latime = data["latime"], adresa = data["adresa"]
+        ,poza= data["poza"],ora_deschidere= data["ora_deschidere"],ora_inchidere=data["ora_inchidere"])
         restaurant.save()
         serializer=RestaurantSerializer(restaurant)
         return Response(serializer.data) 
@@ -145,12 +146,12 @@ class PeretiViewSet(viewsets.ModelViewSet):
     serializer_class = PeretiSerializer
     queryset = Pereti.objects.all()
 
-    @action(detail=False, methods=['get'])
+    @action(detail=False, methods=['post'])
     def getWalls(self,request):
-        data=request.data
-        if request.method == "GET":
+        data=json.loads(request.body.decode('utf-8'))
+        if request.method == "POST":
             try:
-                walls=Pereti.objects.raw("Select * from articles_pereti where id_R_id="+str(data["id"]))
+                walls=Pereti.objects.raw("Select * from articles_pereti where \"id_R_id\"="+str(data["id"]))
 
                 serializer_walls=PeretiSerializer(walls,many=True)
                 print("\n",serializer_walls.data)
@@ -192,12 +193,12 @@ class MeseViewSet(viewsets.ModelViewSet):
     serializer_class = MeseSerializer
     queryset = Mese.objects.all()
 
-    @action(detail=False, methods=['get'])
+    @action(detail=False, methods=['post'])
     def getTables(self,request):
-        data=request.data
-        if request.method == "GET":
+        data=json.loads(request.body.decode('utf-8'))
+        if request.method == "POST":
             try:
-                tables=Mese.objects.raw("Select * from articles_mese where id_R_id="+str(data["id"]))
+                tables=Mese.objects.raw("Select * from articles_mese where \"id_R_id\"="+str(data["id"]))
 
                 serializer_tables=MeseSerializer(tables,many=True)
                 print("\n",serializer_tables.data)
@@ -264,17 +265,39 @@ def login(request):
             print("Error: ",er)
             return Response({'error':str(er)},status=status.HTTP_400_BAD_REQUEST)
 
-@api_view(['GET'])
-def getReviewAverage(request):
-    if request.method == 'GET':
+@api_view(['POST'])
+def changePassword(request):
+    authorization = request.headers['Authorization']
+    data = json.loads(request.body.decode('utf-8'))
+    if request.method == "POST":
         try:
-            data=request.data
-            reviews=Review.objects.raw("Select * from articles_review where id_R_id="+str(data["id"]))
+            u = Token.objects.get(key=authorization).user
+            print("Ajunge aici")
+            user = authenticate(username=u.username,password=data["password"])
+            if not  user:
+                raise Exception("Invalid password")
+            else:
+                u.set_password(data["newPassword"])
+                u.save()
+            return Response("Password changed",status=status.HTTP_200_OK)
+        except Exception as er:
+            print("Error: ",er)
+            return Response({'error':str(er)},status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['POST'])
+def getReviewAverage(request):
+    if request.method == 'POST':
+        try:
+            data=json.loads(request.body.decode('utf-8'))
+            reviews=Review.objects.raw("Select * from articles_review where \"id_R_id\"="+str(data["id"]))
             serialzer_reviews=ReviewSerializer(reviews,many=True)
             sum_of_reviews=0
             
             for review in serialzer_reviews.data:
                 sum_of_reviews=sum_of_reviews+int(review["nr_stele"])
+
+            if len(serialzer_reviews.data) == 0 :
+                return Response({'Average': 0})
 
             average=sum_of_reviews/len(serialzer_reviews.data)
             print("Medie: ", average)
@@ -283,11 +306,11 @@ def getReviewAverage(request):
         except Exception as er:
             return Response({'error':str(er)},status=status.HTTP_400_BAD_REQUEST)
 
-@api_view(['GET'])
+@api_view(['POST'])
 def statisticsByDay(request):
-    if request.method == 'GET':
+    if request.method == 'POST':
         try:
-            data=request.data
+            data=json.loads(request.body.decode('utf-8'))
             rezervation_filter_by_day_of_week=numberOfRezervationByDay(data["id"])
 
             return Response(
@@ -301,11 +324,11 @@ def statisticsByDay(request):
         except Exception as er:
             return Response({'error':str(er)},status=status.HTTP_400_BAD_REQUEST)
 
-@api_view(['GET'])
+@api_view(['POST'])
 def statisticsByDayByHour(request):
-    if request.method == 'GET':
+    if request.method == 'POST':
         try:
-            data=request.data
+            data=json.loads(request.body.decode('utf-8'))
             rezervation_filter_by_day_of_week=numberOfRezervationByDay(data["id"])
             rezerv_hours=[[],[],[],[],[],[],[],[],[],[],[],[]]
             for rezv in rezervation_filter_by_day_of_week[int(data["id_day"])]:
@@ -374,9 +397,11 @@ def statisticsByDayByHour(request):
 def numberOfRezervationByDay(id):
     today_date=datetime.date.today()
     last_month=today_date.month-1
+    year = today_date.year
     if last_month==0:
         last_month=12
-    last_month_date=date(today_date.year,last_month,today_date.day+1)
+        year = year-1
+    last_month_date=date(year,last_month,today_date.day+1)
     rezervari=Rezervari.objects.raw("Select * from articles_rezervari where data >= '"+str(last_month_date)+"' and data <= '"+str(today_date)+"'")
     serializer=RezervariSerializer(rezervari,many=True)
     rezervation_filter_by_day_of_week=[[],[],[],[],[],[],[]]
@@ -387,3 +412,28 @@ def numberOfRezervationByDay(id):
             rezervation_filter_by_day_of_week[datetime.datetime.strptime(rezv["data"],'%Y-%m-%d').weekday()].append(rezv)
 
     return rezervation_filter_by_day_of_week
+
+@api_view(['POST'])
+def getRezervareForRestaurant(request):
+    if request.method == 'POST':
+        try:
+            data=json.loads(request.body.decode('utf-8'))
+            mese = Mese.objects.raw("Select * from articles_mese where \"id_R_id\"="+str(data["id"]))
+            rezervari=Rezervari.objects.raw("Select * from articles_rezervari where data='"+str(data["data"])+"'")
+            rezervari_bune = []
+            
+            serializer_rezervari=RezervariSerializer(rezervari,many=True)
+            print("Rezervari1: ", serializer_rezervari.data)
+            serializer_mese=MeseSerializer(mese,many=True)
+            print("Mese: ", serializer_mese.data)
+
+            for rez in serializer_rezervari.data:
+                for masa in serializer_mese.data:
+                    print(masa)
+                    if masa["id"] == rez["id_M"]:
+                        rezervari_bune.append(rez)
+
+            print("Rezervari: ", rezervari_bune)
+            return Response(rezervari_bune)
+        except Exception as er:
+            return Response({'error':str(er)},status=status.HTTP_400_BAD_REQUEST)

@@ -27,5 +27,7 @@ urlpatterns = [
     path('statisticsByDay',views.statisticsByDay),
     path('statisticsByDayByHour',views.statisticsByDayByHour),
     path('getReviewAverage',views.getReviewAverage),
+    path('getRezervareForRestaurant',views.getRezervareForRestaurant),
+    path('changePassword',views.changePassword),
     path('api/', include('articles.api.urls'))
 ]
