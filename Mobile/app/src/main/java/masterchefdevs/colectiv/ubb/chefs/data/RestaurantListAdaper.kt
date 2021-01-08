@@ -34,9 +34,9 @@ class RestaurantListAdaper(
         Log.v(TAG, "init adapter ")
         onItemClick = View.OnClickListener { view ->
             val item = view.tag as Restaurant
-            Log.v(TAG, "on item view "+item.id.toString())
-            fragment.findNavController().navigate(R.id.restaurantFragment, Bundle().apply {
-                putString("ITEM_ID", item.id.toString())
+            Log.v(TAG, "on item view")
+            fragment.findNavController().navigate(R.id.restaurantEditFragment, Bundle().apply {
+                putString(RestaurantFragment.ITEM_ID, item.id.toString())
             })
         }
     }

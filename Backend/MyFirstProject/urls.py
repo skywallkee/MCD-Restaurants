@@ -24,5 +24,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('createUser/',views.createUser),
     path('login/',views.login),
+    path('statisticsByDay',views.statisticsByDay),
+    path('statisticsByDayByHour',views.statisticsByDayByHour),
+    path('getReviewAverage',views.getReviewAverage),
     path('api/', include('articles.api.urls'))
 ]

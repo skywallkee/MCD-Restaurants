@@ -1,11 +1,11 @@
 package masterchefdevs.colectiv.ubb.chefs.data.model
 
 data class Restaurant(
-    val id: Number,
-    val nameR: String,
-    val adresa: String,
-    val lungime: Number,
-    val latime: Number
+    var id: Number,
+    var nameR: String,
+    var adresa: String,
+    var lungime: Number,
+    var latime: Number
     //val stars: Float,
 
 ) {
