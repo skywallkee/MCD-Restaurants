@@ -19,6 +19,8 @@ import { RestaurantInterfataComponent } from './components/restaurant-interfata/
 import { SearchComponent } from './components/search/search.component';
 import { ReviewsComponent } from './components/reviews/reviews.component';
 import { ReservationComponent } from './components/reservation/reservation.component';
+import { ReservationResultComponent } from './components/reservation-result/reservation-result.component';
+import { StatisticsComponent } from './components/statistics/statistics.component';
 
 
 @NgModule({
@@ -31,7 +33,9 @@ import { ReservationComponent } from './components/reservation/reservation.compo
     RestaurantInterfataComponent,
     SearchComponent,
     ReviewsComponent,
-    ReservationComponent
+    ReservationComponent,
+    ReservationResultComponent,
+    StatisticsComponent
     
   ],
   imports: [
