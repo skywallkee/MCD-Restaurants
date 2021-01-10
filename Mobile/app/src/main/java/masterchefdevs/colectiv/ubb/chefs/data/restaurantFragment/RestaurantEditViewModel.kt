@@ -6,16 +6,20 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
+import masterchefdevs.colectiv.ubb.chefs.core.Result
 import masterchefdevs.colectiv.ubb.chefs.core.TAG
 import masterchefdevs.colectiv.ubb.chefs.data.RestaurantRepository
 import masterchefdevs.colectiv.ubb.chefs.data.model.Restaurant
+import masterchefdevs.colectiv.ubb.chefs.data.remote.RemoteRestaurantDataSource
 
 class RestaurantEditViewModel : ViewModel() {
     private val mutableItem = MutableLiveData<Restaurant>().apply { value = Restaurant(0, "","",0,0) }
     private val mutableFetching = MutableLiveData<Boolean>().apply { value = false }
     private val mutableCompleted = MutableLiveData<Boolean>().apply { value = false }
     private val mutableException = MutableLiveData<Exception>().apply { value = null }
+    private val mutableRating = MutableLiveData<Float>()
 
+    var rating: LiveData<Float> = mutableRating
     val item: LiveData<Restaurant> = mutableItem
     val fetching: LiveData<Boolean> = mutableFetching
     val fetchingError: LiveData<Exception> = mutableException
@@ -27,8 +31,12 @@ class RestaurantEditViewModel : ViewModel() {
             mutableFetching.value = true
             mutableException.value = null
             try {
-                mutableItem.value = RestaurantRepository.load(itemId)
+                mutableItem.value = RestaurantRepository.load(itemId.toInt())
                 Log.i(TAG, "loadItem succeeded")
+                val rat =  RemoteRestaurantDataSource.getRating(itemId.toInt())
+                if (rat is Result.Success<Float>) {
+                    mutableRating.value = rat.data
+                }
                 mutableFetching.value = false
             } catch (e: Exception) {
                 Log.w(TAG, "loadItem failed", e)

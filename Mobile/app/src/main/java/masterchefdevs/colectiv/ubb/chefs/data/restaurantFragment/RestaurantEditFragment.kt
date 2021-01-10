@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.RatingBar
+import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -33,7 +35,6 @@ class RestaurantEditFragment: Fragment() {
                 itemId = it.getString(ITEM_ID).toString()
             }
         }
-
     }
 
     override fun onCreateView(
@@ -47,7 +48,19 @@ class RestaurantEditFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         view.findViewById<Button>(R.id.make_reservation_button).setOnClickListener{
-            findNavController().navigate(R.id.action_restaurantEditFragment_to_restaurantLayout)
+            findNavController().navigate(R.id.action_restaurantEditFragment_to_restaurantLayout,
+                Bundle().apply {
+                    putString("ITEM_ID", itemId)
+
+                })
+        }
+
+        view.findViewById<Button>(R.id.view_statistics_button).setOnClickListener {
+            findNavController().navigate(R.id.action_restaurantFragment_to_Satistics,
+                Bundle().apply {
+                    putString("ITEM_ID", itemId)
+
+                })
         }
         Log.v(TAG, "onViewCreated")
         itemId?.let { Log.v(TAG, it) }
@@ -63,10 +76,14 @@ class RestaurantEditFragment: Fragment() {
 
     private fun setupViewModel() {
         viewModel = ViewModelProvider(this).get(RestaurantEditViewModel::class.java)
+        viewModel.loadItem(ITEM_ID)
+        viewModel.rating.observe(viewLifecycleOwner, { rating ->
+            view?.findViewById<RatingBar>(R.id.rating_stars_map)?.rating = rating
+        })
         viewModel.item.observe(viewLifecycleOwner, { item ->
             Log.v(TAG, "update items")
-            textView7.setText(item.nameR)
-            textView8.setText(item.adresa)
+            view?.findViewById<TextView>(R.id.restaurant_name_map)?.setText(item.nameR)
+            view?.findViewById<TextView>(R.id.restaurant_address_map)?.setText(item.adresa)
         })
         viewModel.fetching.observe(viewLifecycleOwner, { fetching ->
             Log.v(TAG, "update fetching")
@@ -91,6 +108,10 @@ class RestaurantEditFragment: Fragment() {
         val id = itemId
         if (id != null) {
             viewModel.loadItem(id)
+        }
+
+        view?.findViewById<Button>(R.id.back_to_list)?.setOnClickListener {
+            findNavController().navigate(R.id.action_restaurantEditFragment_to_FirstFragment)
         }
     }
 }

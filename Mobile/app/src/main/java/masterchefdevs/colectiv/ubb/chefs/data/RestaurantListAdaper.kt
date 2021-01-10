@@ -10,14 +10,12 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.fragment_first.view.*
 import kotlinx.android.synthetic.main.view_restaurant.view.*
 
 import masterchefdevs.colectiv.ubb.chefs.R
-import masterchefdevs.colectiv.ubb.chefs.RestaurantFragment
+import masterchefdevs.colectiv.ubb.chefs.data.restaurantFragment.RestaurantEditFragment
 import masterchefdevs.colectiv.ubb.chefs.core.TAG
 import masterchefdevs.colectiv.ubb.chefs.data.model.Restaurant
-import masterchefdevs.colectiv.ubb.chefs.data.model.RestaurantDTO
 
 class RestaurantListAdaper(
     private val fragment: Fragment
@@ -36,7 +34,7 @@ class RestaurantListAdaper(
             val item = view.tag as Restaurant
             Log.v(TAG, "on item view")
             fragment.findNavController().navigate(R.id.restaurantEditFragment, Bundle().apply {
-                putString(RestaurantFragment.ITEM_ID, item.id.toString())
+                putString(RestaurantEditFragment.ITEM_ID, item.id.toString())
             })
         }
     }

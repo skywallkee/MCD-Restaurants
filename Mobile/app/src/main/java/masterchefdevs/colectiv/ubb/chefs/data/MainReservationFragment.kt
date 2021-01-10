@@ -177,7 +177,7 @@ class MainReservationFragment : Fragment(), NumberPicker.OnValueChangeListener {
 
         if ((currResDate>oldRes) and (currResDate<oldDatePlusDuration))
             return true
-        if ((currResDatePlusDuration<oldRes) and (currResDatePlusDuration<oldDatePlusDuration))
+        if ((currResDatePlusDuration>oldRes) and (currResDatePlusDuration<oldDatePlusDuration))
             return true
         if ((currResDate<oldRes) and (currResDatePlusDuration>oldDatePlusDuration))
             return true

@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".data.restaurantFragment.RestaurantEditFragment"
-
     >
 
     <androidx.core.widget.NestedScrollView
@@ -28,7 +27,7 @@
                 android:layout_height="34dp" />
 
             <Button
-                android:id="@+id/back2"
+                android:id="@+id/back_to_list"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
