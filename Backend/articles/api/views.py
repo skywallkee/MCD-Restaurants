@@ -73,16 +73,17 @@ class ReviewViewSet(viewsets.ModelViewSet):
     def create(self,request):
         authorization = request.headers['Authorization']
         try:
-            if(Token.objects.get(key=authorization)):
+            token = Token.objects.get(key=authorization)
+            if(token):
                 data = json.loads(request.body.decode('utf-8'))
                 review = Review(nr_stele = data["nr_stele"], mesaj = data["mesaj"], data = data["data"])
                 review.id_R = Restaurant.objects.get(id = data["id_R"])
-                review.id_U = User.objects.get(id = data["id_U"]) 
+                review.id_U = token.user
                 review.save()
                 serializer=ReviewSerializer(review)
                 return Response(serializer.data) 
-        except:
-            return Response(status=401)
+        except Exception as er:
+            return Response({'error':str(er)},status=status.HTTP_401_UNAUTHORIZED)
 
     def retrieve(self,request,pk=None):
         review=get_object_or_404(self.queryset, id=pk)
@@ -111,16 +112,17 @@ class RezervariViewSet(viewsets.ModelViewSet):
     def create(self,request):
         authorization = request.headers['Authorization']
         try:
-            if(Token.objects.get(key=authorization)):
+            token = Token.objects.get(key=authorization)
+            if(token):
                 data = json.loads(request.body.decode('utf-8'))
                 rezervare = Rezervari(data = data["data"],ora=data["ora"],timp=data["timp"],telefon=data["telefon"],nume_pers=data["nume_pers"],email=data["email"])
                 rezervare.id_M = Mese.objects.get(id = data["id_M"])
-                rezervare.id_U = User.objects.get(id = data["id_U"]) 
+                rezervare.id_U = token.user
                 rezervare.save()
                 serializer=RezervariSerializer(rezervare)
                 return Response(serializer.data) 
-        except:
-            return Response(status=401)
+        except Exception as er:
+            return Response({'error':str(er)},status=status.HTTP_401_UNAUTHORIZED)
 
     def retrieve(self,request,pk=None):
         rezervare=get_object_or_404(self.queryset, id=pk)
