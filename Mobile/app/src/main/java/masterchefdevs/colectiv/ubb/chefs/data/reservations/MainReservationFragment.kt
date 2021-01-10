@@ -1,4 +1,4 @@
-package masterchefdevs.colectiv.ubb.chefs.data
+package masterchefdevs.colectiv.ubb.chefs.data.reservations
 
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
@@ -16,22 +16,22 @@ import androidx.annotation.RequiresApi
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import masterchefdevs.colectiv.ubb.chefs.R
 import masterchefdevs.colectiv.ubb.chefs.core.TAG
+import masterchefdevs.colectiv.ubb.chefs.data.RestaurantViewModel
 import masterchefdevs.colectiv.ubb.chefs.data.model.Layout
 import masterchefdevs.colectiv.ubb.chefs.data.model.Reservation
+import masterchefdevs.colectiv.ubb.chefs.data.model.ReservationDTO
 import masterchefdevs.colectiv.ubb.chefs.data.model.Table
-import java.time.Month
 import java.util.Calendar
-import java.util.Date
 
 
 class MainReservationFragment : Fragment(), NumberPicker.OnValueChangeListener {
     private lateinit var viewModel: RestaurantViewModel
+    private lateinit var reservationModel: ReservationsViewModel
     private lateinit var myContext: Context
     private var date = MutableLiveData<Calendar>().apply { value = Calendar.getInstance() }
     private var duration = MutableLiveData<Int>().apply { value = 1 }
@@ -194,6 +194,9 @@ class MainReservationFragment : Fragment(), NumberPicker.OnValueChangeListener {
             butt.id = View.generateViewId()
             table.id_button = butt.id
             table.button = butt
+            butt.setOnClickListener {
+                openReservationPopPup(table.id)
+            }
             if(table.reserved)
                 butt.setBackgroundColor(Color.RED)
             else
@@ -223,7 +226,7 @@ class MainReservationFragment : Fragment(), NumberPicker.OnValueChangeListener {
             val butt = Button(myContext)
             butt.id = View.generateViewId()
             butt.setBackgroundColor(Color.GRAY)
-            butt.setOnClickListener {  }
+
             // w = 370  h = 380
             val h = convertToDp((wall.Dy - wall.Ay) * 380 / 100)
             val w = convertToDp((wall.Bx - wall.Ax) * 370 / 100)
@@ -251,18 +254,44 @@ class MainReservationFragment : Fragment(), NumberPicker.OnValueChangeListener {
         }
     }
 
+    fun openReservationPopPup(tableId: Int){
+        Log.d(TAG,"RESERVE!!!!!!!!!!!")
+
+    }
+
     fun setDuration(){
         view?.findViewById<NumberPicker>(R.id.duration_numer_picker)?.setOnValueChangedListener(this)
     }
 
-    fun makeReservation(){
+    suspend fun makeReservation(){
+        val id_M: Int = 1;
+        val id_U: Int = 1
+        val data: String = ""
+        val ora: String = ""
+        val timp: String = ""
+        val telefon: String = ""
+        val nume_pers: String =""
+        val email: String = ""
 
+        var reservationDto = ReservationDTO(id_M, id_U, data, ora, timp, telefon, nume_pers, email)
+
+        reservationModel.makeReservation(reservationDto)
+        reservationModel.livedataReservationSucceded.observe(viewLifecycleOwner, {
+            if (it == 1){
+                //succes
+            }
+            else
+                if (it == 2){
+                    //error
+            }
+        })
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun setAllElements(){
         Log.d(TAG, "inside setallElements")
         viewModel = ViewModelProvider(this).get(RestaurantViewModel::class.java)
+        reservationModel =  ViewModelProvider(this).get(ReservationsViewModel::class.java);
         setMyDatePicker()
         setMyTimePicker()
         setDuration()

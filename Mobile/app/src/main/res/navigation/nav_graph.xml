@@ -73,7 +73,7 @@
 
     <fragment
         android:id="@+id/restaurantLayout"
-        android:name="masterchefdevs.colectiv.ubb.chefs.data.MainReservationFragment"
+        android:name="masterchefdevs.colectiv.ubb.chefs.data.reservations.MainReservationFragment"
         android:label="fragment_restaurantLayout"
         tools:layout="@layout/fragment_rezerva_main"  >
         <action
