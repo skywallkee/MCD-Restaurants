@@ -1,11 +1,15 @@
 package masterchefdevs.colectiv.ubb.chefs.data.model
 
+import android.widget.Button
+
 data class Table (
+    var id_button: Int,
+    var button: Button,
     val id: Int,
     val id_R: Int,
     val nume: Number,
     val nr_locuri: Int,
-    val reserved: Boolean,
+    var reserved: Boolean = false,
     val etaj: String,
     val Ax: Int,
     val Ay: Int,
