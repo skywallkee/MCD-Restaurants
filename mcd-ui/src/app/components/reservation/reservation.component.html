@@ -5,8 +5,6 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-
-
 <div>
     <mat-card class="header">
         <div style="overflow: hidden;">
@@ -16,54 +14,71 @@
     </mat-card>
 </div>
 
-
 <div fxLayoutAlign="center center" fxLayout="column">
     <p style="color: #147160; font-size: 50px;padding-top: 20px;">McDonald's</p>
-            <br>
-            <p style="color: #147160; font-size: 30px;">Restaurant Adress</p>
-            <br>
-            <p>
-                    <a href="#">
-                      <span class="glyphicon glyphicon-star-empty" style="color: #147160; font-size:25px;"></span>
-                      <span class="glyphicon glyphicon-star-empty" style="color: #147160; font-size:25px;"></span>
-                      <span class="glyphicon glyphicon-star-empty" style="color: #147160; font-size:25px;"></span>
-                      <span class="glyphicon glyphicon-star-empty" style="color: #147160; font-size:25px;"></span>
-                      <span class="glyphicon glyphicon-star-empty" style="color: #147160; font-size:25px;"></span>
-                    </a>
-                  
-            </p>
-        </div>
     <br>
-    <span>
-        
+    <p style="color: #147160; font-size: 30px;">Restaurant Adress</p>
+    <br>
+    <p>
+        <a href="#">
+            <span class="glyphicon glyphicon-star-empty" style="color: #147160; font-size:25px;"></span>
+            <span class="glyphicon glyphicon-star-empty" style="color: #147160; font-size:25px;"></span>
+            <span class="glyphicon glyphicon-star-empty" style="color: #147160; font-size:25px;"></span>
+            <span class="glyphicon glyphicon-star-empty" style="color: #147160; font-size:25px;"></span>
+            <span class="glyphicon glyphicon-star-empty" style="color: #147160; font-size:25px;"></span>
+        </a>
+
+    </p>
+</div>
+<br>
+
+<span>
     <label style="margin-left:15%;color: #147160; font-size: 30px; width: 50%;">Select Seats:</label>
-
-
-    <input style="max-width: width 30%;color: #147160; font-size: 15px;" list="browsers" name="browser" id="browser" placeholder="First floor">
-    <datalist id="browsers" > 
+    <input style="max-width: width 30%;color: #147160; font-size: 15px;" list="browsers" name="browser" id="browser"
+        placeholder="First floor">
+    <datalist id="browsers">
         <option value="Edge">
         <option value="Firefox">
         <option value="Chrome">
         <option value="Opera">
         <option value="Safari">
-      </datalist>
-  
-    </span>
-      <div fxLayoutAlign="center center" fxLayout="column">
+    </datalist>
+</span>
+
+<div fxLayoutAlign="center center" fxLayout="column" class="content">
     <mat-card fxFlex="35" class="LatimeMatCard">
         <div fxLayoutAlign="stretch" fxLayout="column">
-            <mat-form-field>
-                
-            </mat-form-field>
+            <div class="container-mese">
+                <ng-template ngFor let-wall [ngForOf]="walls">
+                    <wall-block [wall]="wall"></wall-block>
+                </ng-template>
+                <ng-template ngFor let-table [ngForOf]="tables">
+                    <table-block [table]="table" [seats]="table.nr_locuri" [isAvailable]="isAvailable(table)"
+                        (onSelect)="tableSelected($event)"></table-block>
+                </ng-template>
+            </div>
         </div>
     </mat-card>
     <br>
-    
-    <button mat-raised-button class="LatimeButon" style="background-color: #147160; color:white;">Make Reservation</button>
-   
+    <div class="row">
+        <span>
+            <div class="circle green"></div>
+            Liber
+        </span>
+        <span>
+            <div class="circle blue"></div>
+            Ales
+        </span>
+        <span>
+            <div class="circle red"></div>
+            Ocupat
+        </span>
+    </div>
+    <button mat-raised-button class="LatimeButon" style="background-color: #147160; color:white;">Make
+        Reservation</button>
 </div>
 
-<footer style="position: fixed;left: 0;bottom: 0;width: 100%;">
+<footer style="position: relative;left: 0;bottom: 0;width: 100%;">
     <div class="row">
         <div class="column">
             <a style="color: white;">URL here</a>
