@@ -2,7 +2,7 @@
     <mat-card class="header">
         <div style="overflow: hidden;">
             <p class="titlu" style="float: left;">Master Chef Devs</p>
-            <a class="PCorMobile" style="float: right;">&lt; Back</a>
+            <a href="/search" class="PCorMobile" style="float: right;color:white;">&lt; Back</a>
         </div>
     </mat-card>
 </div>
@@ -18,14 +18,14 @@
             <mat-form-field>
                 <input matInput type="password" placeholder="password" [(ngModel)]="password">
             </mat-form-field>
-            <label style="text-align: center;">ceva</label>
-            <button mat-raised-button (click)="loginClick()" style="background-color: #147160; color:white;">sign in</button>
+            <!--<label style="text-align: center;">ceva</label>-->
+            <button routerLink="/search" mat-raised-button (click)="loginClick()" style="background-color: #147160; color:white;">sign in</button>
         </div>
     </mat-card>
     <br>
     <br>
     <br>
-    <a style="font-size: 15px; color:cadetblue">create account</a>
+    <a href="/register" style="font-size: 15px; color:cadetblue">create account</a>
 </div>
 
 <footer style="position: relative;left: 0;bottom: 0;width: 100%;">

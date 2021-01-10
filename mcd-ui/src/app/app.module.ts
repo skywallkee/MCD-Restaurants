@@ -23,6 +23,7 @@ import { ReservationResultComponent } from './components/reservation-result/rese
 import { StatisticsComponent } from './components/statistics/statistics.component';
 import { WallBlockComponent } from './components/reservation/wall-block/wall-block.component';
 import { TableBlockComponent } from './components/reservation/table-block/table-block.component';
+import { AgmCoreModule } from '@agm/core';
 
 
 @NgModule({
@@ -50,7 +51,10 @@ import { TableBlockComponent } from './components/reservation/table-block/table-
     MatInputModule,
     MatButtonModule,
     FormsModule,
-    MatCardModule
+    MatCardModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyAxF2VRhdItkAUs-EOR9d3nebrNbLphs9Q'
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -10,7 +10,7 @@
     <mat-card class="header">
         <div style="overflow: hidden;">
             <p class="titlu" style="float: left;">Master Chef Devs</p>
-            <a class="PCorMobile" style="float: right;color: white;">&lt; Back</a>
+            <a href="/search" class="PCorMobile" style="float: right;color: white;">&lt; Back</a>
         </div>
     </mat-card>
 </div>
@@ -29,7 +29,7 @@
                 <mat-form-field routerLink="/reservation">
                     <button mat-raised-button style="background-color: #147160; color:white;width: 95%; font-size:20px">Make Reservation</button>
                 </mat-form-field>
-                <mat-form-field>
+                <mat-form-field routerLink="/statistics">
                     <button mat-raised-button style="background-color: #147160; color:white;width: 95%; font-size:20px">View Statistics</button>
                 </mat-form-field>
                 <mat-form-field routerLink="/reviews">
@@ -55,7 +55,7 @@
                     </a>
                   
             </p>
-            <img width="500" height="300" alt="Google maps" src="https://www.vertical-leap.uk/wp-content/uploads/2017/11/map-1400x800.jpg">
+            <agm-map style="width:500px;height: 300px;"[latitude]="lat" [longitude]="lng"></agm-map>
         </div>
     </div>
 </span>
