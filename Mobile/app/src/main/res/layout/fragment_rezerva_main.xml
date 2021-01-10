@@ -146,6 +146,8 @@
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
                     android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:paddingTop="5dp"
                     />
                 <Button
                     android:id="@+id/time_button"
@@ -162,7 +164,8 @@
                     android:layout_height="30dp"
                     android:layout_weight="1"
                     android:layout_marginLeft="5dp"
-                    android:gravity="center_horizontal" />
+                    android:gravity="center_horizontal"
+                    android:paddingTop="5dp" />
             </TableRow>
 
             <TableRow

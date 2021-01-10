@@ -26,7 +26,7 @@ import masterchefdevs.colectiv.ubb.chefs.data.model.Layout
 import masterchefdevs.colectiv.ubb.chefs.data.model.Reservation
 import masterchefdevs.colectiv.ubb.chefs.data.model.ReservationDTO
 import masterchefdevs.colectiv.ubb.chefs.data.model.Table
-import java.util.Calendar
+import java.util.*
 
 
 class MainReservationFragment : Fragment(), NumberPicker.OnValueChangeListener {
@@ -127,7 +127,7 @@ class MainReservationFragment : Fragment(), NumberPicker.OnValueChangeListener {
 
     fun setAllTablesGreen(){
         layouts.forEach { layout ->
-            layout.tables.forEach{table ->
+            layout.tables.forEach{ table ->
                 table.reserved = false
                 table.button?.setBackgroundColor(Color.GREEN)
             }
@@ -172,7 +172,7 @@ class MainReservationFragment : Fragment(), NumberPicker.OnValueChangeListener {
         val timeh = res.timp_conv.hours
         val minh = res.timp_conv.minutes
         calRes.add(Calendar.HOUR_OF_DAY, timeh)
-        calRes.add(Calendar.MINUTE,minh)
+        calRes.add(Calendar.MINUTE, minh)
         val oldDatePlusDuration = getMilisec(calRes)
 
         if ((currResDate>oldRes) and (currResDate<oldDatePlusDuration))
@@ -212,8 +212,14 @@ class MainReservationFragment : Fragment(), NumberPicker.OnValueChangeListener {
             constraintLayout?.addView(butt, lp)
             val set = ConstraintSet()
             set.clone(constraintLayout)
-            set.connect(butt.id,ConstraintSet.LEFT,ConstraintSet.PARENT_ID,ConstraintSet.LEFT,left)
-            set.connect(butt.id,ConstraintSet.TOP,ConstraintSet.PARENT_ID,ConstraintSet.TOP, top )
+            set.connect(
+                butt.id,
+                ConstraintSet.LEFT,
+                ConstraintSet.PARENT_ID,
+                ConstraintSet.LEFT,
+                left
+            )
+            set.connect(butt.id, ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP, top)
             set.constrainMinHeight(butt.id, h)
             set.constrainMaxHeight(butt.id, h)
             set.constrainMinWidth(butt.id, w)
@@ -255,8 +261,23 @@ class MainReservationFragment : Fragment(), NumberPicker.OnValueChangeListener {
     }
 
     fun openReservationPopPup(tableId: Int){
-        Log.d(TAG,"RESERVE!!!!!!!!!!!")
+        Log.d(TAG, "RESERVE!!!!!!!!!!!")
 
+        val dat = date.value?.get(Calendar.YEAR).toString() + "-" +
+                (date.value?.get(Calendar.MONTH)?.plus(1)).toString() + "-" +
+                date.value?.get(Calendar.DAY_OF_MONTH).toString()
+        val time = date.value?.get(Calendar.HOUR_OF_DAY).toString() + ":" +
+                date.value?.get(Calendar.MINUTE).toString()
+        val dur = duration.value.toString() + ":00"
+
+        val args = Bundle()
+        args.putInt("table_id",tableId)
+        args.putString("date", dat)
+        args.putString("time",time)
+        args.putString("duration", dur)
+        val reservationDialog = ReserveDialog()
+        reservationDialog.setArguments(args)
+        reservationDialog.show(parentFragmentManager, "example dialog");
     }
 
     fun setDuration(){
@@ -277,13 +298,12 @@ class MainReservationFragment : Fragment(), NumberPicker.OnValueChangeListener {
 
         reservationModel.makeReservation(reservationDto)
         reservationModel.livedataReservationSucceded.observe(viewLifecycleOwner, {
-            if (it == 1){
+            if (it == 1) {
                 //succes
-            }
-            else
-                if (it == 2){
+            } else
+                if (it == 2) {
                     //error
-            }
+                }
         })
     }
 
@@ -309,11 +329,13 @@ class MainReservationFragment : Fragment(), NumberPicker.OnValueChangeListener {
                 val smin = "0" + min.toString()
                 timeView?.setText(
                     date.value?.get(Calendar.HOUR_OF_DAY).toString() + " : " +
-                            smin)
+                            smin
+                )
             } else
                 timeView?.setText(
                     date.value?.get(Calendar.HOUR_OF_DAY).toString() + " : " +
-                            date.value?.get(Calendar.MINUTE).toString() )
+                            date.value?.get(Calendar.MINUTE).toString()
+                )
         }
         view?.findViewById<Button>(R.id.back_to_map)?.setOnClickListener {
             findNavController().navigate(R.id.action_layout_to_map, Bundle().apply {
@@ -338,9 +360,15 @@ class MainReservationFragment : Fragment(), NumberPicker.OnValueChangeListener {
                                 date.value?.set(Calendar.MONTH, nmonthOfYear)
                                 date.value?.set(Calendar.DAY_OF_MONTH, ndayOfMonth)
                                 Log.d(TAG, date.value.toString())
-                                flag.value=1
+                                flag.value = 1
                                 dateView?.setText(nyear.toString() + "-" + (nmonthOfYear + 1).toString() + "-" + ndayOfMonth.toString())
-                                Log.d(TAG, "new DAte: " + date.value!!.get(Calendar.YEAR).toString()+" " + date.value!!.get(Calendar.MONTH)+ " " + date.value!!.get(Calendar.DAY_OF_MONTH))
+                                Log.d(
+                                    TAG,
+                                    "new DAte: " + date.value!!.get(Calendar.YEAR)
+                                        .toString() + " " + date.value!!.get(
+                                        Calendar.MONTH
+                                    ) + " " + date.value!!.get(Calendar.DAY_OF_MONTH)
+                                )
                             }, it1, it2, it3
                         )
                     }
@@ -351,17 +379,17 @@ class MainReservationFragment : Fragment(), NumberPicker.OnValueChangeListener {
             }
         }
         flag.observe(viewLifecycleOwner, {
-            if (flag.value==1) {
-               val stringDate: String = date.value!!.get(Calendar.YEAR).toString() + "-" +
-                       (date.value!!.get(Calendar.MONTH)+1).toString() + "-" +
-                       date.value!!.get(Calendar.DAY_OF_MONTH).toString();
+            if (flag.value == 1) {
+                val stringDate: String = date.value!!.get(Calendar.YEAR).toString() + "-" +
+                        (date.value!!.get(Calendar.MONTH) + 1).toString() + "-" +
+                        date.value!!.get(Calendar.DAY_OF_MONTH).toString();
                 viewModel.getReservations(ITEM_ID, stringDate)
                 flag.value = 0
             }
         })
         duration.observe(viewLifecycleOwner, {
             val stringDate: String = date.value!!.get(Calendar.YEAR).toString() + "-" +
-                    (date.value!!.get(Calendar.MONTH)+1).toString() + "-" +
+                    (date.value!!.get(Calendar.MONTH) + 1).toString() + "-" +
                     date.value!!.get(Calendar.DAY_OF_MONTH).toString();
             viewModel.getReservations(ITEM_ID, stringDate)
         })
@@ -386,7 +414,7 @@ class MainReservationFragment : Fragment(), NumberPicker.OnValueChangeListener {
                             else
                                 smin += min.toString()
                             timeView.setText(hours.toString() + " : " + smin)
-                            flag.value=1
+                            flag.value = 1
                         }, it1, it2, true
                     )
                 }
