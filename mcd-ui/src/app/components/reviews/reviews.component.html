@@ -19,109 +19,58 @@
 
 <div fxLayoutAlign="center center" fxLayout="column">
     <p style="color: #147160; font-size: 50px;padding-top: 20px;">McDonald's</p>
-            <br>
-            <p style="color: #147160; font-size: 30px;">Restaurant Adress</p>
-            <br>
-            <p>
-                    <a href="#">
-                      <span class="glyphicon glyphicon-star-empty" style="color: #147160; font-size:25px;"></span>
-                      <span class="glyphicon glyphicon-star-empty" style="color: #147160; font-size:25px;"></span>
-                      <span class="glyphicon glyphicon-star-empty" style="color: #147160; font-size:25px;"></span>
-                      <span class="glyphicon glyphicon-star-empty" style="color: #147160; font-size:25px;"></span>
-                      <span class="glyphicon glyphicon-star-empty" style="color: #147160; font-size:25px;"></span>
-                    </a>
-                  
-            </p>
+    <br>
+    <p style="color: #147160; font-size: 30px;">Restaurant Adress</p>
+    <br>
+    <p>
+        <a href="#">
+            <span class="glyphicon glyphicon-star-empty" style="color: #147160; font-size:25px;"></span>
+            <span class="glyphicon glyphicon-star-empty" style="color: #147160; font-size:25px;"></span>
+            <span class="glyphicon glyphicon-star-empty" style="color: #147160; font-size:25px;"></span>
+            <span class="glyphicon glyphicon-star-empty" style="color: #147160; font-size:25px;"></span>
+            <span class="glyphicon glyphicon-star-empty" style="color: #147160; font-size:25px;"></span>
+        </a>
+
+    </p>
     <mat-card fxFlex="35" class="LatimeMatCard">
         <div fxLayoutAlign="stretch" fxLayout="column">
-            <mat-form-field>
+            <div>
                 <p style="text-align: center; font-size: 30px; color: #147160">Leave a Review</p>
                 <p style="text-align: center;">
-                    <a href="#">
-                      <span class="glyphicon glyphicon-star-empty" style="color: #147160; font-size:25px;"></span>
-                      <span class="glyphicon glyphicon-star-empty" style="color: #147160; font-size:25px;"></span>
-                      <span class="glyphicon glyphicon-star-empty" style="color: #147160; font-size:25px;"></span>
-                      <span class="glyphicon glyphicon-star-empty" style="color: #147160; font-size:25px;"></span>
-                      <span class="glyphicon glyphicon-star-empty" style="color: #147160; font-size:25px;"></span>
-                    </a>
-                  
-            </p>
-            <textarea class="LatimeTextArea" style="height: 100px;" [(ngModel)]="reviewText"></textarea>
-            </mat-form-field>
+                    <ngb-rating style="color: #147160; font-size:25px;" [max]="5" [(rate)]="starRating"
+                        [readonly]="false"></ngb-rating>
+                </p>
+                <textarea class="LatimeTextArea" style="height: 100px;" [(ngModel)]="reviewText"></textarea>
+            </div>
             <button mat-raised-button class="LatimeButon" style="background-color: #147160; color:white;"
-            (click)="submitReview()">Submit</button>
+                (click)="submitReview()">Submit</button>
         </div>
     </mat-card>
     <br>
-    
+
     <p style="font-size: 15px; color:cadetblue">Review List</p>
     <br>
     <mat-card fxFlex="35" class="LatimeMatCard">
         <div fxLayoutAlign="stretch" fxLayout="column">
-            
-            <mat-form-field>
+            <ng-template ngFor let-review [ngForOf]="reviewList">
                 <div>
                     <div>
-                        <label style="color: #147160; font-size:20px;font-family:Arial, Helvetica, sans-serif;">User123</label>
-                        <!--<label class="LableComment" style="color: #147160; font-size:20px;font-family:Arial, Helvetica, sans-serif;">Comment</label>-->
+                        <label style="color: #147160; font-size:20px;font-family:Arial, Helvetica, sans-serif;">
+                            {{processDateString(review.data)}}
+                        </label>
                         <br>
-                    
-                    
-                        <a href="#">
-                          <span class="glyphicon glyphicon-star-empty" style="color: #147160; font-size:15px;"></span>
-                          <span class="glyphicon glyphicon-star-empty" style="color: #147160; font-size:15px;"></span>
-                          <span class="glyphicon glyphicon-star-empty" style="color: #147160; font-size:15px;"></span>
-                          <span class="glyphicon glyphicon-star-empty" style="color: #147160; font-size:15px;"></span>
-                          <span class="glyphicon glyphicon-star-empty" style="color: #147160; font-size:15px;"></span>
+                        <a *ngFor="let e of [].constructor(5); let i = index">
+                            <span *ngIf="i<review.nr_stele" class="glyphicon glyphicon-star"
+                                style="color: #147160; font-size:15px;"></span>
+                            <span *ngIf="i>=review.nr_stele" class="glyphicon glyphicon-star-empty"
+                                style="color: #147160; font-size:15px;"></span>
                         </a>
                     </div>
-                    <div><textarea class="LatimeTextArea" style="height: 100px;"></textarea></div>
-                
+                    <div><textarea class="LatimeTextArea" style="height: 100px;">
+                        {{review.mesaj}}
+                    </textarea></div>
                 </div>
-            </mat-form-field>
-       
-            <hr>
-            <mat-form-field>
-                <div>
-                    <div>
-                        <label style="color: #147160; font-size:20px;font-family:Arial, Helvetica, sans-serif;">User123</label>
-                        <!--<label class="LableComment" style="color: #147160; font-size:20px;font-family:Arial, Helvetica, sans-serif;">Comment</label>-->
-                        <br>
-                    
-                    
-                        <a href="#">
-                          <span class="glyphicon glyphicon-star-empty" style="color: #147160; font-size:15px;"></span>
-                          <span class="glyphicon glyphicon-star-empty" style="color: #147160; font-size:15px;"></span>
-                          <span class="glyphicon glyphicon-star-empty" style="color: #147160; font-size:15px;"></span>
-                          <span class="glyphicon glyphicon-star-empty" style="color: #147160; font-size:15px;"></span>
-                          <span class="glyphicon glyphicon-star-empty" style="color: #147160; font-size:15px;"></span>
-                        </a>
-                    </div>
-                    <div><textarea class="LatimeTextArea" style="height: 100px;"></textarea></div>
-                
-                </div>
-            </mat-form-field>
-            <hr>
-            <mat-form-field>
-                <div>
-                    <div>
-                        <label style="color: #147160; font-size:20px;font-family:Arial, Helvetica, sans-serif;">User123</label>
-                        <!--<label class="LableComment" style="color: #147160; font-size:20px;font-family:Arial, Helvetica, sans-serif;">Comment</label>-->
-                        <br>
-                    
-                    
-                        <a href="#">
-                          <span class="glyphicon glyphicon-star-empty" style="color: #147160; font-size:15px;"></span>
-                          <span class="glyphicon glyphicon-star-empty" style="color: #147160; font-size:15px;"></span>
-                          <span class="glyphicon glyphicon-star-empty" style="color: #147160; font-size:15px;"></span>
-                          <span class="glyphicon glyphicon-star-empty" style="color: #147160; font-size:15px;"></span>
-                          <span class="glyphicon glyphicon-star-empty" style="color: #147160; font-size:15px;"></span>
-                        </a>
-                    </div>
-                    <div><textarea class="LatimeTextArea" style="height: 100px;"></textarea></div>
-                
-                </div>
-            </mat-form-field>
+            </ng-template>
         </div>
     </mat-card>
     <br>

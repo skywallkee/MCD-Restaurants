@@ -2,17 +2,19 @@
     <mat-card class="header">
         <div style="overflow: hidden;">
             <p class="titlu" style="float: left;">Master Chef Devs</p>
-            
-            <a href="/login"class="PCorMobile" style="float: right;color: white;">Login</a>
-            <a href="/register"class="PCorMobile" style="float: right;color: white;">Register/</a>
-        
+            <ng-container *ngIf="!isLoggedIn(); else logoutBlock">
+                <a href="/login"class="PCorMobile" style="float: right;color: white;">Login</a>
+                <a href="/register"class="PCorMobile" style="float: right;color: white;">Register/</a>
+            </ng-container>
+            <ng-template #logoutBlock>
+                <a href="#" style="float: right;color: white;" (click)="logout()">Logout</a>
+            </ng-template>
         </div>
     </mat-card>
 </div>
 <br>
 <br>
 <div fxLayoutAlign="top center" fxLayout="column">
-
     <input style="font-size: 25px;" [(ngModel)]="searchKeyword">
     <br>
     <button mat-raised-button class="src-btn" (click)="search()">Search</button>

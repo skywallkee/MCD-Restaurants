@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { RestaurantServiceApi } from 'src/app/api/restaurant/restaurantApi';
 import { Reservation } from 'src/app/models/reservation';
 import { Restaurant } from 'src/app/models/restaurant';
+import { Review } from 'src/app/models/review';
 import { Table } from 'src/app/models/table';
 import { Wall } from 'src/app/models/wall';
 
@@ -56,7 +57,15 @@ export class RestaurantService {
     return true;
   }
 
-  async submitReview(comment: string): Promise<void> {
-    this.restaurantServiceApi.submitReview(comment);
+  async submitReview(comment: string, stars: number): Promise<void> {
+    return await this.restaurantServiceApi.submitReview(comment, stars);
+  }
+
+  async getAllReviews(): Promise<Review[]> {
+    return await this.restaurantServiceApi.getAllReviews();
+  }
+
+  async getStatisticsByDay(){
+    return await this.restaurantServiceApi.getStatisticsByDay(1, 5);
   }
 }
