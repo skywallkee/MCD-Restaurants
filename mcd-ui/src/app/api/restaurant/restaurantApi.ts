@@ -41,4 +41,19 @@ export class RestaurantServiceApi {
             .set('Accept', 'application/json');
         return resp.body;
     }
+
+    async submitReview(comment: string){
+        const resp = await ajax
+            .post(config.endpoint.restaurant.addReview)
+            .timeout({ deadline: 30000 })  //30 seconds
+            .set('Accept', 'application/json')
+            .send({ 
+                "id_R" : "1",
+                "id_U" : "1",
+                "nr_stele" : "3",
+                "mesaj" : "Mesaj",
+                "data" : "10/11/2020"
+             });
+        return resp;
+    }
 }

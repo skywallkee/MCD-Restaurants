@@ -20,7 +20,7 @@ export class LoginServiceApi {
             .post(config.endpoint.register)
             .timeout({ deadline: 30000 })  //30 seconds
             .set('Accept', 'application/json')
-            .send({ username, password });
+            .send({ username, password, email: "test@abc.com" });
         return resp;
     }
 }

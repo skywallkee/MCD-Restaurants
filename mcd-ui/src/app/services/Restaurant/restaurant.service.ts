@@ -55,4 +55,8 @@ export class RestaurantService {
     }
     return true;
   }
+
+  async submitReview(comment: string): Promise<void> {
+    this.restaurantServiceApi.submitReview(comment);
+  }
 }

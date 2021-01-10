@@ -9,6 +9,7 @@ export default {
             walls: `${domain}/api/pereti/`,
             tables: `${domain}/api/mese/`,
             reservations: `${domain}/api/rezervari/`,
+            addReview: `${domain}/api/review/`,
         }
     }
 };

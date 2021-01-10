@@ -46,14 +46,15 @@
                     </a>
                   
             </p>
-            <textarea class="LatimeTextArea" style="height: 100px;"></textarea>
+            <textarea class="LatimeTextArea" style="height: 100px;" [(ngModel)]="reviewText"></textarea>
             </mat-form-field>
-            <button mat-raised-button class="LatimeButon" style="background-color: #147160; color:white;">Submit</button>
+            <button mat-raised-button class="LatimeButon" style="background-color: #147160; color:white;"
+            (click)="submitReview()">Submit</button>
         </div>
     </mat-card>
     <br>
     
-    <a style="font-size: 15px; color:cadetblue">Review List</a>
+    <p style="font-size: 15px; color:cadetblue">Review List</p>
     <br>
     <mat-card fxFlex="35" class="LatimeMatCard">
         <div fxLayoutAlign="stretch" fxLayout="column">
