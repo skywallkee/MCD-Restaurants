@@ -19,7 +19,7 @@ class ReservationsViewModel : ViewModel(){
     val livedataReservationSucceded: LiveData<Int> = mutableReservationSucceded
     val livedataError: LiveData<String> = mutableError
 
-    suspend fun makeReservation(reqestReservation: ReservationDTO){
+    fun makeReservation(reqestReservation: ReservationDTO){
         viewModelScope.launch {
             val result = RemoteReservationDataSource.reserve(reqestReservation)
             if (result is Result.Success)

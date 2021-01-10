@@ -101,7 +101,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_gravity="center"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="30dp"
                 >
         <Button
             android:id="@+id/cancel_reservation_button"
@@ -126,9 +126,10 @@
             <TextView
                 android:id="@+id/reservation_error"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
                 android:textColor="@color/error_red"
+                android:gravity="center"
                 />
         </LinearLayout>
     </androidx.cardview.widget.CardView>

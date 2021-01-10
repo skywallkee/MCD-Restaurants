@@ -79,6 +79,10 @@
         <action
         android:id="@+id/action_layout_to_map"
         app:destination="@id/restaurantEditFragment" />
+        <action
+            android:id="@+id/action_go_to_loggin"
+            app:destination="@id/SignInFragment"
+            />
     </fragment>
 
     <fragment
@@ -108,6 +112,4 @@
             android:id="@+id/action_statistics_to_map"
             app:destination="@id/restaurantEditFragment" />
     </fragment>
-
-
 </navigation>

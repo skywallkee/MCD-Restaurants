@@ -3,6 +3,7 @@ package masterchefdevs.colectiv.ubb.chefs.data.reservations
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Context
+import android.content.DialogInterface
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
@@ -20,11 +21,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import masterchefdevs.colectiv.ubb.chefs.R
+import masterchefdevs.colectiv.ubb.chefs.core.Api
 import masterchefdevs.colectiv.ubb.chefs.core.TAG
 import masterchefdevs.colectiv.ubb.chefs.data.RestaurantViewModel
 import masterchefdevs.colectiv.ubb.chefs.data.model.Layout
 import masterchefdevs.colectiv.ubb.chefs.data.model.Reservation
-import masterchefdevs.colectiv.ubb.chefs.data.model.ReservationDTO
 import masterchefdevs.colectiv.ubb.chefs.data.model.Table
 import java.util.*
 
@@ -115,11 +116,13 @@ class MainReservationFragment : Fragment(), NumberPicker.OnValueChangeListener {
         viewModel.reservations.observe(viewLifecycleOwner, { rez ->
             setAllTablesGreen()
             rez.forEach { reservation ->
+                Log.d(TAG, "inside observe reservations")
                 val table = getTableFromLayouts(reservation.id_M)
                 if (checkIfReserved(reservation)) {
-                    Log.d(TAG, "red")
+                    Log.d(TAG, "after checking")
                     table?.reserved = true
                     table?.button?.setBackgroundColor(Color.RED)
+                    table?.button?.isClickable = false
                 }
             }
         })
@@ -130,10 +133,10 @@ class MainReservationFragment : Fragment(), NumberPicker.OnValueChangeListener {
             layout.tables.forEach{ table ->
                 table.reserved = false
                 table.button?.setBackgroundColor(Color.GREEN)
+                table.button?.isClickable = true
             }
         }
     }
-
     fun getMilisec(cal: Calendar): Long {
         return cal.timeInMillis
     }
@@ -197,11 +200,13 @@ class MainReservationFragment : Fragment(), NumberPicker.OnValueChangeListener {
             butt.setOnClickListener {
                 openReservationPopPup(table.id)
             }
-            if(table.reserved)
+            if(table.reserved) {
                 butt.setBackgroundColor(Color.RED)
-            else
+                butt.isClickable = false
+            }
+            else {
                 butt.setBackgroundColor(Color.GREEN)
-
+            }
             // w = 370  h = 370
             val h = convertToDp((table.Dy - table.Ay) * 370 / 100)
             val w = convertToDp((table.Bx - table.Ax) * 370 / 100)
@@ -260,51 +265,48 @@ class MainReservationFragment : Fragment(), NumberPicker.OnValueChangeListener {
         }
     }
 
-    fun openReservationPopPup(tableId: Int){
-        Log.d(TAG, "RESERVE!!!!!!!!!!!")
+    fun openLogInPopPup(){
+        val loginDialog = LogInDialog()
+        loginDialog.show(parentFragmentManager, "loginDialog");
+    }
 
-        val dat = date.value?.get(Calendar.YEAR).toString() + "-" +
-                (date.value?.get(Calendar.MONTH)?.plus(1)).toString() + "-" +
-                date.value?.get(Calendar.DAY_OF_MONTH).toString()
-        val time = date.value?.get(Calendar.HOUR_OF_DAY).toString() + ":" +
-                date.value?.get(Calendar.MINUTE).toString()
-        val dur = duration.value.toString() + ":00"
+    fun openReservationPopPup(tableId: Int) {
+        if (Api.tokenInterceptor.token.isNullOrEmpty()) {
+            openLogInPopPup()
+        } else {
+            var mon = (date.value?.get(Calendar.MONTH)?.plus(1)).toString()
+            if (mon.length == 1)
+                mon = "0" + mon
 
-        val args = Bundle()
-        args.putInt("table_id",tableId)
-        args.putString("date", dat)
-        args.putString("time",time)
-        args.putString("duration", dur)
-        val reservationDialog = ReserveDialog()
-        reservationDialog.setArguments(args)
-        reservationDialog.show(parentFragmentManager, "example dialog");
+            var day = date.value?.get(Calendar.DAY_OF_MONTH).toString()
+            if (day.length == 1)
+                day = "0" + day
+
+            val dat = date.value?.get(Calendar.YEAR).toString() + "-" +
+                    mon + "-" + day
+            val time = date.value?.get(Calendar.HOUR_OF_DAY).toString() + ":" +
+                    date.value?.get(Calendar.MINUTE).toString()
+            val dur = duration.value.toString() + ":00"
+
+            val args = Bundle()
+            args.putString("ITEM_ID", ITEM_ID.toString())
+            args.putInt("table_id", tableId)
+            args.putString("date", dat)
+            args.putString("time", time)
+            args.putString("duration", dur)
+            val reservationDialog = ReserveDialog()
+            reservationDialog.setArguments(args)
+            reservationDialog.dialog?.setOnDismissListener{ dialog ->
+                Log.d(TAG, "inside get reservation after reservation completed")
+                flag.value=1
+            }
+
+          reservationDialog.show(parentFragmentManager, "reserveDialog")
+        }
     }
 
     fun setDuration(){
         view?.findViewById<NumberPicker>(R.id.duration_numer_picker)?.setOnValueChangedListener(this)
-    }
-
-    suspend fun makeReservation(){
-        val id_M: Int = 1;
-        val id_U: Int = 1
-        val data: String = ""
-        val ora: String = ""
-        val timp: String = ""
-        val telefon: String = ""
-        val nume_pers: String =""
-        val email: String = ""
-
-        var reservationDto = ReservationDTO(id_M, id_U, data, ora, timp, telefon, nume_pers, email)
-
-        reservationModel.makeReservation(reservationDto)
-        reservationModel.livedataReservationSucceded.observe(viewLifecycleOwner, {
-            if (it == 1) {
-                //succes
-            } else
-                if (it == 2) {
-                    //error
-                }
-        })
     }
 
     @RequiresApi(Build.VERSION_CODES.O)

@@ -147,8 +147,6 @@ class RestaurantViewModel  : ViewModel() {
 
                         cal.set(Calendar.HOUR_OF_DAY, hours)
                         cal.set(Calendar.MINUTE, min)
-                        //Log.d(TAG, cal.get(Calendar.YEAR).toString())
-                        //Log.d(TAG, cal.get(Calendar.MONTH).toString())
                         reservation.data_conv = cal
                         val time = Time(thours, tmin, 0)
                         reservation.timp_conv = time
@@ -157,17 +155,4 @@ class RestaurantViewModel  : ViewModel() {
             }
         }
     }
-
-    fun refresh(restaurantId: Number, calendar: Calendar){
-
-
-    }
-    fun makeReservation(username: String, password1: String, password2: String) {
-
-//        viewModelScope.launch {
-//            Log.v(ContentValues.TAG, "register...");
-//            mutableLoginResult.value = LoginRepository.register(username, password1, password2)
-//        }
-    }
-
 }
