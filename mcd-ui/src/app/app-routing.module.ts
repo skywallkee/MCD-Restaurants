@@ -13,7 +13,7 @@ import {StatisticsComponent} from './components/statistics/statistics.component'
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
-  {path: 'restaurant', component: RestaurantInterfataComponent},
+  {path: 'restaurant/:id', component: RestaurantInterfataComponent},
   {path: 'search', component: SearchComponent},
   {path: 'reviews', component: ReviewsComponent},
   {path: 'reservation', component: ReservationComponent},

@@ -1,5 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-
 @Component({
   selector: 'app-restaurant',
   templateUrl: './restaurant.component.html',
@@ -8,7 +7,9 @@ import { Component, Input, OnInit } from '@angular/core';
 export class RestaurantComponent implements OnInit {
   @Input() restaurant={
     title: "",
-    description: ""
+    description: "",
+    stars: 0,
+    logo: ""
   };
 
   constructor() { }

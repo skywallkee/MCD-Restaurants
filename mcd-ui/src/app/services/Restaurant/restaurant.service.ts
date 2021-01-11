@@ -21,6 +21,16 @@ export class RestaurantService {
     return restaurants.filter(item => item.nameR.startsWith(keyword));
   }
 
+  async getId(keyword: number): Promise<any> {
+    const restaurants = await this.restaurantServiceApi.getAll();
+    let restaurant;
+    restaurants.forEach(function (item) {
+      if (item.id == keyword)
+        restaurant = item;
+    })
+    return restaurant;
+  }
+
   async getWalls(): Promise<Wall[]> {
     const walls = await this.restaurantServiceApi.getWalls();
     return walls;

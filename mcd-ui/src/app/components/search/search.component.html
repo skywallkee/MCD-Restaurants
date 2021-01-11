@@ -20,7 +20,7 @@
 
     <div *ngFor="let restaurant of restaurants; index as i" style="width: 100%;">
         <div *ngIf="i%2==0" class="row">
-            <mat-card class="restaurant-card" routerLink="/restaurant">
+            <mat-card class="restaurant-card" routerLink="/restaurant/{{restaurant.id}}">
                 <div fxLayoutAlign="stretch" fxLayout="column">
                     <img class="restaurantImage" alt="Restaurant image"
                         src="https://hoteldelcorso.ro/img/94930_D8A3444-FB.jpg">
@@ -28,7 +28,7 @@
                     <p>{{restaurant.adresa}}</p>
                 </div>
             </mat-card>
-            <mat-card *ngIf="i+1 < restaurants.length" routerLink="/restaurant" class="restaurant-card">
+            <mat-card *ngIf="i+1 < restaurants.length" routerLink="/restaurant/{{restaurants[i+1].id}}" class="restaurant-card">
                 <div fxLayoutAlign="stretch" fxLayout="column">
                     <img class="restaurantImage" alt="Restaurant image"
                         src="https://hoteldelcorso.ro/img/94930_D8A3444-FB.jpg">
