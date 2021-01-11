@@ -17,7 +17,16 @@ export class SearchComponent implements OnInit {
     this.restaurants = await this.restaurantService.getAll();
   }
 
+  isLoggedIn(): boolean {
+    const token = localStorage.getItem('TOKEN');
+    return token != null;
+  }
+
   async search(): Promise<void> {
     this.restaurants = await this.restaurantService.filter(this.searchKeyword);
+  }
+
+  logout(): void {
+    localStorage.removeItem('TOKEN');
   }
 }

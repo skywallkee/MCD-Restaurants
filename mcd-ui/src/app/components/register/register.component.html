@@ -17,10 +17,10 @@
                 <input matInput placeholder="user" [(ngModel)]="username">
             </mat-form-field>
             <mat-form-field>
-                <input matInput type="password" placeholder="password" [(ngModel)]="password">
+                <input matInput type="password" placeholder="password" [(ngModel)]="password1">
             </mat-form-field>
             <mat-form-field>
-                <input matInput type="password" placeholder="confirm password">
+                <input matInput type="password" placeholder="confirm password" [(ngModel)]="password2">
             </mat-form-field>
             <button routerLink="/search" mat-raised-button (click)="registerClick()" style="background-color: #147160; color:white;">register</button>
         </div>

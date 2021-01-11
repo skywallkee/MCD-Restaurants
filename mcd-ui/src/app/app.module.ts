@@ -24,6 +24,8 @@ import { StatisticsComponent } from './components/statistics/statistics.componen
 import { WallBlockComponent } from './components/reservation/wall-block/wall-block.component';
 import { TableBlockComponent } from './components/reservation/table-block/table-block.component';
 import { AgmCoreModule } from '@agm/core';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 
 @NgModule({
@@ -54,7 +56,9 @@ import { AgmCoreModule } from '@agm/core';
     MatCardModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyAxF2VRhdItkAUs-EOR9d3nebrNbLphs9Q'
-    })
+    }),
+    NgbModule,
+    NgxChartsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

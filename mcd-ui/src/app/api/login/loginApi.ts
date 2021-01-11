@@ -6,21 +6,21 @@ import config from '../../config/index';
     providedIn: 'root'
 })
 export class LoginServiceApi {
-    async login(username: string, password: string): Promise<any> {
+    async login(username: string, password: string): Promise<string> {
         const resp = await ajax
             .post(config.endpoint.login)
             .timeout({ deadline: 30000 })  //30 seconds
             .set('Accept', 'application/json')
             .send({ username, password });
-        return resp;
+        return resp.body.key;
     }
 
-    async register(username: string, password: string): Promise<any> {
+    async register(username: string, password1: string, password2: string): Promise<any> {
         const resp = await ajax
             .post(config.endpoint.register)
             .timeout({ deadline: 30000 })  //30 seconds
             .set('Accept', 'application/json')
-            .send({ username, password });
+            .send({ username, password1, password2, email: "test@abc.com" });
         return resp;
     }
 }
