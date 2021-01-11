@@ -32,6 +32,19 @@ export class RestaurantService {
     return restaurant;
   }
 
+  async getAverageReview(keyword: number): Promise<any> {
+    const reviews = await this.restaurantServiceApi.getAllReviews();
+    let sum = 0;
+    let number = 0;
+    reviews.forEach(function (review) {
+      if (review.id_R == keyword) {
+        sum += review.nr_stele;
+        number += 1;
+      }
+    })
+    return sum / number;
+  }
+
   async getWalls(): Promise<Wall[]> {
     const walls = await this.restaurantServiceApi.getWalls();
     return walls;
