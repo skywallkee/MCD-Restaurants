@@ -48,10 +48,10 @@ class FilterFragment : Fragment() {
             findNavController().navigate(R.id.action_filter_to_back)
         }
         img_1.setOnClickListener{
-            findNavController().navigate(R.id.action_fragment_blank_to_restaurantFragment)
+            findNavController().navigate(R.id.action_fragment_blank_to_restaurantEditFragment)
         }
         img_2.setOnClickListener{
-            findNavController().navigate(R.id.action_fragment_blank_to_restaurantFragment)
+            findNavController().navigate(R.id.action_fragment_blank_to_restaurantEditFragment)
         }
     }
     companion object {

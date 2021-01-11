@@ -1,0 +1,47 @@
+* {
+    box-sizing: border-box;
+}
+@media screen and (max-width: 600px) {
+    .LatimeMatCard{
+        width: 400px;
+    }
+    .LatimeTextArea{
+        width:300px;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .LatimeButon{
+        width:100px;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .LableComment{
+        padding-left: 50px;
+    }
+    .LabelAsk{
+        text-align:center;
+    }
+}
+@media screen and (min-width: 600px) {
+    .LatimeMatCard{
+        width: 1000px;
+    }
+    .LatimeTextArea{
+        width:600px;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .LatimeButon{
+        width:150px;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .LableComment{
+        padding-left: 100px;
+    }
+    
+}

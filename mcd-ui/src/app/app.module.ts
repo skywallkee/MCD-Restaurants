@@ -17,6 +17,12 @@ import { RestaurantComponent } from './components/home/restaurant/restaurant.com
 import { FormsModule } from '@angular/forms';
 import { RestaurantInterfataComponent } from './components/restaurant-interfata/restaurant-interfata.component';
 import { SearchComponent } from './components/search/search.component';
+import { ReviewsComponent } from './components/reviews/reviews.component';
+import { ReservationComponent } from './components/reservation/reservation.component';
+import { ReservationResultComponent } from './components/reservation-result/reservation-result.component';
+import { StatisticsComponent } from './components/statistics/statistics.component';
+import { WallBlockComponent } from './components/reservation/wall-block/wall-block.component';
+import { TableBlockComponent } from './components/reservation/table-block/table-block.component';
 
 
 @NgModule({
@@ -27,8 +33,13 @@ import { SearchComponent } from './components/search/search.component';
     HomeComponent,
     RestaurantComponent,
     RestaurantInterfataComponent,
-    SearchComponent
-    
+    SearchComponent,
+    ReviewsComponent,
+    ReservationComponent,
+    ReservationResultComponent,
+    StatisticsComponent,
+    WallBlockComponent,
+    TableBlockComponent
   ],
   imports: [
     BrowserModule,
@@ -38,8 +49,8 @@ import { SearchComponent } from './components/search/search.component';
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    MatCardModule,
-    FormsModule
+    FormsModule,
+    MatCardModule
   ],
   providers: [],
   bootstrap: [AppComponent]

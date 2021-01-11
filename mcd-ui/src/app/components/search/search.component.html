@@ -8,69 +8,40 @@
 </div>
 <br>
 <br>
-<div fxLayoutAlign="top center" fxLayout="column" fxFlexFill>
-    
-    <input style="font-size: 25px;">
+<div fxLayoutAlign="top center" fxLayout="column">
+
+    <input style="font-size: 25px;" [(ngModel)]="searchKeyword">
     <br>
-    <button style="color:white; background-color: #147160; font-size: 15px;">Search</button>
-<hr><!--pt linie orizontala-->
+    <button mat-raised-button class="src-btn" (click)="search()">Search</button>
+    <img id="top" src="assets/topp.svg">
+    <!--pt linie orizontala-->
 
-
-<div class="row">
-    <div class="column1">
-        <mat-card style="width: 295px; height: 250px; border-radius: 25px;">
-            <div fxLayoutAlign="stretch" fxLayout="column">
-                <mat-form-field>
-                    <img class="pozaRestaurant"alt="Image restaurant" src="https://hoteldelcorso.ro/img/94930_D8A3444-FB.jpg">
-                
-                    <p>Nume restaurant</p>
-                    <p>Adresa</p>
-                </mat-form-field>
-            </div>
+    <div *ngFor="let restaurant of restaurants; index as i" style="width: 100%;">
+        <div *ngIf="i%2==0" class="row">
+            <mat-card class="restaurant-card" routerLink="/reservation">
+                <div fxLayoutAlign="stretch" fxLayout="column">
+                    <img class="restaurantImage" alt="Restaurant image"
+                        src="https://hoteldelcorso.ro/img/94930_D8A3444-FB.jpg">
+                    <p>{{restaurant.nameR}}</p>
+                    <p>{{restaurant.adresa}}</p>
+                </div>
             </mat-card>
-        <br>
-        <br>
-        <mat-card style="width: 295px; height: 250px;border-radius: 25px;">
-            <div fxLayoutAlign="stretch" fxLayout="column">
-                <mat-form-field>
-                    <img class="pozaRestaurant"alt="Image restaurant" src="https://hoteldelcorso.ro/img/94930_D8A3444-FB.jpg">
-                
-                    <p>Nume restaurant</p>
-                    <p>Adresa</p>
-                </mat-form-field>
-            </div>
+            <mat-card *ngIf="i+1 < restaurants.length" routerLink="/reservation" class="restaurant-card">
+                <div fxLayoutAlign="stretch" fxLayout="column">
+                    <img class="restaurantImage" alt="Restaurant image"
+                        src="https://hoteldelcorso.ro/img/94930_D8A3444-FB.jpg">
+                    <p>{{restaurants[i+1].nameR}}</p>
+                    <p>{{restaurants[i+1].adresa}}</p>
+                </div>
             </mat-card>
+        </div>
     </div>
-    <div class="column2">
-        <mat-card style="width: 295px; height: 250px;border-radius: 25px;">
-            <div fxLayoutAlign="stretch" fxLayout="column">
-                <mat-form-field>
-                    <img class="pozaRestaurant"alt="Image restaurant" src="https://hoteldelcorso.ro/img/94930_D8A3444-FB.jpg">
-                    <p>Nume restaurant</p>
-                    <p>Adresa</p>
-                </mat-form-field>
-            </div>
-            </mat-card>
-        <br>
-        <br>
-        <mat-card style="width: 295px; height: 250px; border-radius: 25px;">
-            <div fxLayoutAlign="stretch" fxLayout="column">
-                <mat-form-field>
-                    <img class="pozaRestaurant" alt="Image restaurant" src="https://hoteldelcorso.ro/img/94930_D8A3444-FB.jpg">
-                
-                    <p>Nume restaurant</p>
-                    <p>Adresa</p>
-                </mat-form-field>
-            </div>
-            </mat-card>
-    </div>
-</div>
 
 </div>
 <br>
 <br>
 <br>
-<footer>
+<footer style="position: relative;left: 0;bottom: 0;width: 100%;">
     <div class="row">
         <div class="column">
             <a>URL here</a>

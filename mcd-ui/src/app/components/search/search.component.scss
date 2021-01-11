@@ -1,10 +1,10 @@
 * {
     box-sizing: border-box;
 }
-.pozaRestaurant{
+.restaurantImage {
     width: 100%;
     border-radius: 12%;
-};
+}
 .column1 {
     float: left;
     width: 50%;
@@ -21,13 +21,57 @@
     padding-right: 100px;
     padding-left: 150px;
 }
+
+.restaurant-card {
+    margin: 15px;
+    width: 295px;
+    border-radius: 25px;
+    margin: 15px 150px;
+}
+
+.src-btn {
+    width: 100px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #147160;
+    color: white;
+}
+
 @media screen and (max-width: 600px) {
     a.PCorMobile {
-      display: none;
+        display: none;
     }
-    p.titlu{
-        float:none;
+    p.titlu {
+        float: none;
         text-align: center;
-        margin-left:40%;
+        margin-left: 40%;
     }
   }
+
+  #top {
+    margin-bottom: 0px;
+    padding-bottom: 0px;
+    display: block;
+    width: 100vw;
+    height: 50vw;
+    object-fit: cover;
+}
+
+@media (min-width: 400px) and (orientation:landscape) {
+    #top {
+        margin-bottom: 0px;
+        padding-bottom: 0px;
+        display: block;
+        width: 100vw;
+        height: 70%;
+        object-fit: cover;
+    }
+}
+
+#main {
+    width: 100vw;
+    background-color: #06D6A0;
+    padding-top: 0px;
+    margin-top: 0px;
+}

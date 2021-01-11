@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/reservation_dialog"
+    tools:context=".data.reservations.LogInDialog">
+
+
+    <androidx.cardview.widget.CardView
+    android:layout_width="match_parent"
+    android:layout_height="300dp"
+    android:backgroundTint="@color/cardBackground"
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+
+    <TextView
+        android:layout_width="330dp"
+        android:layout_height="80dp"
+        android:layout_gravity="center"
+        android:text="@string/please"
+        android:textSize="25dp"
+        android:layout_marginTop="80dp"
+        android:layout_marginLeft="10dp"
+        android:textAlignment="center"
+        android:textColor="@color/error_red"
+        />
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        android:layout_marginTop="40dp"
+        >
+        <Button
+            android:id="@+id/cancel_please"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:backgroundTint="@color/mainGreen"
+            android:text="Cancel"
+            android:layout_marginRight="70dp"
+            />
+
+        <Button
+            android:id="@+id/login_please"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:backgroundTint="@color/mainGreen"
+            android:text="sign in"
+            android:layout_gravity="center"
+            />
+
+        </LinearLayout>
+    </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+</RelativeLayout>

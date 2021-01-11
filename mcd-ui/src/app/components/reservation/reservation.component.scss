@@ -1,0 +1,80 @@
+* {
+    box-sizing: border-box;
+}
+
+.content{
+    margin-bottom: 20px;
+}
+
+.container-mese{
+    height: 400px;
+}
+
+.row{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    span{
+        line-height: 100%;
+        display: flex;
+    }
+}
+
+.circle{
+    border-radius: 50%;
+    width: 12px;
+    height: 12px;
+    margin-right: 15px;
+}
+
+.red{
+    background-color: #AF1515;
+}
+
+.blue{
+    background-color: #2F41E3;
+}
+
+.green{
+    background-color: #15AF2E;
+}
+
+@media screen and (max-width: 600px) {
+    .LatimeMatCard{
+        width: 400px;
+    }
+    .LatimeTextArea{
+        width:300px;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .LatimeButon{
+        width:100px;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .LableComment{
+        padding-left: 50px;
+    }
+}
+@media screen and (min-width: 600px) {
+    .LatimeMatCard{
+        width: 1000px;
+    }
+    .LatimeTextArea{
+        width:600px;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .LatimeButon{
+        width:150px;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .LableComment{
+        padding-left: 100px;
+    }
+}

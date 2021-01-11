@@ -16,11 +16,13 @@ object RestaurantRepository {
         }
         cachedItems = mutableListOf()
         val items = RestaurantApi.service.find()
+
+
         cachedItems?.addAll(items)
         return cachedItems as List<Restaurant>
     }
 
-    suspend fun load(itemId: String): Restaurant {
+    suspend fun load(itemId: Number): Restaurant {
         Log.i(TAG, "load")
         Log.i(TAG, itemId.toString())
         val item = cachedItems?.find { it.id == itemId }
