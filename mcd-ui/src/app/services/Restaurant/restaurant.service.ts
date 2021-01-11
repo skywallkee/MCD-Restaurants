@@ -42,7 +42,7 @@ export class RestaurantService {
         number += 1;
       }
     })
-    return sum / number;
+    return Math.floor(sum / number);
   }
 
   async getWalls(): Promise<Wall[]> {

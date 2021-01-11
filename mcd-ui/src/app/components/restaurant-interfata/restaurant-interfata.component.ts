@@ -23,15 +23,23 @@ export class RestaurantInterfataComponent implements OnInit {
     ora_inchidere: "",
     poza: ""
   };
+  reviewAverage: number[];
 
   constructor(private route:ActivatedRoute, private restaurantService: RestaurantService){}
 
   async ngOnInit(){
+    let average = 0;
+    this.reviewAverage = Array<number>(5);
     this.route.params.subscribe( async params => {
       this.restaurant = await this.restaurantService.getId(params["id"]);
-      console.log(this.restaurant);
-    }
-  )
+      average = await this.restaurantService.getAverageReview(params["id"]);
+      for(let i = 0; i < 5; i++) {
+        if (i < average)
+          this.reviewAverage[i] = 1;
+        else
+          this.reviewAverage[i] = 0;
+      }
+    });
 }
 
 }
