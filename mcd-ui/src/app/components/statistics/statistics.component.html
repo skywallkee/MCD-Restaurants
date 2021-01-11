@@ -11,7 +11,7 @@
     <mat-card class="header">
         <div style="overflow: hidden;">
             <p class="titlu" style="float: left;">Master Chef Devs</p>
-            <a class="PCorMobile" style="float: right; color: white;">&lt; Back</a>
+            <a href="/restaurant" class="PCorMobile" style="float: right; color: white;">&lt; Back</a>
         </div>
     </mat-card>
 </div>
@@ -19,47 +19,53 @@
 
 <div fxLayoutAlign="center center" fxLayout="column">
     <p style="color: #147160; font-size: 50px;padding-top: 20px;">McDonald's</p>
-            <br>
-            <p style="color: #147160; font-size: 30px;">Restaurant Adress</p>
-            <br>
-            <p>
-                    <a href="#">
-                      <span class="glyphicon glyphicon-star-empty" style="color: #147160; font-size:25px;"></span>
-                      <span class="glyphicon glyphicon-star-empty" style="color: #147160; font-size:25px;"></span>
-                      <span class="glyphicon glyphicon-star-empty" style="color: #147160; font-size:25px;"></span>
-                      <span class="glyphicon glyphicon-star-empty" style="color: #147160; font-size:25px;"></span>
-                      <span class="glyphicon glyphicon-star-empty" style="color: #147160; font-size:25px;"></span>
-                    </a>
-                  
-            </p>
-        
-
-            <mat-card fxFlex="35" class="LatimeMatCard">
-                <div fxLayoutAlign="stretch" fxLayout="column">
-                    <mat-form-field style="text-align: center;">
-                        <label style="color: #147160; font-size:20px;">Statistics</label>
-                    
-                    </mat-form-field>
-                    <span fxLayoutAlign="left center" fxFlexFill>
-                        <div class="row">
-                            <div class="column">
-                                <img alt="Logo restaurant" src="https://www.bestdesigns.co/uploads/inspiration_images/4531/990__1511456189_555_McDonald's.png" style="width: 100%;">
-                            </div>
-                            <div class="column">
-                                
-                                <img alt="Logo restaurant" src="https://www.bestdesigns.co/uploads/inspiration_images/4531/990__1511456189_555_McDonald's.png" style="width: 100%;">
-                            </div>
-                        </div>
-                    </span>
-                    
-                </div>
-            </mat-card>
-        </div>
-            <br>
-       
     <br>
-  
-      
+    <p style="color: #147160; font-size: 30px;">Restaurant Adress</p>
+    <br>
+    <p>
+        <a href="#">
+            <span class="glyphicon glyphicon-star-empty" style="color: #147160; font-size:25px;"></span>
+            <span class="glyphicon glyphicon-star-empty" style="color: #147160; font-size:25px;"></span>
+            <span class="glyphicon glyphicon-star-empty" style="color: #147160; font-size:25px;"></span>
+            <span class="glyphicon glyphicon-star-empty" style="color: #147160; font-size:25px;"></span>
+            <span class="glyphicon glyphicon-star-empty" style="color: #147160; font-size:25px;"></span>
+        </a>
+
+    </p>
+
+
+    <mat-card fxFlex="35" class="LatimeMatCard">
+        <div fxLayoutAlign="stretch" fxLayout="column">
+            <div style="text-align: center;">
+                <label style="color: #147160; font-size:20px;">Statistics</label>
+            </div>
+            <span fxLayoutAlign="left center" fxFlexFill>
+                <div class="row">
+                    <div class="column">
+                        <ngx-charts-bar-vertical [view]="view" [scheme]="colorScheme" [results]="single"
+                            [gradient]="gradient" [xAxis]="showXAxis" [yAxis]="showYAxis" [legend]="showLegend"
+                            [showXAxisLabel]="showXAxisLabel" [showYAxisLabel]="showYAxisLabel"
+                            [xAxisLabel]="xAxisLabel" [yAxisLabel]="yAxisLabel" (select)="onSelect($event)">
+                        </ngx-charts-bar-vertical>
+                    </div>
+                    <div class="column">
+                        <ngx-charts-bar-vertical [view]="view" [scheme]="colorScheme" [results]="single"
+                            [gradient]="gradient" [xAxis]="showXAxis" [yAxis]="showYAxis" [legend]="showLegend"
+                            [showXAxisLabel]="showXAxisLabel" [showYAxisLabel]="showYAxisLabel"
+                            [xAxisLabel]="xAxisLabel" [yAxisLabel]="yAxisLabel" (select)="onSelect($event)">
+                        </ngx-charts-bar-vertical>
+                    </div>
+                </div>
+            </span>
+
+        </div>
+    </mat-card>
+</div>
+<br>
+
+<br>
+
+
 
 <footer style="position: relative;left: 0;bottom: 0;width: 100%;">
     <div class="row">

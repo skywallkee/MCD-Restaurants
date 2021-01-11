@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { RestaurantServiceApi } from 'src/app/api/restaurant/restaurantApi';
 import { Reservation } from 'src/app/models/reservation';
 import { Restaurant } from 'src/app/models/restaurant';
+import { Review } from 'src/app/models/review';
 import { Table } from 'src/app/models/table';
 import { Wall } from 'src/app/models/wall';
 
@@ -19,6 +20,29 @@ export class RestaurantService {
   async filter(keyword: string): Promise<Restaurant[]> {
     const restaurants = await this.restaurantServiceApi.getAll();
     return restaurants.filter(item => item.nameR.startsWith(keyword));
+  }
+
+  async getId(keyword: number): Promise<any> {
+    const restaurants = await this.restaurantServiceApi.getAll();
+    let restaurant;
+    restaurants.forEach(function (item) {
+      if (item.id == keyword)
+        restaurant = item;
+    })
+    return restaurant;
+  }
+
+  async getAverageReview(keyword: number): Promise<any> {
+    const reviews = await this.restaurantServiceApi.getAllReviews();
+    let sum = 0;
+    let number = 0;
+    reviews.forEach(function (review) {
+      if (review.id_R == keyword) {
+        sum += review.nr_stele;
+        number += 1;
+      }
+    })
+    return Math.floor(sum / number);
   }
 
   async getWalls(): Promise<Wall[]> {
@@ -54,5 +78,17 @@ export class RestaurantService {
       }
     }
     return true;
+  }
+
+  async submitReview(comment: string, stars: number): Promise<void> {
+    return await this.restaurantServiceApi.submitReview(comment, stars);
+  }
+
+  async getAllReviews(): Promise<Review[]> {
+    return await this.restaurantServiceApi.getAllReviews();
+  }
+
+  async getStatisticsByDay(){
+    return await this.restaurantServiceApi.getStatisticsByDay(1, 5);
   }
 }

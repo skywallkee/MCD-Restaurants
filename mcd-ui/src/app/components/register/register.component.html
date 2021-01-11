@@ -2,7 +2,7 @@
     <mat-card class="header">
         <div style="overflow: hidden;">
             <p class="titlu" style="float: left;">Master Chef Devs</p>
-            <a class="PCorMobile" style="float: right;">&lt; Back</a>
+            <a href="/search" class="PCorMobile" style="float: right;color:white;">&lt; Back</a>
         </div>
     </mat-card>
 </div>
@@ -17,18 +17,18 @@
                 <input matInput placeholder="user" [(ngModel)]="username">
             </mat-form-field>
             <mat-form-field>
-                <input matInput type="password" placeholder="password" [(ngModel)]="password">
+                <input matInput type="password" placeholder="password" [(ngModel)]="password1">
             </mat-form-field>
             <mat-form-field>
-                <input matInput type="password" placeholder="confirm password">
+                <input matInput type="password" placeholder="confirm password" [(ngModel)]="password2">
             </mat-form-field>
-            <button mat-raised-button (click)="registerClick()" style="background-color: #147160; color:white;">register</button>
+            <button routerLink="/search" mat-raised-button (click)="registerClick()" style="background-color: #147160; color:white;">register</button>
         </div>
     </mat-card>
     <br>
     <br>
     <br>
-    <a style="font-size: 15px; color:cadetblue">Already have an account?</a>
+    <a href="/login" style="font-size: 15px; color:cadetblue">Already have an account?</a>
 </div>
 
 <footer style="position: relative;left: 0;bottom: 0;width: 100%;">

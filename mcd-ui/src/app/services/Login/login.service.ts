@@ -8,11 +8,12 @@ export class LoginService {
 
   constructor(private loginServiceApi: LoginServiceApi) { }
 
-  login(username: string, password: string): void {
-    this.loginServiceApi.login(username, password);
+  async login(username: string, password: string): Promise<void> {
+    const token = await this.loginServiceApi.login(username, password);
+    localStorage.setItem('TOKEN', token);
   }
 
-  register(username: string, password: string): void {
-    this.loginServiceApi.register(username, password);
+  register(username: string, password1: string, password2: string): void {
+    this.loginServiceApi.register(username, password1, password2);
   }
 }
