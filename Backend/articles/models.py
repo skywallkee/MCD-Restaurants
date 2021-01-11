@@ -25,9 +25,12 @@ class Restaurant(models.Model):
     lungime = models.IntegerField()
     latime = models.IntegerField()
     adresa = models.CharField(max_length=250)
+    poza=models.CharField(max_length=1000)
+    ora_deschidere=models.TimeField()
+    ora_inchidere=models.TimeField()
 
     def _str_(self):
-        return self.nameR + ' ' + self.lungime + ' ' + self.latime + ' ' + self.adresa
+        return self.nameR + ' ' + self.lungime + ' ' + self.latime + ' ' + self.adresa+ ' '+self.ora_deschidere+ ' '+self.ora_inchidere
 
 
 
@@ -68,8 +71,8 @@ class Mese(models.Model):
 class Rezervari(models.Model):
     id_M = models.ForeignKey(Mese, on_delete = models.CASCADE)
     id_U = models.ForeignKey(User, on_delete = models.CASCADE, blank=True,null=True)
-    data = models.DateField(auto_now=True)
-    ora = models.TimeField(auto_now=True)
+    data = models.DateField()
+    ora = models.TimeField()
     timp = models.TimeField()
     telefon = models.CharField(max_length=14)
     nume_pers = models.CharField(max_length=250)
@@ -85,7 +88,7 @@ class Review(models.Model):
     id_U = models.ForeignKey(User, on_delete=models.CASCADE)
     nr_stele = models.IntegerField()
     mesaj = models.CharField(max_length=2000)
-    data = models.DateTimeField(auto_now=True)
+    data = models.DateTimeField()
 
     def _str_(self):
         return self.id_R +' '+ self.id_U + ' '+ self.nr_stele +' ' + self.mesaj +' '+ self.data

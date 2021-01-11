@@ -28,6 +28,8 @@ SECRET_KEY = '3pj-@i1s35_0#0*1llxb8=fo8=%tbw7ds)%#yf-vy%dpq3jo#n'
 DEBUG = True
 
 ALLOWED_HOSTS = ['master-chef-devs.herokuapp.com','127.0.0.1']
+#CORS_ALLOWED_ORIGINS = ['master-chef-devs.herokuapp.com']
+CORS_ALLOW_ALL_ORIGINS = True
 #ALLOWED_HOSTS =[]
 
 # Application definition
@@ -48,15 +50,17 @@ INSTALLED_APPS = [
     'rest_auth',
     'rest_auth.registration',
     'rest_framework',
-    'rest_framework.authtoken',
-    
+    'rest_framework.authtoken'
 ]
 
 SITE_ID = 1
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
+<<<<<<< HEAD
+=======
     'django.middleware.common.CommonMiddleware',
+>>>>>>> development
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
