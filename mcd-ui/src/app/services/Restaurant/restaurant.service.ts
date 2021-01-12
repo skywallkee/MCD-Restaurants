@@ -19,7 +19,7 @@ export class RestaurantService {
 
   async filter(keyword: string): Promise<Restaurant[]> {
     const restaurants = await this.restaurantServiceApi.getAll();
-    return restaurants.filter(item => item.nameR.startsWith(keyword));
+    return restaurants.filter(item => item.nameR.toLowerCase().startsWith(keyword.toLowerCase()));
   }
 
   async getId(keyword: number): Promise<any> {
@@ -50,9 +50,21 @@ export class RestaurantService {
     return walls;
   }
 
+  async getWallsByRestaurant(id: number): Promise<Wall[]> {
+    return (await this.restaurantServiceApi.getWalls()).filter(wall => wall.id_R === id);
+  }
+
+  async getReviewsByRestaurant(id: number): Promise<Review[]> {
+    return (await this.restaurantServiceApi.getAllReviews()).filter(review => review.id_R === id);
+  }
+
   async getTables(): Promise<Table[]> {
     const tables = await this.restaurantServiceApi.getTables();
     return tables;
+  }
+
+  async getTablesByRestaurant(id: number): Promise<Table[]> {
+    return (await this.getTables()).filter(table => table.id_R === id);
   }
 
   async getReservations(): Promise<Reservation[]> {
@@ -80,15 +92,22 @@ export class RestaurantService {
     return true;
   }
 
-  async submitReview(comment: string, stars: number): Promise<void> {
-    return await this.restaurantServiceApi.submitReview(comment, stars);
+  async submitReview(comment: string, stars: number, idR: number): Promise<void> {
+    return await this.restaurantServiceApi.submitReview(comment, stars, idR);
   }
 
   async getAllReviews(): Promise<Review[]> {
     return await this.restaurantServiceApi.getAllReviews();
   }
 
-  async getStatisticsByDay(){
+  async getStatisticsByDay() {
     return await this.restaurantServiceApi.getStatisticsByDay(1, 5);
+  }
+
+  async submitReservation(tables: number[], phone: string, name: string): Promise<void> {
+    tables.forEach(async (table: number) => {
+      await this.restaurantServiceApi.submitReservation(table, phone, name, "");
+    });
+    return
   }
 }

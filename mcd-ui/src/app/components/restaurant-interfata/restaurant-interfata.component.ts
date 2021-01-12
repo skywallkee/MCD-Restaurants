@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AgmCoreModule } from '@agm/core';
-import {​​ google }​​ from "google-maps";
+import { google } from "google-maps";
 import { RestaurantService } from 'src/app/services/Restaurant/restaurant.service';
-import {ActivatedRoute} from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Restaurant } from 'src/app/models/restaurant';
 
 @Component({
@@ -25,21 +25,21 @@ export class RestaurantInterfataComponent implements OnInit {
   };
   reviewAverage: number[];
 
-  constructor(private route:ActivatedRoute, private restaurantService: RestaurantService){}
+  constructor(private route: ActivatedRoute, private restaurantService: RestaurantService) { }
 
-  async ngOnInit(){
+  async ngOnInit() {
     let average = 0;
     this.reviewAverage = Array<number>(5);
-    this.route.params.subscribe( async params => {
+    this.route.params.subscribe(async params => {
       this.restaurant = await this.restaurantService.getId(params["id"]);
       average = await this.restaurantService.getAverageReview(params["id"]);
-      for(let i = 0; i < 5; i++) {
+      for (let i = 0; i < 5; i++) {
         if (i < average)
           this.reviewAverage[i] = 1;
         else
           this.reviewAverage[i] = 0;
       }
     });
-}
+  }
 
 }

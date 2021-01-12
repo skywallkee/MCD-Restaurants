@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Reservation } from 'src/app/models/reservation';
 import { Table } from 'src/app/models/table';
 import { Wall } from 'src/app/models/wall';
@@ -13,13 +14,43 @@ export class ReservationComponent implements OnInit {
   walls: Wall[];
   tables: Table[];
   reservations: Reservation[];
+  restaurant: {
+    id: number,
+    adresa: "",
+    latime: number,
+    lungime: number,
+    nameR: "",
+    ora_deschidere: "",
+    ora_inchidere: "",
+    poza: ""
+  };
+  reviewAverage: number[];
+  selectedTables: number[] = [];
 
-  constructor(private restaurantService: RestaurantService) { }
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private restaurantService: RestaurantService,
+    private cd: ChangeDetectorRef
+  ) { }
 
   async ngOnInit(): Promise<void> {
-    this.walls = await this.restaurantService.getWalls();
-    this.tables = await this.restaurantService.getTables();
+    let average = 0;
+    this.reviewAverage = Array<number>(5);
     this.reservations = await this.restaurantService.getReservations();
+    this.route.params.subscribe(async params => {
+      this.restaurant = await this.restaurantService.getId(params["id"]);
+      this.tables = await this.restaurantService.getTablesByRestaurant(this.restaurant.id);
+      this.walls = await this.restaurantService.getWallsByRestaurant(this.restaurant.id);
+      average = await this.restaurantService.getAverageReview(params["id"]);
+      for (let i = 0; i < 5; i++) {
+        if (i < average)
+          this.reviewAverage[i] = 1;
+        else
+          this.reviewAverage[i] = 0;
+      }
+      this.cd.detectChanges();
+    });
   }
 
   isAvailable(table) {
@@ -27,6 +58,15 @@ export class ReservationComponent implements OnInit {
   }
 
   tableSelected(x) {
-    console.log(x);
+    this.selectedTables.push(x);
+  }
+
+  submitReservation() {
+    this.router.navigate(['reservation-result'], {
+      state: {
+        tables: this.selectedTables,
+        restaurant: this.restaurant
+      }
+    });
   }
 }

@@ -18,43 +18,44 @@
 <span fxLayoutAlign="left center" fxFlexFill>
     <div class="row">
         <div class="column1">
-            <img width="200" height="100" alt="Logo restaurant" src="{{restaurant.poza}}" style="padding-left: 70px;">
+            <img width="200" height="100" alt="Logo restaurant" src="{{restaurant?.poza}}" style="padding-left: 70px;">
             <br>
             <br>
             <br>
             <br>
             <div style="padding-left: 30px;">
-            <mat-card fxFlex="75">
-            <div fxLayoutAlign="stretch" fxLayout="column">
-                <mat-form-field routerLink="/reservation">
-                    <button mat-raised-button style="background-color: #147160; color:white;width: 95%; font-size:20px">Make Reservation</button>
-                </mat-form-field>
-                <mat-form-field routerLink="/statistics">
-                    <button mat-raised-button style="background-color: #147160; color:white;width: 95%; font-size:20px">View Statistics</button>
-                </mat-form-field>
-                <mat-form-field routerLink="/reviews">
-                    <button mat-raised-button style="background-color: #147160; color:white;width: 95%; font-size:20px; padding-left:medium;">View Reviews</button>
-                </mat-form-field>
-            </div>
-            </mat-card>
+                <mat-card fxFlex="75">
+                    <div fxLayoutAlign="stretch" fxLayout="column" class="d-flex flex-column">
+                        <button routerLink="/reservation/{{restaurant?.id}}" class="mb-4 mt-4" mat-raised-button
+                            style="background-color: #147160; color:white;width: 95%; font-size:20px">Make
+                            Reservation</button>
+                        <button routerLink="/statistics" class="mb-4" mat-raised-button
+                            style="background-color: #147160; color:white;width: 95%; font-size:20px">View
+                            Statistics</button>
+                        <button routerLink="/reviews/{{restaurant?.id}}" class="mb-4" mat-raised-button
+                            style="background-color: #147160; color:white;width: 95%; font-size:20px; padding-left:medium;">View
+                            Reviews</button>
+                    </div>
+                </mat-card>
             </div>
         </div>
-    
+
         <div class="column2">
-            <p style="color: #147160; font-size: 50px;">{{restaurant.nameR}}</p>
+            <p style="color: #147160; font-size: 50px;">{{restaurant?.nameR}}</p>
             <br>
-            <p style="color: #147160; font-size: 30px;">{{restaurant.adresa}}</p>
+            <p style="color: #147160; font-size: 30px;">{{restaurant?.adresa}}</p>
             <br>
             <p>
                 <a href="#">
                     <span *ngFor="let review of reviewAverage; index as i">
-                        <span *ngIf="reviewAverage[i]==1" class="glyphicon glyphicon-star" style="color: #147160; font-size:25px;"></span>
-                        <span *ngIf="reviewAverage[i]===0"class="glyphicon glyphicon-star-empty" style="color: #147160; font-size:25px;"></span>
+                        <span *ngIf="reviewAverage[i]==1" class="glyphicon glyphicon-star"
+                            style="color: #147160; font-size:25px;"></span>
+                        <span *ngIf="reviewAverage[i]===0" class="glyphicon glyphicon-star-empty"
+                            style="color: #147160; font-size:25px;"></span>
                     </span>
                 </a>
-                  
             </p>
-            <agm-map style="width:500px;height: 300px;"[latitude]="lat" [longitude]="lng"></agm-map>
+            <agm-map style="width:500px;height: 300px;" [latitude]="lat" [longitude]="lng"></agm-map>
         </div>
     </div>
 </span>
@@ -78,4 +79,3 @@
     <p>Copyright 2020 MCD<br>
     </p>
 </footer>
-

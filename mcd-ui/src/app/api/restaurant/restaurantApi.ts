@@ -42,7 +42,7 @@ export class RestaurantServiceApi {
         return resp.body;
     }
 
-    async submitReview(comment: string, stars: number) {
+    async submitReview(comment: string, stars: number, idR: number) {
         const token = localStorage.getItem('TOKEN');
         const resp = await ajax
             .post(config.endpoint.restaurant.reviews)
@@ -50,11 +50,11 @@ export class RestaurantServiceApi {
             .set('Authorization', token)
             .set('Accept', 'application/json')
             .send({
-                id_R: 4,
-                id_U: 1,
+                id_R: idR,
+                id_U: token,
                 nr_stele: stars,
                 mesaj: comment,
-                data: Date.now()
+                data: new Date().toISOString().slice(0, 19).replace('T', ' ')
             });
         return resp;
     }
@@ -76,6 +76,27 @@ export class RestaurantServiceApi {
             .send({
                 id: id_restaurant,
                 id_day
+            });
+        return resp;
+    }
+
+    async submitReservation(tableId: number, phone: string, name: string, email: string) {
+        const token = localStorage.getItem('TOKEN');
+        const now = new Date();
+        const resp = await ajax
+            .post(config.endpoint.restaurant.reservations)
+            .timeout({ deadline: 30000 })  //30 seconds
+            .set('Authorization', token)
+            .set('Accept', 'application/json')
+            .send({
+                "id_M": tableId,
+                "id_U": token,
+                "data": now.getFullYear() + "-" + (now.getMonth() + 1) + "-" + now.getDate(),
+                "ora": now.getHours() + ":" + now.getMinutes(),
+                "timp": (now.getHours() + 2) + ":" + now.getMinutes(),
+                "telefon": phone,
+                "nume_pers": name,
+                email
             });
         return resp;
     }

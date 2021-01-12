@@ -3,6 +3,6 @@ export interface Review {
     nr_stele: number;
     mesaj: string;
     data: Date;
-    id_R_id: number;
+    id_R: number;
     id_U_id: number;
 }
