@@ -15,10 +15,10 @@ const routes: Routes = [
   {path: 'register', component: RegisterComponent},
   {path: 'restaurant/:id', component: RestaurantInterfataComponent},
   {path: 'search', component: SearchComponent},
-  {path: 'reviews', component: ReviewsComponent},
-  {path: 'reservation', component: ReservationComponent},
+  {path: 'reviews/:id', component: ReviewsComponent},
+  {path: 'reservation/:id', component: ReservationComponent},
   {path: 'reservation-result', component:ReservationResultComponent},
-  {path: 'statistics', component:StatisticsComponent},
+  {path: 'statistics/:id', component:StatisticsComponent},
   {path: '', component: SearchComponent}
 ];
 

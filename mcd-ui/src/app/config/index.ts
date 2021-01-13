@@ -11,8 +11,8 @@ export default {
             reservations: `${domain}/api/rezervari/`,
             reviews: `${domain}/api/review/`,
             statistics: {
-                byDay: `${domain}/statisticsByDay/`,
-                byDayByHour:`${domain}/statisticsByDayByHour/`
+                byDay: `${domain}/statisticsByDay`,
+                byDayByHour:`${domain}/statisticsByDayByHour`
             }
         }
     }
