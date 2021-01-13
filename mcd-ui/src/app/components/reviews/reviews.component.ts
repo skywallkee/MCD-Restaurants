@@ -32,17 +32,15 @@ export class ReviewsComponent implements OnInit {
     this.route.params.subscribe(async params => {
       let average = 0;
       this.reviewAverage = Array<number>(5);
-      this.route.params.subscribe(async params => {
-        this.restaurant = await this.restaurantService.getId(params["id"]);
-        this.reviewList = await this.restaurantService.getReviewsByRestaurant(this.restaurant.id);
-        average = await this.restaurantService.getAverageReview(params["id"]);
-        for (let i = 0; i < 5; i++) {
-          if (i < average)
-            this.reviewAverage[i] = 1;
-          else
-            this.reviewAverage[i] = 0;
-        }
-      });
+      this.restaurant = await this.restaurantService.getId(params["id"]);
+      this.reviewList = await this.restaurantService.getReviewsByRestaurant(this.restaurant.id);
+      average = await this.restaurantService.getAverageReview(params["id"]);
+      for (let i = 0; i < 5; i++) {
+        if (i < average)
+          this.reviewAverage[i] = 1;
+        else
+          this.reviewAverage[i] = 0;
+      }
     });
   }
 

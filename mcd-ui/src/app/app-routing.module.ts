@@ -18,7 +18,7 @@ const routes: Routes = [
   {path: 'reviews/:id', component: ReviewsComponent},
   {path: 'reservation/:id', component: ReservationComponent},
   {path: 'reservation-result', component:ReservationResultComponent},
-  {path: 'statistics', component:StatisticsComponent},
+  {path: 'statistics/:id', component:StatisticsComponent},
   {path: '', component: SearchComponent}
 ];
 

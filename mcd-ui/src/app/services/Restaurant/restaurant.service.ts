@@ -100,8 +100,20 @@ export class RestaurantService {
     return await this.restaurantServiceApi.getAllReviews();
   }
 
-  async getStatisticsByDay() {
-    return await this.restaurantServiceApi.getStatisticsByDay(1, 5);
+  async getStatisticsByDay(id_restaurant: number, id_day: number): Promise<{
+    "Monday": number;
+    "Tuesday": number;
+    "Wednesday": number;
+    "Thursday": number;
+    "Friday": number;
+    "Saturday": number;
+    "Sunday": number;
+  }> {
+    return await this.restaurantServiceApi.getStatisticsByDay(id_restaurant, id_day);
+  }
+
+  async getStatisticsByDayByHour(id_restaurant: number, id_day: number) {
+    return await this.restaurantServiceApi.getStatisticsByDayByHour(id_restaurant, id_day);
   }
 
   async submitReservation(tables: number[], phone: string, name: string): Promise<void> {

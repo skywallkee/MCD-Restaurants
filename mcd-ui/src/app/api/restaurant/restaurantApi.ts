@@ -68,17 +68,38 @@ export class RestaurantServiceApi {
     }
 
     async getStatisticsByDay(id_restaurant: number, id_day: number) {
-        const resp = await ajax
-            .post(config.endpoint.restaurant.statistics.byDay)
-            .timeout({ deadline: 30000 })  //30 seconds
-            .set('Accept', 'application/json')
-            .set('Access-Control-Allow-Origin', '*')
-            .send({
-                id: id_restaurant,
-                id_day
-            });
-        return resp;
+        const resp = await fetch(
+            config.endpoint.restaurant.statistics.byDay,
+            {
+                body: JSON.stringify({
+                    id: id_restaurant,
+                    id_day
+                }),
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                method: 'POST'
+            }
+        );
+        return await resp.json();
     }
+
+    async getStatisticsByDayByHour(id_restaurant: number, id_day: number) {
+        const resp = await fetch(
+            config.endpoint.restaurant.statistics.byDayByHour,
+            {
+                body: JSON.stringify({
+                    id: id_restaurant,
+                    id_day
+                }),
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                method: 'POST'
+            }
+        );
+        return await resp.json();
+     }
 
     async submitReservation(tableId: number, phone: string, name: string, email: string) {
         const token = localStorage.getItem('TOKEN');
@@ -100,6 +121,4 @@ export class RestaurantServiceApi {
             });
         return resp;
     }
-
-    async getStatisticsByDayByHour() { }
 }
