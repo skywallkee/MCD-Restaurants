@@ -5,7 +5,8 @@ data class Restaurant(
     var nameR: String,
     var adresa: String,
     var lungime: Number,
-    var latime: Number
+    var latime: Number,
+    var poza: String
     //val stars: Float,
 
 ) {

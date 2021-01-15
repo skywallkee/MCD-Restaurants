@@ -1,26 +1,27 @@
 package masterchefdevs.colectiv.ubb.chefs.other
 
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Color
+import android.os.AsyncTask
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-
-import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-
 import androidx.navigation.fragment.findNavController
 import kotlinx.android.synthetic.main.fragment_first.*
 import masterchefdevs.colectiv.ubb.chefs.R
 import masterchefdevs.colectiv.ubb.chefs.auth.data.LoginRepository
 import masterchefdevs.colectiv.ubb.chefs.core.Api
 import masterchefdevs.colectiv.ubb.chefs.core.TAG
-
 import masterchefdevs.colectiv.ubb.chefs.data.RestaurantListAdaper
 import masterchefdevs.colectiv.ubb.chefs.data.RestaurantListViewModel
+import java.io.InputStream
+import java.net.URL
 
 
 /**
@@ -31,9 +32,9 @@ class FirstFragment : Fragment() {
     private lateinit var itemsModel: RestaurantListViewModel
 
     override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
-    ): View? {
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View?{
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_first, container, false)
     }
@@ -70,8 +71,9 @@ class FirstFragment : Fragment() {
             override fun onQueryTextChange(newText: String): Boolean {
                 return false
             }
+
             override fun onQueryTextSubmit(query: String): Boolean {
-                findNavController().navigate(R.id.action_FirstFragment_to_fragment_blank)
+                itemListAdapter.filter.filter(query)
                 return false
             }
 
@@ -92,12 +94,11 @@ class FirstFragment : Fragment() {
         restaurant_list.adapter = itemListAdapter
         itemsModel = ViewModelProvider(this).get(RestaurantListViewModel::class.java)
 
-
         itemsModel.items.observe(viewLifecycleOwner, { items ->
             Log.i(TAG, "update items")
             itemListAdapter.items = items
+            itemListAdapter.filterItems = items
         })
-        //daca se face loading se afisaza un progress bar
         itemsModel.loading.observe(viewLifecycleOwner, { loading ->
             Log.i(TAG, "update loading")
             progress.visibility = if (loading) View.VISIBLE else View.GONE
@@ -112,6 +113,4 @@ class FirstFragment : Fragment() {
         })
         itemsModel.loadItems()
     }
-
-
 }

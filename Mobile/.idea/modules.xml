@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/MobileChefs.iml" filepath="$PROJECT_DIR$/.idea/modules/MobileChefs.iml" group="MobileChefs" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/app.iml" group="MobileChefs/app" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/MobileChefs.iml" filepath="$PROJECT_DIR$/.idea/modules/MobileChefs.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/MobileChefs.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/MobileChefs.app.iml" />
     </modules>
   </component>
 </project>

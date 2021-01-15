@@ -13,7 +13,9 @@ import masterchefdevs.colectiv.ubb.chefs.data.model.Restaurant
 import masterchefdevs.colectiv.ubb.chefs.data.remote.RemoteRestaurantDataSource
 
 class RestaurantEditViewModel : ViewModel() {
-    private val mutableItem = MutableLiveData<Restaurant>().apply { value = Restaurant(0, "","",0,0) }
+    private val mutableItem = MutableLiveData<Restaurant>().apply { value = Restaurant(0, "","",0,0,
+        ""
+    ) }
     private val mutableFetching = MutableLiveData<Boolean>().apply { value = false }
     private val mutableCompleted = MutableLiveData<Boolean>().apply { value = false }
     private val mutableException = MutableLiveData<Exception>().apply { value = null }
@@ -54,6 +56,7 @@ class RestaurantEditViewModel : ViewModel() {
             item.nameR=nameR
             item.latime=latime
             item.lungime=lungime
+
 
             mutableFetching.value = true
             mutableException.value = null
