@@ -10,7 +10,7 @@ export interface Wall {
     Cy: number;
     Dx: number;
     Dy: number;
-    id_R_id: number;
+    id_R: number;
     width?: number;
     height?: number;
 }

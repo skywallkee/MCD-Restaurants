@@ -11,24 +11,25 @@
     <mat-card class="header">
         <div style="overflow: hidden;">
             <p class="titlu" style="float: left;">Master Chef Devs</p>
-            <a href="/restaurant" class="PCorMobile" style="float: right; color: white;">&lt; Back</a>
+            <a href="/search" class="PCorMobile" style="float: right; color: white;">&lt; Back</a>
         </div>
     </mat-card>
 </div>
 
 
 <div fxLayoutAlign="center center" fxLayout="column">
-    <p style="color: #147160; font-size: 50px;padding-top: 20px;">McDonald's</p>
+    <p style="color: #147160; font-size: 50px;padding-top: 20px;">{{restaurant?.nameR}}</p>
     <br>
-    <p style="color: #147160; font-size: 30px;">Restaurant Adress</p>
+    <p style="color: #147160; font-size: 30px;">{{restaurant?.adresa}}</p>
     <br>
     <p>
         <a href="#">
-            <span class="glyphicon glyphicon-star-empty" style="color: #147160; font-size:25px;"></span>
-            <span class="glyphicon glyphicon-star-empty" style="color: #147160; font-size:25px;"></span>
-            <span class="glyphicon glyphicon-star-empty" style="color: #147160; font-size:25px;"></span>
-            <span class="glyphicon glyphicon-star-empty" style="color: #147160; font-size:25px;"></span>
-            <span class="glyphicon glyphicon-star-empty" style="color: #147160; font-size:25px;"></span>
+            <span *ngFor="let review of reviewAverage; index as i">
+                <span *ngIf="reviewAverage[i]==1" class="glyphicon glyphicon-star"
+                    style="color: #147160; font-size:25px;"></span>
+                <span *ngIf="reviewAverage[i]===0" class="glyphicon glyphicon-star-empty"
+                    style="color: #147160; font-size:25px;"></span>
+            </span>
         </a>
 
     </p>
@@ -42,17 +43,15 @@
             <span fxLayoutAlign="left center" fxFlexFill>
                 <div class="row">
                     <div class="column">
-                        <ngx-charts-bar-vertical [view]="view" [scheme]="colorScheme" [results]="single"
-                            [gradient]="gradient" [xAxis]="showXAxis" [yAxis]="showYAxis" [legend]="showLegend"
-                            [showXAxisLabel]="showXAxisLabel" [showYAxisLabel]="showYAxisLabel"
-                            [xAxisLabel]="xAxisLabel" [yAxisLabel]="yAxisLabel" (select)="onSelect($event)">
+                        <p>Average reserved seats per day</p>
+                        <ngx-charts-bar-vertical [view]="view" [results]="byDay" [xAxis]="showXAxis"
+                            [yAxis]="showYAxis">
                         </ngx-charts-bar-vertical>
                     </div>
                     <div class="column">
-                        <ngx-charts-bar-vertical [view]="view" [scheme]="colorScheme" [results]="single"
-                            [gradient]="gradient" [xAxis]="showXAxis" [yAxis]="showYAxis" [legend]="showLegend"
-                            [showXAxisLabel]="showXAxisLabel" [showYAxisLabel]="showYAxisLabel"
-                            [xAxisLabel]="xAxisLabel" [yAxisLabel]="yAxisLabel" (select)="onSelect($event)">
+                        <p>Average reserved seats per hour</p>
+                        <ngx-charts-bar-vertical [view]="view" [results]="byDayByHour" [xAxis]="showXAxis"
+                            [yAxis]="showYAxis">
                         </ngx-charts-bar-vertical>
                     </div>
                 </div>

@@ -16,13 +16,15 @@ export class TableBlockComponent implements OnInit, OnChanges {
   @Output() onSelect: EventEmitter<number> = new EventEmitter<number>();
   width: number;
   height: number;
+  top: number;
+  left: number;
   bgColor: string;
   private initialBgColor: string;
   private isSelected: boolean;
 
   constructor() { }
 
-  ngOnChanges(changes: SimpleChanges){
+  ngOnChanges(changes: SimpleChanges) {
     for (const propName in changes) {
       if (changes.hasOwnProperty(propName)) {
         switch (propName) {
@@ -33,7 +35,7 @@ export class TableBlockComponent implements OnInit, OnChanges {
               this.bgColor = '#15AF2E';
             }
           }
-          break;
+            break;
         }
       }
     }
@@ -41,12 +43,14 @@ export class TableBlockComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     this.isSelected = false;
-    this.height = this.table.Dy - this.table.Ay;
-    this.width = this.table.Bx - this.table.Ax;
+    this.height = (this.table.Dy - this.table.Ay) * 400 / 100;
+    this.width = (this.table.Bx - this.table.Ax) * 1000 / 100;
+    this.top = (this.table.Ay) * 400 / 100;
+    this.left = (this.table.Ax) * 1000 / 100;
   }
 
   toggle() {
-    if (this.isAvailable===false) {
+    if (this.isAvailable === false) {
       return;
     }
     if (this.isSelected) {
