@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+   >
+
+    <!-- TODO: Update blank fragment layout -->
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="35dp">
+
+        <TableRow
+            android:layout_width="277dp"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/username_t"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Username"
+                android:textColor="#009688"
+                android:textSize="18sp" />
+
+            <Space
+                android:layout_width="37dp"
+                android:layout_height="21dp" />
+
+            <TextView
+                android:id="@+id/review_t"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Review"
+                android:textColor="#D0009688" />
+
+        </TableRow>
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="83dp">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#009688" />
+
+        </TableRow>
+    </TableLayout>
+
+</FrameLayout>

@@ -102,6 +102,9 @@
         <action
             android:id="@+id/action_restaurantFragment_to_Satistics"
             app:destination="@id/restaurantStatistics" />
+        <action
+            android:id="@+id/action_restaurantEditFragment_to_reviewsFragment"
+            app:destination="@id/reviewsFragment" />
     </fragment>
     <fragment
         android:id="@+id/restaurantStatistics"
@@ -112,4 +115,11 @@
             android:id="@+id/action_statistics_to_map"
             app:destination="@id/restaurantEditFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/reviewsFragment"
+        android:name="masterchefdevs.colectiv.ubb.chefs.ReviewsFragment"
+        android:label="fragment_reviews"
+        tools:layout="@layout/fragment_reviews" />
+
+
 </navigation>

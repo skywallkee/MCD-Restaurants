@@ -103,6 +103,14 @@ try {
 
                 })
         }
+
+
+        view.findViewById<Button>(R.id.view_reviews).setOnClickListener {
+            findNavController().navigate(R.id.action_restaurantEditFragment_to_reviewsFragment,
+                Bundle().apply {
+                    putString("ITEM_ID", itemId)
+                })
+        }
         Log.v(TAG, "onViewCreated")
         itemId?.let { Log.v(TAG, it) }
 //        item_text.setText(itemId)
