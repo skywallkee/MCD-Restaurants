@@ -1,5 +1,7 @@
 package masterchefdevs.colectiv.ubb.chefs.data.restaurantFragment
 
+import android.location.Address
+import android.location.Geocoder
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -13,20 +15,59 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 import kotlinx.android.synthetic.main.fragment_first.*
-
 import kotlinx.android.synthetic.main.fragment_restaurant.*
 import masterchefdevs.colectiv.ubb.chefs.R
 import masterchefdevs.colectiv.ubb.chefs.core.TAG
+
 
 class RestaurantEditFragment: Fragment() {
     companion object {
         const val ITEM_ID = "ITEM_ID"
     }
 
+
+
     private lateinit var viewModel: RestaurantEditViewModel
     private var itemId: String? = null
 
+    private  lateinit  var geocoder :Geocoder
+
+    private lateinit var mMap: GoogleMap
+
+
+    private lateinit var adresses:List<Address>
+
+    private val callback = OnMapReadyCallback { googleMap ->
+
+        mMap=googleMap
+
+        geocoder = Geocoder(this.context)
+try {
+    if (viewModel.item.value?.adresa != null) {
+        Log.v(TAG, "adresa: " + viewModel.item.value?.adresa)
+        adresses = geocoder.getFromLocationName(viewModel.item.value?.adresa, 1)
+        if (adresses != null) {
+            val location: Address = adresses.get(0)
+            Log.v(TAG, "latitude" + location.latitude.toString())
+            var pos = LatLng(location.latitude,location.longitude)
+            googleMap.addMarker(MarkerOptions().position(pos).title(viewModel.item.value?.adresa))
+            googleMap.moveCamera(CameraUpdateFactory.newLatLng(pos))
+        }
+    }
+} catch (e:Exception) {
+    var pos = LatLng(46.770439, 23.591423)
+    googleMap.addMarker(MarkerOptions().position(pos).title("Marker in Cluj"))
+    googleMap.moveCamera(CameraUpdateFactory.newLatLng(pos))
+    e.printStackTrace();
+} // end catch
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.v(TAG, "onCreate")
@@ -69,6 +110,8 @@ class RestaurantEditFragment: Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        val mapFragment = childFragmentManager.findFragmentById(R.id.map2) as SupportMapFragment?
+        mapFragment?.getMapAsync(callback)
         Log.v(TAG, "onActivityCreated")
         setupViewModel()
 
@@ -82,6 +125,7 @@ class RestaurantEditFragment: Fragment() {
         })
         viewModel.item.observe(viewLifecycleOwner, { item ->
             Log.v(TAG, "update items")
+
             view?.findViewById<TextView>(R.id.restaurant_name_map)?.setText(item.nameR)
             view?.findViewById<TextView>(R.id.restaurant_address_map)?.setText(item.adresa)
         })
