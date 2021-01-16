@@ -53,21 +53,6 @@
 
         </TableRow>
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="20dp"
-            android:background="@color/purple_500">
-
-            <SearchView
-                android:id="@+id/search_view_first"
-                android:layout_width="279dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:background="#F1EAEA">
-
-            </SearchView>
-
-        </TableRow>
 
         <TableRow
             android:layout_width="match_parent"
@@ -78,7 +63,7 @@
                 android:id="@+id/button_first"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                android:layout_gravity="right"
                 android:text="@string/login"
                 app:backgroundTint="#009688"
 
@@ -87,6 +72,23 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:rippleColor="#FAF7F7" />
+
+        </TableRow>
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:background="@color/purple_500">
+
+            <SearchView
+                android:id="@+id/search_view_first"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:iconifiedByDefault="false"
+                android:background="#F1EAEA">
+
+            </SearchView>
+
         </TableRow>
 
     </TableLayout>

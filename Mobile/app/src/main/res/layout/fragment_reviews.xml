@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ReviewsFragment">
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="76dp" />
+
+    <TextView
+        android:id="@+id/res_name_rew"
+        android:layout_width="match_parent"
+        android:layout_height="49dp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="Nume Restaurant"
+        android:textColor="#009688"
+        android:textSize="24sp" />
+
+    <RatingBar
+        android:id="@+id/rating_stars_stat_rew"
+        android:layout_width="wrap_content"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:layout_height="40dp"
+        android:isIndicator="true"
+        android:numStars="5" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="117dp"
+            android:hint="review" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/submit"
+        android:layout_width="166dp"
+        android:layout_height="wrap_content"
+        android:text="Submit"
+        android:layout_gravity="center"
+        android:gravity="center"
+        app:backgroundTint="#009688" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/reviews_list"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:foregroundGravity="center"
+        android:gravity="center"
+        app:layoutManager="LinearLayoutManager"
+        tools:layout_editor_absoluteX="186dp"
+        tools:layout_editor_absoluteY="269dp">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <ProgressBar
+        android:id="@+id/progress3"
+        android:layout_width="422dp"
+        android:layout_height="690dp"
+        android:indeterminate="true"
+        android:visibility="gone" />
+</LinearLayout>
