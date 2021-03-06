@@ -28,6 +28,8 @@ class Restaurant(models.Model):
     poza=models.CharField(max_length=1000)
     ora_deschidere=models.TimeField()
     ora_inchidere=models.TimeField()
+    latitudine = models.DecimalField(max_digits=30, decimal_places=15)
+    longitudine = models.DecimalField(max_digits=30, decimal_places=15)
 
     def _str_(self):
         return self.nameR + ' ' + self.lungime + ' ' + self.latime + ' ' + self.adresa+ ' '+self.ora_deschidere+ ' '+self.ora_inchidere
