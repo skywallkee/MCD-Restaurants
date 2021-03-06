@@ -57,10 +57,6 @@ SITE_ID = 1
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
-<<<<<<< HEAD
-=======
-    'django.middleware.common.CommonMiddleware',
->>>>>>> development
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',

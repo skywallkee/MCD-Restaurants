@@ -29,5 +29,7 @@ urlpatterns = [
     path('getReviewAverage',views.getReviewAverage),
     path('getRezervareForRestaurant',views.getRezervareForRestaurant),
     path('changePassword',views.changePassword),
+    path('getRezervareUser', views.getRezervareUser),
+    #path('getReviewUser', views.getReviewUser),
     path('api/', include('articles.api.urls'))
 ]

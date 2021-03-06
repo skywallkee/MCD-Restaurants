@@ -439,3 +439,27 @@ def getRezervareForRestaurant(request):
             return Response(rezervari_bune)
         except Exception as er:
             return Response({'error':str(er)},status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET'])
+def getRezervareUser(request):
+    authorization = request.headers['Authorization']
+    try:
+        token = Token.objects.get(key=authorization)
+        if(token):
+            rezervari = Rezervari.objects.filter(id_U=token.user_id)
+            serializer=RezervariSerializer(rezervari,many=True)
+            return Response(serializer.data) 
+    except Exception as er:
+        return Response({'error':str(er)},status=status.HTTP_401_UNAUTHORIZED)
+
+@api_view(['GET'])
+def getReviewUser(request):
+    authorization = request.headers['Authorization']
+    try:
+        token = Token.objects.get(key=authorization)
+        if(token):
+            reviews = Review.objects.filter(id_U=token.user_id)
+            serializer=ReviewSerializer(reviews,many=True)
+            return Response(serializer.data) 
+    except Exception as er:
+        return Response({'error':str(er)},status=status.HTTP_401_UNAUTHORIZED)
