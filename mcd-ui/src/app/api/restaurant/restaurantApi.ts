@@ -121,9 +121,9 @@ export class RestaurantServiceApi {
             }
         );
         return await resp.json();
-     }
+    }
 
-    async submitReservation(tableId: number, phone: string, name: string, email: string) {
+    async submitReservation(tableId: number, phone: string, name: string, email: string, time: string, date: string) {
         const token = localStorage.getItem('TOKEN');
         const now = new Date();
         const resp = await ajax
@@ -134,9 +134,9 @@ export class RestaurantServiceApi {
             .send({
                 "id_M": tableId,
                 "id_U": token,
-                "data": now.getFullYear() + "-" + (now.getMonth() + 1) + "-" + now.getDate(),
-                "ora": now.getHours() + ":" + now.getMinutes(),
-                "timp": (now.getHours() + 2) + ":" + now.getMinutes(),
+                "data": date,
+                "ora": time,
+                "timp": parseInt(time.split(':')[0]) + 2 + ':' + time.split(':')[1],
                 "telefon": phone,
                 "nume_pers": name,
                 email

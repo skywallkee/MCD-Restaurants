@@ -125,9 +125,9 @@ export class RestaurantService {
     return await this.restaurantServiceApi.getStatisticsByDayByHour(id_restaurant, id_day);
   }
 
-  async submitReservation(tables: number[], phone: string, name: string): Promise<void> {
+  async submitReservation(tables: number[], phone: string, name: string, time: string, date: string): Promise<void> {
     tables.forEach(async (table: number) => {
-      await this.restaurantServiceApi.submitReservation(table, phone, name, "");
+      await this.restaurantServiceApi.submitReservation(table, phone, name, "", time, date);
     });
     return
   }

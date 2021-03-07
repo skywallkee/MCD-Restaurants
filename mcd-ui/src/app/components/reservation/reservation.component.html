@@ -37,12 +37,18 @@
 </span>
 
 <div fxLayoutAlign="center center" fxLayout="column" class="content">
-    <label for="etajDropdown">Etaj: </label>
-    <select id="etajDropdown" [(ngModel)]="etajSelectat">
-        <ng-container *ngFor="let etaj of etaje">
-            <option [value]="etaj">{{etaj}}</option>
-        </ng-container>
-    </select>
+    <div>
+        <label for="etajDropdown">Etaj: </label>
+        <select id="etajDropdown" [(ngModel)]="etajSelectat">
+            <ng-container *ngFor="let etaj of etaje">
+                <option [value]="etaj">{{etaj}}</option>
+            </ng-container>
+        </select>
+        Ora:
+        <input type="time" [(ngModel)]="selectedTime"/>
+        Data:
+        <input type="date" [(ngModel)]="selectedDate"/>
+    </div>
     <mat-card fxFlex="35" class="LatimeMatCard" style="padding: 0;">
         <div fxLayoutAlign="stretch" fxLayout="column" class="container-mese">
             <ng-template ngFor let-wall [ngForOf]="walls">

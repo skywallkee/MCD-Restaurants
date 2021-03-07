@@ -22,11 +22,15 @@ export class ReservationResultComponent implements OnInit {
   phone: string;
   name: string;
   validPhone: boolean = false;
+  time: string;
+  date: string;
 
   constructor(private router: Router, private restaurantService: RestaurantService) {
     const state = this.router.getCurrentNavigation().extras.state;
     this.restaurant = state.restaurant;
     this.tables = state.tables;
+    this.time = state.time;
+    this.date = state.date;
   }
 
   ngOnInit(): void {
@@ -42,7 +46,7 @@ export class ReservationResultComponent implements OnInit {
   }
 
   confirm() {
-    this.restaurantService.submitReservation(this.tables, this.phone, this.name);
+    this.restaurantService.submitReservation(this.tables, this.phone, this.name, this.time, this.date);
     this.router.navigate(['search'], {});
   }
 

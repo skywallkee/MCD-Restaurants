@@ -23,7 +23,7 @@
                 <p>Ora: {{reservation.ora}}</p>
                 <p>
                     Timp:
-                    <input #time type="time" [(ngModel)]="reservation.timp"/>
+                    <input type="time" [(ngModel)]="reservation.timp"/>
                     <button mat-raised-button class="update-button" (click)="updateTime(reservation)">Update</button>
                 </p>
                 <p>Nume: {{reservation.nume_pers}}</p>

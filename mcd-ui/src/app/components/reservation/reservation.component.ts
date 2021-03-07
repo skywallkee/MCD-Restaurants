@@ -28,6 +28,8 @@ export class ReservationComponent implements OnInit {
   };
   reviewAverage: number[];
   selectedTables: number[] = [];
+  selectedDate;
+  selectedTime;
 
   constructor(
     private route: ActivatedRoute,
@@ -78,7 +80,9 @@ export class ReservationComponent implements OnInit {
     this.router.navigate(['reservation-result'], {
       state: {
         tables: this.selectedTables,
-        restaurant: this.restaurant
+        restaurant: this.restaurant,
+        time: this.selectedTime,
+        date: this.selectedDate
       }
     });
   }
