@@ -72,6 +72,15 @@ export class RestaurantService {
     return reservations;
   }
 
+  async getReservationsOfCurrentUser(): Promise<Reservation[]> {
+    const reservations = await this.restaurantServiceApi.getReservationsOfCurrentUser();
+    return reservations;
+  }
+
+  async updateReservation(reservation: Reservation): Promise<void> {
+    await this.restaurantServiceApi.updateReservation(reservation);
+  }
+
   isAvailable(reservations: Reservation[], table: Table) {
     if (!reservations) {
       return false;

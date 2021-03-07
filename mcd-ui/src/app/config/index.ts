@@ -9,6 +9,7 @@ export default {
             walls: `${domain}/api/pereti/`,
             tables: `${domain}/api/mese/`,
             reservations: `${domain}/api/rezervari/`,
+            reservationsByUser: `${domain}/getRezervareUser`,
             reviews: `${domain}/api/review/`,
             statistics: {
                 byDay: `${domain}/statisticsByDay`,

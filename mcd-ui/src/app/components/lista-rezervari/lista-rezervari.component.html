@@ -1,0 +1,53 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+<div>
+    <mat-card class="header">
+        <div style="overflow: hidden;">
+            <p class="titlu" style="float: left;">Master Chef Devs</p>
+            <a href="/search" class="PCorMobile" style="float: right;color: white;">&lt; Back</a>
+        </div>
+    </mat-card>
+</div>
+
+<div class="row reservations-list">
+    <div *ngFor="let reservation of reservations">
+        <mat-card class="reservation">
+            <div fxLayoutAlign="stretch" fxLayout="column">
+                <p>Data: {{reservation.data}}</p>
+                <p>Ora: {{reservation.ora}}</p>
+                <p>
+                    Timp:
+                    <input #time type="time" [(ngModel)]="reservation.timp"/>
+                    <button mat-raised-button class="update-button" (click)="updateTime(reservation)">Update</button>
+                </p>
+                <p>Nume: {{reservation.nume_pers}}</p>
+            </div>
+        </mat-card>
+    </div>
+</div>
+
+
+<footer style="position: relative;left: 0;bottom: 0;width: 100%;">
+    <div class="row">
+        <div class="column">
+            <a style="color: white;">URL here</a>
+            <br>
+            <br>
+            <a style="color: white;">URL here</a>
+        </div>
+        <div class="column">
+            <a style="color: white;">URL here</a>
+            <br>
+            <br>
+            <a style="color: white;">URL here</a>
+        </div>
+    </div>
+    <p>Copyright 2020 MCD<br>
+    </p>
+</footer>

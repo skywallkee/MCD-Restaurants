@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Reservation } from 'src/app/models/reservation';
 import { Restaurant } from 'src/app/models/restaurant';
 import { Table } from 'src/app/models/table';
 import { Wall } from 'src/app/models/wall';
@@ -39,6 +40,27 @@ export class RestaurantServiceApi {
             .get(config.endpoint.restaurant.reservations)
             .timeout({ deadline: 30000 })  //30 seconds
             .set('Accept', 'application/json');
+        return resp.body;
+    }
+
+    async getReservationsOfCurrentUser() {
+        const token = localStorage.getItem('TOKEN');
+        const resp = await ajax
+            .get(config.endpoint.restaurant.reservationsByUser)
+            .timeout({ deadline: 30000 })  //30 seconds
+            .set('Authorization', token)
+            .set('Accept', 'application/json');
+        return resp.body;
+    }
+
+    async updateReservation(reservation: Reservation) {
+        const token = localStorage.getItem('TOKEN');
+        const resp = await ajax
+            .put(config.endpoint.restaurant.reservations + reservation.id + "/")
+            .timeout({ deadline: 30000 })  //30 seconds
+            .set('Authorization', token)
+            .set('Accept', 'application/json')
+            .send(reservation);
         return resp.body;
     }
 

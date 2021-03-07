@@ -14,6 +14,8 @@ export class ReservationComponent implements OnInit {
   walls: Wall[];
   tables: Table[];
   reservations: Reservation[];
+  etaje: String[] = [];
+  etajSelectat: String;
   restaurant: {
     id: number,
     adresa: "",
@@ -49,6 +51,12 @@ export class ReservationComponent implements OnInit {
         else
           this.reviewAverage[i] = 0;
       }
+      this.tables.forEach(table => {
+        if (!this.etaje.includes(table.etaj)) {
+          this.etaje.push(table.etaj);
+        }
+      });
+      this.etajSelectat = this.etaje[0];
       this.cd.detectChanges();
     });
   }
@@ -58,7 +66,12 @@ export class ReservationComponent implements OnInit {
   }
 
   tableSelected(x) {
-    this.selectedTables.push(x);
+    if (!this.selectedTables.includes(x)) {
+      this.selectedTables.push(x);
+    } else {
+      this.selectedTables = this.selectedTables.filter(table => table !== x);
+    }
+    this.cd.detectChanges();
   }
 
   submitReservation() {

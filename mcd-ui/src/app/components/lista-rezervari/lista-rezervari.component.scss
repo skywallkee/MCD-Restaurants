@@ -1,0 +1,15 @@
+.reservations-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.reservation {
+    margin: 20px;
+    background-color: rgb(240, 240, 240);
+}
+
+.update-button {
+    background-color: #147160;
+    color: white;
+    margin-left: 20px;
+}

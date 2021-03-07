@@ -1,9 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { AgmCoreModule } from '@agm/core';
-import { google } from "google-maps";
 import { RestaurantService } from 'src/app/services/Restaurant/restaurant.service';
 import { ActivatedRoute } from '@angular/router';
-import { Restaurant } from 'src/app/models/restaurant';
 
 @Component({
   selector: 'app-restaurant-interfata',

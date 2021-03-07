@@ -12,8 +12,6 @@ import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
 import {MatCardModule} from '@angular/material/card';
 import {FlexLayoutModule} from '@angular/flex-layout';
-import { HomeComponent } from './components/home/home.component';
-import { RestaurantComponent } from './components/home/restaurant/restaurant.component';
 import { FormsModule } from '@angular/forms';
 import { RestaurantInterfataComponent } from './components/restaurant-interfata/restaurant-interfata.component';
 import { SearchComponent } from './components/search/search.component';
@@ -26,6 +24,7 @@ import { TableBlockComponent } from './components/reservation/table-block/table-
 import { AgmCoreModule } from '@agm/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { ListaRezervariComponent } from './components/lista-rezervari/lista-rezervari.component';
 
 
 @NgModule({
@@ -33,8 +32,6 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
     AppComponent,
     LoginComponent,
     RegisterComponent,
-    HomeComponent,
-    RestaurantComponent,
     RestaurantInterfataComponent,
     SearchComponent,
     ReviewsComponent,
@@ -42,7 +39,8 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
     ReservationResultComponent,
     StatisticsComponent,
     WallBlockComponent,
-    TableBlockComponent
+    TableBlockComponent,
+    ListaRezervariComponent
   ],
   imports: [
     BrowserModule,

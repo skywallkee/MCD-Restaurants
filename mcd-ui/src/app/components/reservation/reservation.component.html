@@ -37,13 +37,23 @@
 </span>
 
 <div fxLayoutAlign="center center" fxLayout="column" class="content">
+    <label for="etajDropdown">Etaj: </label>
+    <select id="etajDropdown" [(ngModel)]="etajSelectat">
+        <ng-container *ngFor="let etaj of etaje">
+            <option [value]="etaj">{{etaj}}</option>
+        </ng-container>
+    </select>
     <mat-card fxFlex="35" class="LatimeMatCard" style="padding: 0;">
         <div fxLayoutAlign="stretch" fxLayout="column" class="container-mese">
             <ng-template ngFor let-wall [ngForOf]="walls">
-                <wall-block [wall]="wall"></wall-block>
+                <wall-block *ngIf="wall.etaj===etajSelectat" 
+                            [wall]="wall"></wall-block>
             </ng-template>
             <ng-template ngFor let-table [ngForOf]="tables">
-                <table-block [table]="table" [seats]="table.nr_locuri" [isAvailable]="isAvailable(table)"
+                <table-block *ngIf="table.etaj===etajSelectat" 
+                    [table]="table" 
+                    [seats]="table.nr_locuri" 
+                    [isAvailable]="isAvailable(table)"
                     (onSelect)="tableSelected($event)"></table-block>
             </ng-template>
         </div>
@@ -63,7 +73,10 @@
             Ocupat
         </span>
     </div>
-    <button mat-raised-button class="LatimeButon" (click)="submitReservation()"
+    <button mat-raised-button 
+        class="LatimeButon" 
+        (click)="submitReservation()"
+        [disabled]="selectedTables.length === 0"
         style="background-color: #147160; color:white;">
         Make Reservation
     </button>
