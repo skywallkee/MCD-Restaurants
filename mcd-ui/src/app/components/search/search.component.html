@@ -37,7 +37,7 @@
             <mat-card *ngIf="i+1 < restaurants.length" routerLink="/restaurant/{{restaurants[i+1].id}}" class="restaurant-card">
                 <div fxLayoutAlign="stretch" fxLayout="column">
                     <img class="restaurantImage" alt="Restaurant image"
-                    [src]="restaurant.poza">
+                    [src]="restaurants[i+1].poza">
                     <p>{{restaurants[i+1].nameR}}</p>
                     <p>{{restaurants[i+1].adresa}}</p>
                 </div>
