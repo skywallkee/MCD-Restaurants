@@ -9,11 +9,7 @@
 
 
 <div fxLayoutAlign="left left" fxLayout="column" style="margin-left:100px;">
-
     <label style="color: #147160; font-size: 30px; margin-left:10%;margin-top:5%">Your reservation</label>
-    <br>
-    <br>
-    <br>
     <span>
         <label style="color: #147160; font-size: 20px; margin-left:10%;margin-top:5%">
             You have reserved {{tables?.length}} tables at {{restaurant?.nameR}}
@@ -34,15 +30,13 @@
     </span>
     <label class="LabelAsk" style="color: #147160; font-size: 20px; margin-left:10%;margin-top:5%">Would you like to
         confirm? </label>
-    <br>
-    <br>
     <span fxLayoutAlign="center center">
         <button style="color:white; background-color: #147160; font-size: 20px;margin-right: 10%;" (click)="confirm()">Confirm</button>
         <button style="color:white; background-color: #147160; font-size: 20px; " (click)="cancel()">Cancel</button>
     </span>
 </div>
 
-<footer style="position: fixed;left: 0;bottom: 0;width: 100%;">
+<footer style="position: relative; margin-top: 30px; width: 100%;">
     <div class="row">
         <div class="column">
             <a style="color: white;">URL here</a>
